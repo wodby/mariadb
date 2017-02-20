@@ -1,0 +1,33 @@
+language: python
+
+services:
+  - docker
+
+env:
+  matrix:
+    - VERSION=10.1
+
+script:
+  - cd ./$VERSION
+  - make && make test
+
+after_success: |
+  if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    make release
+
+    if [ -n "$TRAVIS_TAG" ]; then
+      make VERSION="$VERSION-$TRAVIS_TAG" release
+    fi
+
+    if [ "$VERSION" == "10.1" ]; then
+      make VERSION=latest release
+    fi
+  fi
+
+after_failure:
+  - make logs
+
+notifications:
+  email:
+    on_success: never

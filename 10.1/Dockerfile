@@ -20,7 +20,7 @@ RUN mkdir -p /var/run/mysqld
 RUN chown 100:101 /var/run/mysqld
 
 RUN mkdir /docker-entrypoint-initdb.d
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint.sh /
 
 COPY *.tpl /etc/gotpl/
 

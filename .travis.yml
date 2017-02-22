@@ -4,6 +4,8 @@ services:
   - docker
 
 env:
+  global:
+    - LATEST_VERSION=10.1
   matrix:
     - VERSION=10.1
 
@@ -20,7 +22,7 @@ after_success: |
       make VERSION="$VERSION-$TRAVIS_TAG" release
     fi
 
-    if [ "$VERSION" == "10.1" ]; then
+    if [ "$VERSION" == "$LATEST_VERSION" ]; then
       make VERSION=latest release
     fi
   fi

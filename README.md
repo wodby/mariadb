@@ -12,6 +12,10 @@
 
 | Environment Variable | Type | Default Value | Description |
 | -------------------- | -----| ------------- | ----------- |
+| MYSQL_ROOT_PASSWORD                   | String |                                            | REQUIRED |
+| MYSQL_USER                            | String |                                            | |
+| MYSQL_PASSWORD                        | String |                                            | |
+| MYSQL_DATABASE                        | String |                                            | |
 | MYSQL_DUMP_MAX_ALLOWED_PACKET         | String | 1G                                         | |
 | MYSQL_PORT                            | Int    | 3306                                       | |
 | MYSQL_DEFAULT_CHARACTER_SET           | String | utf8                                       | | 

@@ -37,8 +37,10 @@ default_storage_engine                  = InnoDB
 skip-character-set-client-handshake
 skip-name-resolve
 
-query_cache_size                        = {{ getenv "MYSQL_QUERY_CACHE_SIZE" "8M" }}
-query_cache_limit                       = {{ getenv "MYSQL_QUERY_CACHE_LIMIT" "2M" }}
+query_cache_type                        = {{ getenv "MYSQL_QUERY_CACHE_TYPE" "0" }}
+query_cache_min_res_unit                = {{ getenv "MYSQL_QUERY_CACHE_MIN_RES_UNIT" "2K" }}
+query_cache_size                        = {{ getenv "MYSQL_QUERY_CACHE_SIZE" "128M" }}
+query_cache_limit                       = {{ getenv "MYSQL_QUERY_CACHE_LIMIT" "256K" }}
 table_open_cache                        = {{ getenv "MYSQL_TABLE_OPEN_CACHE" "1024" }}
 tmp_table_size                          = {{ getenv "MYSQL_TMP_TABLE_SIZE" "16M" }}
 key_buffer_size                         = {{ getenv "MYSQL_KEY_BUFFER_SIZE" "32M" }}
@@ -59,4 +61,3 @@ innodb_log_file_size                    = {{ getenv "MYSQL_INNODB_LOG_FILE_SIZE"
 long_query_time                         = {{ getenv "MYSQL_LONG_QUERY_TIME" "2" }}
 slow-query-log                          = {{ getenv "MYSQL_SLOW_QUERY_LOG" "OFF" }}
 general-log                             = {{ getenv "MYSQL_GENERAL_LOG" "0" }}
-query_cache_type                        = {{ getenv "MYSQL_QUERY_CACHE_TYPE" "OFF" }}

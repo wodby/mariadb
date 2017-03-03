@@ -44,4 +44,4 @@
 | MYSQL_LONG_QUERY_TIME                 | Int    | 2                                          | |
 | MYSQL_SLOW_QUERY_LOG                  | Int    | 0                                          | |
 | MYSQL_GENERAL_LOG                     | Int    | 1                                          | |
-| MYSQL_QUERY_CACHE_TYPE                | Int    | 9000                                       | |
+| MYSQL_QUERY_CACHE_TYPE                | String | Off                                        | |

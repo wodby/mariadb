@@ -27,8 +27,10 @@
 | MYSQL_INIT_CONNECT                    | String | SET collation_connection = utf8_general_ci | |
 | MYSQL_CHARACTER_SET_SERVER            | String | utf8                                       | |
 | MYSQL_CHARACTER_SET_FILESYSTEM        | String | utf8                                       | |
-| MYSQL_QUERY_CACHE_SIZE                | String | 8M                                         | |
-| MYSQL_QUERY_CACHE_LIMIT               | String | 2M                                         | |
+| MYSQL_QUERY_CACHE_TYPE                | Int    | 0                                          | |
+| MYSQL_QUERY_CACHE_MIN_RES_UNIT        | String | 2K                                         | |
+| MYSQL_QUERY_CACHE_SIZE                | String | 128M                                       | |
+| MYSQL_QUERY_CACHE_LIMIT               | String | 256K                                       | |
 | MYSQL_TABLE_OPEN_CACHE                | String | 1024                                       | |
 | MYSQL_TMP_TABLE_SIZE                  | String | 16M                                        | |
 | MYSQL_KEY_BUFFER_SIZE                 | String | 32M                                        | |
@@ -46,7 +48,6 @@
 | MYSQL_LONG_QUERY_TIME                 | Int    | 2                                          | |
 | MYSQL_SLOW_QUERY_LOG                  | Int    | 0                                          | |
 | MYSQL_GENERAL_LOG                     | Int    | 1                                          | |
-| MYSQL_QUERY_CACHE_TYPE                | Int    | 9000                                       | |
 
 ## Actions
 

@@ -12,19 +12,16 @@ password ?= $(MYSQL_PASSWORD)
 db ?= $(MYSQL_DATABASE)
 root_password ?= $(MYSQL_ROOT_PASSWORD)
 host ?= localhost
-config_set ?= data_driven_schema_configs
 max_try ?= 12
 wait_seconds ?= 5
 
-default: create
-
 import:
-	$(call check_defined, db, filepath)
-	mysql -p$(root_password) -h$(host) $(db) < $(filepath)
+	$(call check_defined, source)
+	import.sh $(root_password) $(host) $(db) $(source)
 
 backup:
-	$(call check_defined, db, filepath)
-	mysqldump -p$(root_password) -h$(host) $(db) > $(filepath)
+	$(call check_defined, filepath)
+	backup.sh $(root_password) $(host) $(db) $(filepath)
 
 query:
 	$(call check_defined, query)

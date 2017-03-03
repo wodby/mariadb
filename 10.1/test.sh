@@ -2,9 +2,9 @@
 
 set -e
 
-#if [[ ! -z $DEBUG ]]; then
+if [[ ! -z $DEBUG ]]; then
   set -x
-#fi
+fi
 
 export MYSQL_ROOT_PASSWORD='password'
 export MYSQL_USER='mariadb'
@@ -26,6 +26,7 @@ trap "docker rm -vf $cid > /dev/null" EXIT
 mariadb() {
 	docker run --rm -i \
 	    -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+	    -v /tmp:/mnt \
 	    --link "$NAME":"$MYSQL_HOST" \
 	    "$IMAGE" \
 	    "$@" \
@@ -45,3 +46,6 @@ mariadb make query query="DELETE FROM test WHERE a = 1"
 [ "$(mariadb make query-silent query='SELECT c FROM test')" = 'goodbye!' ]
 mariadb make query query="DELETE FROM test WHERE a = 1"
 mariadb make query query="DROP TABLE test"
+mariadb make backup filepath="/mnt/export.sql.gz"
+mariadb make import source="/mnt/export.sql.gz"
+mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/export.zip"

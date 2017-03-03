@@ -14,7 +14,6 @@ RUN apk add --no-cache \
         mariadb=${MARIADB_VER} \
         mariadb-client \
         pwgen \
-        tar \
         tzdata \
         wget && \
 

@@ -1,8 +1,10 @@
-# Generic MariaDB docker container
+# Generic MariaDB docker image
 
 [![Build Status](https://travis-ci.org/wodby/mariadb.svg?branch=master)](https://travis-ci.org/wodby/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
+
+[![Wodby Slack](https://www.google.com/s2/favicons?domain=www.slack.com) Join us on Slack](https://slack.wodby.com/)
 
 ## Supported tags and respective `Dockerfile` links:
 
@@ -45,3 +47,52 @@
 | MYSQL_SLOW_QUERY_LOG                  | Int    | 0                                          | |
 | MYSQL_GENERAL_LOG                     | Int    | 1                                          | |
 | MYSQL_QUERY_CACHE_TYPE                | Int    | 9000                                       | |
+
+## Actions
+
+Usage:
+```
+make COMMAND [params ...]
+
+commands:
+    import root_password=<pass> host=<mariadb> db=<db name> source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> 
+    backup root_password=<pass> host=<mariadb> db=<db name> filepath=</path/to/backup.sql.gz>
+    query user=<mysql> password=<pass> host=<mariadb> query=<SELECT 1> db=<mydb> 
+    query-silent user=<mysqk> password=<pass> host=<mariadb> query=<SELECT 1> db=<mydb> 
+    query-root root_password=<pass> host=<mariadb> query=<SELECT 1> db=<mydb>
+    check-ready root_password=<pass> host=<mariadb> max_try=<8> wait_seconds=<5> 
+    
+default values:
+    user $MYSQL_USER
+    password $MYSQL_PASSWORD
+    db $MYSQL_DATABASE
+    root_password $MYSQL_ROOT_PASSWORD
+    host localhost
+    max_try 12
+    wait_seconds = 5
+```
+
+Examples:
+
+```bash
+# Check if MariaDB is ready
+docker exec -ti [ID] make check-ready -f /usr/local/bin/Makefile
+
+# Run query
+docker exec -ti [ID] make query query="CREATE TABLE test (a INT, b INT, c VARCHAR(255))" -f /usr/local/bin/Makefile
+
+# Backup default database
+docker exec -ti [ID] make backup filepath="/path/to/mounted/dir/backup.sql.gz" -f /usr/local/bin/Makefile
+
+# Import from file
+docker exec -ti [ID] make import source="/path/to/mounted/dir/export.sql.gz"
+
+# Import from URL
+docker exec -ti [ID] make import source="https://example.com/url/to/sql/dump.zip"
+```
+
+You can skip -f option if you use run instead of exec. 
+
+## Using in Production
+
+Deploy MariaDB container to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).

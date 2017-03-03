@@ -20,8 +20,8 @@ RUN apk add --no-cache \
     # Download and install Gotlp
     wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTLP_VER}/gotpl-alpine-linux-amd64-${GOTLP_VER}.tar.gz | tar xz -C /usr/local/bin
 
-RUN mkdir -p /var/run/mysqld
-RUN chown -R mysql:mysql /var/run/mysqld
+RUN mkdir -p /var/run/mysqld && mkdir -p /var/lib/mysql
+RUN chown -R mysql:mysql /var/run/mysqld && chown -R mysql:mysql /var/lib/mysql
 
 RUN mkdir /docker-entrypoint-initdb.d
 COPY scripts /usr/local/bin

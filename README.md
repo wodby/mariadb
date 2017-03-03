@@ -56,14 +56,14 @@ Usage:
 make COMMAND [params ...]
 
 commands:
-    import root_password=<pass> host=<mariadb> db=<db name> source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> 
-    backup root_password=<pass> host=<mariadb> db=<db name> filepath=</path/to/backup.sql.gz>
-    query user=<mysql> password=<pass> host=<mariadb> query=<SELECT 1> db=<mydb> 
-    query-silent user=<mysqk> password=<pass> host=<mariadb> query=<SELECT 1> db=<mydb> 
-    query-root root_password=<pass> host=<mariadb> query=<SELECT 1> db=<mydb>
-    check-ready root_password=<pass> host=<mariadb> max_try=<8> wait_seconds=<5> 
+    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db=<db name> root_password=<pass> host=<mariadb>]   
+    backup filepath=</path/to/backup.sql.gz> [root_password=<pass> host=<mariadb> db=<db name>] 
+    query query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
+    query-silent query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
+    query-root query=<SELECT 1> [db=<dbname> root_password=<pass> host=<mariadb>]
+    check-ready [root_password=<pass> host=<mariadb> max_try=<8> wait_seconds=<5>] 
     
-default values:
+default params values:
     user $MYSQL_USER
     password $MYSQL_PASSWORD
     db $MYSQL_DATABASE

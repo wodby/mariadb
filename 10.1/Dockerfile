@@ -3,10 +3,6 @@ FROM alpine:3.5
 ENV GOTLP_VER 0.1.5
 ENV MARIADB_VER 10.1.21-r0
 
-RUN set -e && \
-	addgroup -S mysql && \
-	adduser -D -S -s /bin/bash -G mysql mysql
-
 RUN apk add --no-cache \
         bash \
         ca-certificates \

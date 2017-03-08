@@ -42,6 +42,7 @@ query_cache_min_res_unit                = {{ getenv "MYSQL_QUERY_CACHE_MIN_RES_U
 query_cache_size                        = {{ getenv "MYSQL_QUERY_CACHE_SIZE" "128M" }}
 query_cache_limit                       = {{ getenv "MYSQL_QUERY_CACHE_LIMIT" "256K" }}
 table_open_cache                        = {{ getenv "MYSQL_TABLE_OPEN_CACHE" "1024" }}
+thread_cache_size                       = {{ getenv "MYSQL_THREAD_CACHE_SIZE" "0" }}
 tmp_table_size                          = {{ getenv "MYSQL_TMP_TABLE_SIZE" "16M" }}
 key_buffer_size                         = {{ getenv "MYSQL_KEY_BUFFER_SIZE" "32M" }}
 

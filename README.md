@@ -55,7 +55,7 @@
 Usage:
 ```
 make COMMAND [params ...]
-
+ 
 commands:
     import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db=<db name> root_password=<pass> host=<mariadb>]   
     backup filepath=</path/to/backup.sql.gz> [root_password=<pass> host=<mariadb> db=<db name>] 

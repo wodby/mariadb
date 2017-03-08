@@ -31,6 +31,7 @@
 | MYSQL_QUERY_CACHE_MIN_RES_UNIT        | String | 2K                                         | |
 | MYSQL_QUERY_CACHE_SIZE                | String | 128M                                       | |
 | MYSQL_QUERY_CACHE_LIMIT               | String | 256K                                       | |
+| MYSQL_THREAD_CACHE_SIZE               | Int    | 0                                          | |
 | MYSQL_TABLE_OPEN_CACHE                | String | 1024                                       | |
 | MYSQL_TMP_TABLE_SIZE                  | String | 16M                                        | |
 | MYSQL_KEY_BUFFER_SIZE                 | String | 32M                                        | |

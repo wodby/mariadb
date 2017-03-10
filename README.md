@@ -8,7 +8,7 @@
 
 ## Supported tags and respective `Dockerfile` links:
 
-- [`10.1`, `latest` (*10.1/Dockerfile*)](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile)
+- [`10.1-2.0.0`, `10.1`, `latest` (*10.1/Dockerfile*)](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile)
 
 ## Environment Variables Available for Customization
 

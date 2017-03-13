@@ -1,4 +1,4 @@
-.PHONY: check-ready check-live
+.PHONY: import backup query query-silent query-root check-ready check-live
 
 check_defined = \
     $(strip $(foreach 1,$1, \
@@ -14,6 +14,8 @@ root_password ?= $(MYSQL_ROOT_PASSWORD)
 host ?= localhost
 max_try ?= 12
 wait_seconds ?= 5
+
+default: query
 
 import:
 	$(call check_defined, source)

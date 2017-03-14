@@ -119,7 +119,7 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 fi
 
 if [[ $1 == 'make' ]]; then
-    exec $@ -f /usr/local/bin/actions.mk
+    exec "${@}" -f /usr/local/bin/actions.mk
 else
-    exec $@
+    exec "${@}"
 fi

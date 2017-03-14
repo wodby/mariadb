@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ ! -z $DEBUG ]]; then
+if [[ ! -z "${DEBUG}" ]]; then
   set -x
 fi
 
@@ -18,19 +18,19 @@ cid="$(
 		-e MYSQL_USER \
 		-e MYSQL_PASSWORD \
 		-e MYSQL_DATABASE \
-		--name "$NAME" \
-		"$IMAGE"
+		--name "${NAME}" \
+		"${IMAGE}"
 )"
-trap "docker rm -vf $cid > /dev/null" EXIT
+trap "docker rm -vf ${cid} > /dev/null" EXIT
 
 mariadb() {
 	docker run --rm -i \
-	    -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+	    -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE -e DEBUG=1 \
 	    -v /tmp:/mnt \
-	    --link "$NAME":"$MYSQL_HOST" \
-	    "$IMAGE" \
+	    --link "${NAME}":"${MYSQL_HOST}" \
+	    "${IMAGE}" \
 	    "$@" \
-	    host=$MYSQL_HOST
+	    host="${MYSQL_HOST}"
 }
 
 mariadb make check-ready
@@ -48,4 +48,5 @@ mariadb make query query="DELETE FROM test WHERE a = 1"
 mariadb make query query="DROP TABLE test"
 mariadb make backup filepath="/mnt/export.sql.gz"
 mariadb make import source="/mnt/export.sql.gz"
-mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/export.zip"
+mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.zip"
+mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.tar.gz"

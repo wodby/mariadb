@@ -20,16 +20,17 @@ RUN mkdir -p /var/run/mysqld && mkdir -p /var/lib/mysql
 RUN chown -R mysql:mysql /var/run/mysqld && chown -R mysql:mysql /var/lib/mysql
 
 RUN mkdir /docker-entrypoint-initdb.d
-COPY scripts /usr/local/bin
+COPY actions /usr/local/bin
 
 RUN chown mysql:mysql /usr/local/bin/actions.mk /usr/local/bin/wait-for-mariadb.sh
 
 COPY *.tpl /etc/gotpl/
+COPY docker-entrypoint.sh /
 
 WORKDIR /var/lib/mysql
 VOLUME /var/lib/mysql
 
 EXPOSE 3306
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["mysqld"]

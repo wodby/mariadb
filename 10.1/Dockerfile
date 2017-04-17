@@ -1,7 +1,7 @@
 FROM alpine:3.5
 
-ENV GOTLP_VER 0.1.5
-ENV MARIADB_VER 10.1.21-r0
+ENV GOTPL_VER 0.1.5
+ENV MARIADB_VER 10.1.22-r0
 
 RUN apk add --no-cache \
         bash \
@@ -13,8 +13,8 @@ RUN apk add --no-cache \
         tzdata \
         wget && \
 
-    # Download and install Gotlp
-    wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTLP_VER}/gotpl-alpine-linux-amd64-${GOTLP_VER}.tar.gz | tar xz -C /usr/local/bin
+    # Download and install GOTPL
+    wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz | tar xz -C /usr/local/bin
 
 RUN mkdir -p /var/run/mysqld && mkdir -p /var/lib/mysql
 RUN chown -R mysql:mysql /var/run/mysqld && chown -R mysql:mysql /var/lib/mysql

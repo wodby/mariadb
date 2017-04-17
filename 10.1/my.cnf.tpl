@@ -58,6 +58,7 @@ innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_T
 innodb_buffer_pool_size                 = {{ getenv "MYSQL_INNODB_BUFFER_POOL_SIZE" "1G" }}
 innodb_log_buffer_size                  = {{ getenv "MYSQL_INNODB_LOG_BUFFER_SIZE" "8M" }}
 innodb_log_file_size                    = {{ getenv "MYSQL_INNODB_LOG_FILE_SIZE" "32M" }}
+innodb_write_io_threads                 = {{ getenv "MYSQL_INNODB_WRITE_IO_THREADS" "4" }}
 
 long_query_time                         = {{ getenv "MYSQL_LONG_QUERY_TIME" "2" }}
 slow-query-log                          = {{ getenv "MYSQL_SLOW_QUERY_LOG" "OFF" }}

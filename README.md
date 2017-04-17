@@ -62,7 +62,7 @@ commands:
     query query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
     query-silent query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
     query-root query=<SELECT 1> [db=<dbname> root_password=<pass> host=<mariadb>]
-    check-ready [root_password=<pass> host=<mariadb> max_try=<8> wait_seconds=<5>] 
+    check-ready [root_password=<pass> host=<mariadb> max_try=<8> wait_seconds=<5>]  
     
 default params values:
     user $MYSQL_USER

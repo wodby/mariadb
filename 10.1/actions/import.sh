@@ -36,7 +36,7 @@ else
 fi
 
 if [ "$(find -type f -name "*.sql" | wc -l)" != "1" ]; then
-    echo >&2 "Expecting single SQL file, multiple found: $(find -type f -name '*.sql')"
+    echo >&2 "Expecting single .sql file, none or multiple found: $(find -type f -name '*.sql')"
     exit 1
 fi
 

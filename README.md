@@ -57,7 +57,7 @@ Usage:
 make COMMAND [params ...]
  
 commands:
-    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db=<db name> root_password=<pass> host=<mariadb>]   
+    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db=<db name> root_password=<pass> host=<mariadb> ignore="table1;table2"] 
     backup filepath=</path/to/backup.sql.gz> [root_password=<pass> host=<mariadb> db=<db name>] 
     query query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
     query-silent query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
@@ -72,6 +72,7 @@ default params values:
     host localhost
     max_try 12
     wait_seconds = 5
+    ignore ""
 ```
 
 Examples:

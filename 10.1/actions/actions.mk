@@ -14,6 +14,7 @@ root_password ?= $(MYSQL_ROOT_PASSWORD)
 host ?= localhost
 max_try ?= 12
 wait_seconds ?= 5
+ignore ?= ""
 
 default: query
 
@@ -23,7 +24,7 @@ import:
 
 backup:
 	$(call check_defined, filepath)
-	backup.sh $(root_password) $(host) $(db) $(filepath)
+	backup.sh $(root_password) $(host) $(db) $(filepath) "$(ignore)"
 
 query:
 	$(call check_defined, query)

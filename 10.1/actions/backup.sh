@@ -26,3 +26,4 @@ mysqldump --no-data --allow-keywords -h"${host}" -uroot -p"${root_password}" "${
 mysqldump --no-create-info "${ignore[@]}" --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" >> "${filename}"
 gzip "${filename}"
 mv "${filename}.gz" "${filepath}"
+stat -c "RESULT=%s" "${filepath}"

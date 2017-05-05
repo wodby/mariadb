@@ -50,6 +50,10 @@
 | MYSQL_LONG_QUERY_TIME                 | Int    | 2                                          | |
 | MYSQL_SLOW_QUERY_LOG                  | Int    | 0                                          | |
 | MYSQL_GENERAL_LOG                     | Int    | 1                                          | |
+| MYSQL_NET_WRITE_TIMEOUT               | Int    | 90                                         | |
+| MYSQL_NET_READ_TIMEOUT                | Int    | 90                                         | |
+| MYSQL_WAIT_TIMEOUT                    | Int    | 420                                        | |
+| MYSQL_INTERACTIVE_TIMEOUT             | Int    | 420                                        | |
 
 ## Actions
 

@@ -63,3 +63,8 @@ innodb_write_io_threads                 = {{ getenv "MYSQL_INNODB_WRITE_IO_THREA
 long_query_time                         = {{ getenv "MYSQL_LONG_QUERY_TIME" "2" }}
 slow-query-log                          = {{ getenv "MYSQL_SLOW_QUERY_LOG" "OFF" }}
 general-log                             = {{ getenv "MYSQL_GENERAL_LOG" "0" }}
+
+net_write_timeout                       = {{ getenv "MYSQL_NET_WRITE_TIMEOUT" "90" }}
+net_read_timeout                        = {{ getenv "MYSQL_NET_READ_TIMEOUT" "90" }}
+wait_timeout                            = {{ getenv "MYSQL_WAIT_TIMEOUT" "420" }}
+interactive_timeout                     = {{ getenv "MYSQL_INTERACTIVE_TIMEOUT" "420" }}

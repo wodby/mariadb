@@ -44,6 +44,7 @@
 | MYSQL_INNODB_OPEN_FILES               | Int    | 1024                                       | |
 | MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT  | Int    | 2                                          | |
 | MYSQL_INNODB_BUFFER_POOL_SIZE         | String | 1G                                         | |
+| MYSQL_INNODB_BUFFER_POOL_INSTANCES    | Int    | 1                                          | |
 | MYSQL_INNODB_LOG_BUFFER_SIZE          | String | 8M                                         | |
 | MYSQL_INNODB_LOG_FILE_SIZE            | String | 32M                                        | |
 | MYSQL_INNODB_WRITE_IO_THREADS         | Int    | 4                                          | |

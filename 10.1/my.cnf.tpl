@@ -56,6 +56,7 @@ innodb_strict_mode                      = {{ getenv "MYSQL_INNODB_STRICT_MODE" "
 innodb_open_files                       = {{ getenv "MYSQL_INNODB_OPEN_FILES" "1024" }}
 innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "2" }}
 innodb_buffer_pool_size                 = {{ getenv "MYSQL_INNODB_BUFFER_POOL_SIZE" "1G" }}
+innodb_buffer_pool_instances            = {{ getenv "MYSQL_INNODB_BUFFER_POOL_INSTANCES" "1" }}
 innodb_log_buffer_size                  = {{ getenv "MYSQL_INNODB_LOG_BUFFER_SIZE" "8M" }}
 innodb_log_file_size                    = {{ getenv "MYSQL_INNODB_LOG_FILE_SIZE" "32M" }}
 innodb_write_io_threads                 = {{ getenv "MYSQL_INNODB_WRITE_IO_THREADS" "4" }}

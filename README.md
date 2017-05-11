@@ -14,47 +14,50 @@
 
 | Environment Variable | Type | Default Value | Description |
 | -------------------- | -----| ------------- | ----------- |
-| MYSQL_ROOT_PASSWORD                   | String |                                            | REQUIRED |
-| MYSQL_USER                            | String |                                            | |
-| MYSQL_PASSWORD                        | String |                                            | |
-| MYSQL_DATABASE                        | String |                                            | |
-| MYSQL_DUMP_MAX_ALLOWED_PACKET         | String | 1G                                         | |
-| MYSQL_PORT                            | Int    | 3306                                       | |
-| MYSQL_DEFAULT_CHARACTER_SET           | String | utf8                                       | | 
-| MYSQL_INNODB_FILE_FORMAT              | String | barracuda                                  | |
-| MYSQL_COLLATION_SERVER                | String | utf8_unicode_ci                            | |
-| MYSQL_INIT_CONNECT                    | String | SET NAMES utf8                             | |
-| MYSQL_INIT_CONNECT                    | String | SET collation_connection = utf8_general_ci | |
-| MYSQL_CHARACTER_SET_SERVER            | String | utf8                                       | |
-| MYSQL_CHARACTER_SET_FILESYSTEM        | String | utf8                                       | |
-| MYSQL_QUERY_CACHE_TYPE                | Int    | 0                                          | |
-| MYSQL_QUERY_CACHE_MIN_RES_UNIT        | String | 2K                                         | |
-| MYSQL_QUERY_CACHE_SIZE                | String | 128M                                       | |
-| MYSQL_QUERY_CACHE_LIMIT               | String | 256K                                       | |
-| MYSQL_THREAD_CACHE_SIZE               | Int    | 0                                          | |
-| MYSQL_TABLE_OPEN_CACHE                | String | 1024                                       | |
-| MYSQL_TMP_TABLE_SIZE                  | String | 16M                                        | |
-| MYSQL_KEY_BUFFER_SIZE                 | String | 32M                                        | |
-| MYSQL_MAX_ALLOWED_PACKET              | String | 256M                                       | |
-| MYSQL_MAX_CONNECTIONS                 | Int    | 50                                         | |
-| MYSQL_INNODB_FILE_PER_TABLE           | String | true                                       | |
-| MYSQL_INNODB_FILE_FORMAT              | String | barracuda                                  | |
-| MYSQL_INNODB_LARGE_PREFIX             | String | true                                       | |
-| MYSQL_INNODB_STRICT_MODE              | Int    | 0                                          | |
-| MYSQL_INNODB_OPEN_FILES               | Int    | 1024                                       | |
-| MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT  | Int    | 2                                          | |
-| MYSQL_INNODB_BUFFER_POOL_SIZE         | String | 1G                                         | |
-| MYSQL_INNODB_BUFFER_POOL_INSTANCES    | Int    | 1                                          | |
-| MYSQL_INNODB_LOG_BUFFER_SIZE          | String | 8M                                         | |
-| MYSQL_INNODB_LOG_FILE_SIZE            | String | 32M                                        | |
-| MYSQL_INNODB_WRITE_IO_THREADS         | Int    | 4                                          | |
-| MYSQL_LONG_QUERY_TIME                 | Int    | 2                                          | |
-| MYSQL_SLOW_QUERY_LOG                  | Int    | 0                                          | |
-| MYSQL_GENERAL_LOG                     | Int    | 1                                          | |
-| MYSQL_NET_WRITE_TIMEOUT               | Int    | 90                                         | |
-| MYSQL_NET_READ_TIMEOUT                | Int    | 90                                         | |
-| MYSQL_WAIT_TIMEOUT                    | Int    | 420                                        | |
-| MYSQL_INTERACTIVE_TIMEOUT             | Int    | 420                                        | |
+| MYSQL_BACK_LOG                        | Numeric | 100                                        | |
+| MYSQL_CHARACTER_SET_SERVER            | String  | utf8                                       | |
+| MYSQL_CHARACTER_SET_FILESYSTEM        | String  | utf8                                       | |
+| MYSQL_COLLATION_SERVER                | String  | utf8_unicode_ci                            | |
+| MYSQL_DATABASE                        | String  |                                            | |
+| MYSQL_DEFAULT_CHARACTER_SET           | String  | utf8                                       | | 
+| MYSQL_DUMP_MAX_ALLOWED_PACKET         | String  | 1G                                         | |
+| MYSQL_GENERAL_LOG                     | Numeric | 1                                          | |
+| MYSQL_INNODB_FILE_FORMAT              | String  | barracuda                                  | |
+| MYSQL_INIT_CONNECT                    | String  | SET NAMES utf8                             | |
+| MYSQL_INIT_CONNECT                    | String  | SET collation_connection = utf8_general_ci | |
+| MYSQL_INNODB_FILE_PER_TABLE           | String  | true                                       | |
+| MYSQL_INNODB_FILE_FORMAT              | String  | barracuda                                  | |
+| MYSQL_INNODB_LARGE_PREFIX             | String  | true                                       | |
+| MYSQL_INNODB_STRICT_MODE              | Numeric | 0                                          | |
+| MYSQL_INNODB_OPEN_FILES               | Numeric | 1024                                       | |
+| MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT  | Numeric | 2                                          | |
+| MYSQL_INNODB_BUFFER_POOL_SIZE         | String  | 1G                                         | |
+| MYSQL_INNODB_BUFFER_POOL_INSTANCES    | Numeric | 4                                          | |
+| MYSQL_INNODB_LOG_BUFFER_SIZE          | String  | 8M                                         | |
+| MYSQL_INNODB_LOG_FILE_SIZE            | String  | 32M                                        | |
+| MYSQL_INNODB_WRITE_IO_THREADS         | Numeric | 4                                          | |
+| MYSQL_INTERACTIVE_TIMEOUT             | Numeric | 420                                        | |
+| MYSQL_KEY_BUFFER_SIZE                 | String  | 32M                                        | |
+| MYSQL_LONG_QUERY_TIME                 | Numeric | 2                                          | |
+| MYSQL_MAX_ALLOWED_PACKET              | String  | 16M                                        | |
+| MYSQL_MAX_CONNECT_ERRORS              | Numeric | 100000                                     | |
+| MYSQL_MAX_CONNECTIONS                 | Numeric | 50                                         | |
+| MYSQL_NET_WRITE_TIMEOUT               | Numeric | 90                                         | |
+| MYSQL_NET_READ_TIMEOUT                | Numeric | 90                                         | |
+| MYSQL_PASSWORD                        | String  |                                            | |
+| MYSQL_PORT                            | Numeric | 3306                                       | |
+| MYSQL_ROOT_PASSWORD                   | String  |                                            | REQUIRED |
+| MYSQL_QUERY_CACHE_TYPE                | Numeric | 0                                          | |
+| MYSQL_QUERY_CACHE_MIN_RES_UNIT        | String  | 2K                                         | |
+| MYSQL_QUERY_CACHE_SIZE                | String  | 128M                                       | |
+| MYSQL_QUERY_CACHE_LIMIT               | String  | 256K                                       | |
+| MYSQL_SLOW_QUERY_LOG                  | Numeric | 0                                          | |
+| MYSQL_TABLE_DEFINITION_CACHE          | String  | 400                                        | |
+| MYSQL_TABLE_OPEN_CACHE                | String  | 4096                                       | |
+| MYSQL_THREAD_CACHE_SIZE               | Numeric | 75                                         | |
+| MYSQL_TMP_TABLE_SIZE                  | String  | 16M                                        | |
+| MYSQL_USER                            | String  |                                            | |
+| MYSQL_WAIT_TIMEOUT                    | Numeric | 420                                        | |
 
 ## Actions
 
@@ -88,7 +91,7 @@ Examples:
 docker exec -ti [ID] make check-ready -f /usr/local/bin/Makefile
 
 # Run query
-docker exec -ti [ID] make query query="CREATE TABLE test (a INT, b INT, c VARCHAR(255))" -f /usr/local/bin/Makefile
+docker exec -ti [ID] make query query="CREATE TABLE test (a Numeric, b Numeric, c VARCHAR(255))" -f /usr/local/bin/Makefile
 
 # Backup default database
 docker exec -ti [ID] make backup filepath="/path/to/mounted/dir/backup.sql.gz" -f /usr/local/bin/Makefile

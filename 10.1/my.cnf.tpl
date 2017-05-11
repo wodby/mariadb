@@ -37,17 +37,21 @@ default_storage_engine                  = InnoDB
 skip-character-set-client-handshake
 skip-name-resolve
 
+back_log                                = {{ getenv "MYSQL_BACK_LOG" "100" }}
+
 query_cache_type                        = {{ getenv "MYSQL_QUERY_CACHE_TYPE" "0" }}
 query_cache_min_res_unit                = {{ getenv "MYSQL_QUERY_CACHE_MIN_RES_UNIT" "2K" }}
 query_cache_size                        = {{ getenv "MYSQL_QUERY_CACHE_SIZE" "128M" }}
 query_cache_limit                       = {{ getenv "MYSQL_QUERY_CACHE_LIMIT" "256K" }}
-table_open_cache                        = {{ getenv "MYSQL_TABLE_OPEN_CACHE" "1024" }}
-thread_cache_size                       = {{ getenv "MYSQL_THREAD_CACHE_SIZE" "0" }}
+table_open_cache                        = {{ getenv "MYSQL_TABLE_OPEN_CACHE" "4096" }}
+thread_cache_size                       = {{ getenv "MYSQL_THREAD_CACHE_SIZE" "75" }}
 tmp_table_size                          = {{ getenv "MYSQL_TMP_TABLE_SIZE" "16M" }}
 key_buffer_size                         = {{ getenv "MYSQL_KEY_BUFFER_SIZE" "32M" }}
+table_definition_cache                  = {{ getenv "MYSQL_TABLE_DEFINITION_CACHE" "400" }}
 
-max_allowed_packet                      = {{ getenv "MYSQL_MAX_ALLOWED_PACKET" "256M" }}
-max_connections                         = {{ getenv "MYSQL_MAX_CONNECTIONS" "50" }}
+max_allowed_packet                      = {{ getenv "MYSQL_MAX_ALLOWED_PACKET" "16M" }}
+max_connect_errors                      = {{ getenv "MYSQL_MAX_CONNECT_ERRORS" "100000" }}
+max_connections                         = {{ getenv "MYSQL_MAX_CONNECTIONS" "100" }}
 
 innodb_file_per_table                   = {{ getenv "MYSQL_INNODB_FILE_PER_TABLE" "true" }}
 innodb_file_format                      = {{ getenv "MYSQL_INNODB_FILE_FORMAT" "barracuda" }}
@@ -56,7 +60,7 @@ innodb_strict_mode                      = {{ getenv "MYSQL_INNODB_STRICT_MODE" "
 innodb_open_files                       = {{ getenv "MYSQL_INNODB_OPEN_FILES" "1024" }}
 innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "2" }}
 innodb_buffer_pool_size                 = {{ getenv "MYSQL_INNODB_BUFFER_POOL_SIZE" "1G" }}
-innodb_buffer_pool_instances            = {{ getenv "MYSQL_INNODB_BUFFER_POOL_INSTANCES" "1" }}
+innodb_buffer_pool_instances            = {{ getenv "MYSQL_INNODB_BUFFER_POOL_INSTANCES" "4" }}
 innodb_log_buffer_size                  = {{ getenv "MYSQL_INNODB_LOG_BUFFER_SIZE" "8M" }}
 innodb_log_file_size                    = {{ getenv "MYSQL_INNODB_LOG_FILE_SIZE" "32M" }}
 innodb_write_io_threads                 = {{ getenv "MYSQL_INNODB_WRITE_IO_THREADS" "4" }}

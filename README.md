@@ -34,7 +34,7 @@
 | MYSQL_INNODB_LARGE_PREFIX             | String  | true                                       | |
 | MYSQL_INNODB_LOCK_WAIT_TIMEOUT        | Numeric | 50                                         | |
 | MYSQL_INNODB_LOG_BUFFER_SIZE          | String  | 8M                                         | |
-| MYSQL_INNODB_LOG_FILE_SIZE            | String  | 64M                                        | |
+| MYSQL_INNODB_LOG_FILE_SIZE            | String  | 128M                                       | |
 | MYSQL_INNODB_LOG_FILES_IN_GROUP       | Numeric | 2                                          | |
 | MYSQL_INNODB_OLD_BLOCKS_TIME          | Numeric | 1000                                       | |
 | MYSQL_INNODB_OPEN_FILES               | Numeric | 1024                                       | |

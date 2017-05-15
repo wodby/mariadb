@@ -12,8 +12,8 @@ password ?= $(MYSQL_PASSWORD)
 db ?= $(MYSQL_DATABASE)
 root_password ?= $(MYSQL_ROOT_PASSWORD)
 host ?= localhost
-max_try ?= 12
-wait_seconds ?= 5
+max_try ?= 1
+wait_seconds ?= 1
 ignore ?= ""
 
 default: query

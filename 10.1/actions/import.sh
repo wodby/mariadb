@@ -26,8 +26,10 @@ archive_file=$(find -type f)
 
 if [[ "${archive_file}" =~ \.zip$ ]]; then
     unzip "${archive_file}"
+    rm -f "${archive_file}"
 elif [[ "${archive_file}" =~ \.tgz$ ]] || [[ "${archive_file}" =~ \.tar.gz$ ]]; then
     tar -zxf "${archive_file}"
+    rm -f "${archive_file}"
 elif [[ "${archive_file}" =~ \.gz$ ]]; then
     gunzip "${archive_file}"
 else
@@ -35,15 +37,15 @@ else
     exit 1
 fi
 
-if [ "$(find -type f -name "*.sql" | wc -l)" != "1" ]; then
-    echo >&2 "Expecting single .sql file, none or multiple found: $(find -type f -name '*.sql')"
+if [ "$(find -type f | wc -l)" != "1" ]; then
+    echo >&2 "Expecting single file, none or multiple found: $(find -type f)"
     exit 1
 fi
 
-sql_file=$(find -type f -name "*.sql")
+dump_file=$(find -type f)
 
 mysql -h"${host}" -uroot -p"${root_password}" -e "DROP DATABASE IF EXISTS ${db};"
 mysql -h"${host}" -uroot -p"${root_password}" -e "CREATE DATABASE ${db};"
-mysql -h"${host}" -uroot -p"${root_password}" "${db}" < "${sql_file}"
+mysql -h"${host}" -uroot -p"${root_password}" "${db}" < "${dump_file}"
 
 rm -rf "${tmp_dir}"

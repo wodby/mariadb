@@ -13,7 +13,6 @@ RUN apk add --no-cache \
         tzdata \
         wget && \
 
-    # Download and install GOTPL
     wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz | tar xz -C /usr/local/bin
 
 RUN mkdir -p /var/run/mysqld && mkdir -p /var/lib/mysql

@@ -1,4 +1,4 @@
-# Generic MariaDB docker image
+# Generic MariaDB docker container image
 
 [![Build Status](https://travis-ci.org/wodby/mariadb.svg?branch=master)](https://travis-ci.org/wodby/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
@@ -76,12 +76,12 @@ Usage:
 make COMMAND [params ...]
  
 commands:
-    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db=<db name> root_password=<pass> host=<mariadb> ignore="table1;table2"] 
-    backup filepath=</path/to/backup.sql.gz> [root_password=<pass> host=<mariadb> db=<db name>] 
-    query query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
-    query-silent query=<SELECT 1> [db=<dbname> user=<mysql> password=<pass> host=<mariadb>] 
-    query-root query=<SELECT 1> [db=<dbname> root_password=<pass> host=<mariadb>]
-    check-ready [root_password=<pass> host=<mariadb> max_try=<8> wait_seconds=<5>]  
+    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db root_password host ignore="table1;table2"] 
+    backup filepath=</path/to/backup.sql.gz> [root_password host db] 
+    query query=<SELECT 1> [db user password host] 
+    query-silent query=<SELECT 1> [db user password host] 
+    query-root query=<SELECT 1> [db root_password host]
+    check-ready [root_password host max_try wait_seconds]  
     
 default params values:
     user $MYSQL_USER
@@ -101,19 +101,17 @@ Examples:
 docker exec -ti [ID] make check-ready -f /usr/local/bin/Makefile
 
 # Run query
-docker exec -ti [ID] make query query="CREATE TABLE test (a Numeric, b Numeric, c VARCHAR(255))" -f /usr/local/bin/Makefile
+docker exec -ti [ID] make query query="CREATE TABLE test (a Numeric, b Numeric, c VARCHAR(255))" -f /usr/local/bin/actions.mk
 
 # Backup default database
-docker exec -ti [ID] make backup filepath="/path/to/mounted/dir/backup.sql.gz" -f /usr/local/bin/Makefile
+docker exec -ti [ID] make backup filepath="/path/to/mounted/dir/backup.sql.gz" -f /usr/local/bin/actions.mk
 
 # Import from file
-docker exec -ti [ID] make import source="/path/to/mounted/dir/export.sql.gz"
+docker exec -ti [ID] make import source="/path/to/mounted/dir/export.sql.gz" -f /usr/local/bin/actions.mk
 
 # Import from URL
-docker exec -ti [ID] make import source="https://example.com/url/to/sql/dump.zip"
+docker exec -ti [ID] make import source="https://example.com/url/to/sql/dump.zip" -f /usr/local/bin/actions.mk
 ```
-
-You can skip -f option if you use run instead of exec. 
 
 ## Using in Production
 

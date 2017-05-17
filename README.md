@@ -1,16 +1,15 @@
-# Generic MariaDB docker container image
+# MariaDB docker container image
 
 [![Build Status](https://travis-ci.org/wodby/mariadb.svg?branch=master)](https://travis-ci.org/wodby/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
-
-[![Wodby Slack](https://www.google.com/s2/favicons?domain=www.slack.com) Join us on Slack](https://slack.wodby.com/)
+[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
 ## Supported tags and respective `Dockerfile` links:
 
-- [`10.1-2.0.0`, `10.1`, `latest` (*10.1/Dockerfile*)](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile)
+- [`10.1-2.2.0`, `10.1`, `latest` (*10.1/Dockerfile*)](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile)
 
-## Environment Variables Available for Customization
+## Environment variables available for customization
 
 | Environment Variable | Type | Default Value | Description |
 | -------------------- | -----| ------------- | ----------- |
@@ -89,8 +88,8 @@ default params values:
     db $MYSQL_DATABASE
     root_password $MYSQL_ROOT_PASSWORD
     host localhost
-    max_try 12
-    wait_seconds = 5
+    max_try 1
+    wait_seconds 1
     ignore ""
 ```
 
@@ -98,7 +97,7 @@ Examples:
 
 ```bash
 # Check if MariaDB is ready
-docker exec -ti [ID] make check-ready -f /usr/local/bin/Makefile
+docker exec -ti [ID] make check-ready wait_seconds=5 max_try=12 -f /usr/local/bin/Makefile
 
 # Run query
 docker exec -ti [ID] make query query="CREATE TABLE test (a Numeric, b Numeric, c VARCHAR(255))" -f /usr/local/bin/actions.mk
@@ -113,6 +112,6 @@ docker exec -ti [ID] make import source="/path/to/mounted/dir/export.sql.gz" -f 
 docker exec -ti [ID] make import source="https://example.com/url/to/sql/dump.zip" -f /usr/local/bin/actions.mk
 ```
 
-## Using in Production
+## Using in production
 
 Deploy MariaDB container to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).

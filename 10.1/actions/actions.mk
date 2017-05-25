@@ -14,6 +14,7 @@ root_password ?= $(MYSQL_ROOT_PASSWORD)
 host ?= localhost
 max_try ?= 1
 wait_seconds ?= 1
+delay_seconds ?= 0
 ignore ?= ""
 
 default: query
@@ -39,7 +40,7 @@ query-root:
 	mysql -p$(root_password) -h$(host) -e "$(query)" $(db)
 
 check-ready:
-	wait-for-mariadb.sh $(root_password) $(host) $(max_try) $(wait_seconds)
+	wait-for-mariadb.sh $(root_password) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
 
 check-live:
 	@echo "OK"

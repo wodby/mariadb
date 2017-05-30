@@ -1,7 +1,7 @@
-FROM alpine:3.5
+FROM alpine:3.6
 
 ENV GOTPL_VER 0.1.5
-ENV MARIADB_VER 10.1.22-r0
+ENV MARIADB_VER 10.1.22-r1
 
 RUN apk add --no-cache \
         bash \

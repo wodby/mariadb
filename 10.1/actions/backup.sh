@@ -22,8 +22,8 @@ done
 
 mkdir -p "${tmp_dir}"
 cd "${tmp_dir}"
-mysqldump --no-data --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" > "${filename}"
-mysqldump --no-create-info "${ignore[@]}" --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" >> "${filename}"
+mysqldump --single-transaction --no-data --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" > "${filename}"
+mysqldump --single-transaction --no-create-info "${ignore[@]}" --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" >> "${filename}"
 gzip "${filename}"
 mv "${filename}.gz" "${filepath}"
 stat -c "RESULT=%s" "${filepath}"

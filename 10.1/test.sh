@@ -2,9 +2,9 @@
 
 set -e
 
-#if [[ -n "${DEBUG}" ]]; then
+if [[ -n "${DEBUG}" ]]; then
     set -x
-#fi
+fi
 
 export MYSQL_ROOT_PASSWORD='password'
 export MYSQL_USER='mariadb'
@@ -25,7 +25,7 @@ trap "docker rm -vf ${cid} > /dev/null" EXIT
 
 mariadb() {
 	docker run --rm -i \
-	    -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+	    -e DEBUG -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
 	    -v /tmp:/mnt \
 	    --link "${NAME}":"${MYSQL_HOST}" \
 	    "${IMAGE}" \

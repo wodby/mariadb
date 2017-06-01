@@ -17,7 +17,16 @@ ignore=()
 
 IFS=';' read -ra ADDR <<< "${ignore_tables}"
 for table in "${ADDR[@]}"; do
-    ignore+=("--ignore-table=${db}.${table}")
+    if echo "${table}" | grep -q "%"; then
+        out=$(mysql --silent -h"${host}" -uroot -p"${root_password}" -e "SHOW TABLES LIKE '${table}'" "${db}")
+        tables=(${out//$'\n'/ })
+
+        for t in "${tables[@]}"; do
+            ignore+=("--ignore-table=${db}.${t}")
+        done
+    else
+        ignore+=("--ignore-table=${db}.${table}")
+    fi
 done
 
 mkdir -p "${tmp_dir}"

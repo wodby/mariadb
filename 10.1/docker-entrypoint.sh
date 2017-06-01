@@ -3,7 +3,7 @@
 set -e
 
 if [[ -n "${DEBUG}" ]]; then
-  set -x
+    set -x
 fi
 
 gotpl "/etc/gotpl/my.cnf.tpl" > "/etc/mysql/my.cnf"

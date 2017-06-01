@@ -3,7 +3,7 @@
 set -e
 
 if [[ ! -z "${DEBUG}" ]]; then
-  set -x
+    set -x
 fi
 
 root_password=$1

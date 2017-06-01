@@ -3,7 +3,7 @@
 set -e
 
 if [[ -n "${DEBUG}" ]]; then
-  set -x
+    set -x
 fi
 
 export MYSQL_ROOT_PASSWORD='password'
@@ -33,7 +33,7 @@ mariadb() {
 	    host="${MYSQL_HOST}"
 }
 
-mariadb make check-ready wait_seconds=5 max_try=12
+mariadb make check-ready delay_seconds=5 wait_seconds=5 max_try=12
 mariadb make query query="CREATE TABLE test (a INT, b INT, c VARCHAR(255))"
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 0 ]
 mariadb make query query="INSERT INTO test VALUES (1, 2, 'hello')"

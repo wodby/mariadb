@@ -112,6 +112,6 @@ docker exec -ti [ID] make import source="/path/to/mounted/dir/export.sql.gz" -f 
 docker exec -ti [ID] make import source="https://example.com/url/to/sql/dump.zip" -f /usr/local/bin/actions.mk
 ```
 
-## Using in production
+## Deployment
 
 Deploy MariaDB container to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).

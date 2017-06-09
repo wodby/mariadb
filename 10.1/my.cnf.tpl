@@ -48,7 +48,7 @@ table_open_cache                        = {{ getenv "MYSQL_TABLE_OPEN_CACHE" "40
 thread_cache_size                       = {{ getenv "MYSQL_THREAD_CACHE_SIZE" "75" }}
 tmp_table_size                          = {{ getenv "MYSQL_TMP_TABLE_SIZE" "16M" }}
 
-max_allowed_packet                      = {{ getenv "MYSQL_MAX_ALLOWED_PACKET" "16M" }}
+max_allowed_packet                      = {{ getenv "MYSQL_MAX_ALLOWED_PACKET" "256M" }}
 max_connect_errors                      = {{ getenv "MYSQL_MAX_CONNECT_ERRORS" "100000" }}
 max_connections                         = {{ getenv "MYSQL_MAX_CONNECTIONS" "100" }}
 

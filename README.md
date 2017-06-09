@@ -45,7 +45,7 @@
 | MYSQL_JOIN_BUFFER_SIZE                | 8M                                         | |
 | MYSQL_KEY_BUFFER_SIZE                 | 32M                                        | |
 | MYSQL_LONG_QUERY_TIME                 | 2                                          | |
-| MYSQL_MAX_ALLOWED_PACKET              | 16M                                        | |
+| MYSQL_MAX_ALLOWED_PACKET              | 256M                                       | |
 | MYSQL_MAX_CONNECT_ERRORS              | 100000                                     | |
 | MYSQL_MAX_CONNECTIONS                 | 50                                         | |
 | MYSQL_MAX_HEAP_TABLE_SIZE             | 16M                                        | |

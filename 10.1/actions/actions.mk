@@ -25,7 +25,7 @@ import:
 
 backup:
 	$(call check_defined, filepath)
-	backup.sh $(root_password) $(host) $(db) $(filepath) "$(ignore)"
+	backup.sh $(root_password) $(host) $(db) $(filepath) $(ignore)
 
 query:
 	$(call check_defined, query)

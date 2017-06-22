@@ -14,6 +14,7 @@ export MYSQL_HOST='mariadb'
 
 cid="$(
 	docker run -d \
+	    -e DEBUG \
 		-e MYSQL_ROOT_PASSWORD \
 		-e MYSQL_USER \
 		-e MYSQL_PASSWORD \
@@ -29,7 +30,7 @@ mariadb() {
 	    -v /tmp:/mnt \
 	    --link "${NAME}":"${MYSQL_HOST}" \
 	    "${IMAGE}" \
-	    "$@" \
+	    "${@}" \
 	    host="${MYSQL_HOST}"
 }
 
@@ -59,7 +60,7 @@ mariadb make query query="CREATE TABLE test2 (a INT, b INT, c VARCHAR(255))"
 mariadb make query query="INSERT INTO test1 VALUES (1, 2, 'hello')"
 mariadb make query query="INSERT INTO test2 VALUES (1, 2, 'hello!')"
 
-mariadb make backup filepath="/mnt/export.sql.gz" ignore="test1;test2;cache_%;test3"
+mariadb make backup filepath="/mnt/export.sql.gz" 'ignore="test1;test2;cache_%;test3"'
 mariadb make query query="DROP DATABASE mariadb"
 mariadb make import source="/mnt/export.sql.gz"
 

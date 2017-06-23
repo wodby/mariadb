@@ -6,10 +6,15 @@ if [[ ! -z "${DEBUG}" ]]; then
     set -x
 fi
 
-root_password=$1
-host=$2
-db=$3
-source=$4
+query() {
+    mysql -h"${host}" -uroot -p"${root_password}" -e "${@}"
+}
+
+user=$1
+root_password=$2
+host=$3
+db=$4
+source=$5
 tmp_dir="/tmp/import"
 
 [ -d "${tmp_dir}" ] && rm -rf "${tmp_dir}"
@@ -44,8 +49,13 @@ fi
 
 dump_file=$(find -type f)
 
-mysql -h"${host}" -uroot -p"${root_password}" -e "DROP DATABASE IF EXISTS ${db};"
-mysql -h"${host}" -uroot -p"${root_password}" -e "CREATE DATABASE ${db};"
+query "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${user}'@'%';"
+query "DROP DATABASE IF EXISTS ${db};"
+query "CREATE DATABASE ${db};"
+
 mysql -h"${host}" -uroot -p"${root_password}" "${db}" < "${dump_file}"
+
+query "GRANT ALL ON \`${db}\`.* TO '${user}'@'%';"
+query 'FLUSH PRIVILEGES;'
 
 rm -rf "${tmp_dir}"

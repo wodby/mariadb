@@ -5,11 +5,17 @@
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
-## Supported tags and respective `Dockerfile` links:
+## Docker Images
 
-- [`10.1-2.3.1`, `10.1`, `latest` (*10.1/Dockerfile*)](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile)
+Images are built via [Travis CI](https://travis-ci.org/wodby/mariadb) and published on [Docker Hub](https://hub.docker.com/r/wodby/mariadb). 
 
-## Environment variables available for customization
+## Versions
+
+| MariaDB version (Dockerfile) | Alpine Linux version |
+| ---------------------------- | -------------------- |
+| [10.1.22](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile) | 3.6 |  
+
+## Environment Variables
 
 | Environment Variable | Default Value | Description |
 | -------------------- | ------------- | ----------- |
@@ -68,18 +74,18 @@
 | MYSQL_USER                            |                                            | |
 | MYSQL_WAIT_TIMEOUT                    | 420                                        | |
 
-## Actions
+## Orchestration Actions
 
 Usage:
 ```
 make COMMAND [params ...]
  
 commands:
-    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db root_password host ignore="table1;table2"] 
+    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db root_password host ignore="table1;table2;cache_%"] 
     backup filepath=</path/to/backup.sql.gz> [root_password host db] 
-    query query=<SELECT 1> [db user password host] 
-    query-silent query=<SELECT 1> [db user password host] 
-    query-root query=<SELECT 1> [db root_password host]
+    query query [db user password host] 
+    query-silent query [db user password host] 
+    query-root query [db root_password host]
     check-ready [root_password host max_try wait_seconds]  
     
 default params values:
@@ -91,25 +97,6 @@ default params values:
     max_try 1
     wait_seconds 1
     ignore ""
-```
-
-Examples:
-
-```bash
-# Check if MariaDB is ready
-docker exec -ti [ID] make check-ready wait_seconds=5 max_try=12 -f /usr/local/bin/Makefile
-
-# Run query
-docker exec -ti [ID] make query query="CREATE TABLE test (a Numeric, b Numeric, c VARCHAR(255))" -f /usr/local/bin/actions.mk
-
-# Backup default database
-docker exec -ti [ID] make backup filepath="/path/to/mounted/dir/backup.sql.gz" -f /usr/local/bin/actions.mk
-
-# Import from file
-docker exec -ti [ID] make import source="/path/to/mounted/dir/export.sql.gz" -f /usr/local/bin/actions.mk
-
-# Import from URL
-docker exec -ti [ID] make import source="https://example.com/url/to/sql/dump.zip" -f /usr/local/bin/actions.mk
 ```
 
 ## Deployment

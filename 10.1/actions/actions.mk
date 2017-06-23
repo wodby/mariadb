@@ -21,7 +21,7 @@ default: query
 
 import:
 	$(call check_defined, source)
-	import.sh $(root_password) $(host) $(db) $(source)
+	import.sh $(user) $(root_password) $(host) $(db) $(source)
 
 backup:
 	$(call check_defined, filepath)

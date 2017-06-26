@@ -10,6 +10,10 @@ query() {
     mysql -h"${host}" -uroot -p"${root_password}" -e "${@}"
 }
 
+restore_privileges() {
+    query "GRANT ALL ON \`${db}\`.* TO '${user}'@'%';"
+}
+
 user=$1
 root_password=$2
 host=$3
@@ -53,9 +57,10 @@ query "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${user}'@'%';"
 query "DROP DATABASE IF EXISTS ${db};"
 query "CREATE DATABASE ${db};"
 
+trap 'restore_privileges' EXIT
 mysql -h"${host}" -uroot -p"${root_password}" "${db}" < "${dump_file}"
 
-query "GRANT ALL ON \`${db}\`.* TO '${user}'@'%';"
+restore_privileges
 query 'FLUSH PRIVILEGES;'
 
 rm -rf "${tmp_dir}"

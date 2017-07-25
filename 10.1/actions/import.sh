@@ -34,10 +34,10 @@ fi
 archive_file=$(find -type f)
 
 if [[ "${archive_file}" =~ \.zip$ ]]; then
-    unzip "${archive_file}"
+    unzip "${archive_file}" -x "__MACOSX/*"
     rm -f "${archive_file}"
 elif [[ "${archive_file}" =~ \.tgz$ ]] || [[ "${archive_file}" =~ \.tar.gz$ ]]; then
-    tar -zxf "${archive_file}"
+    tar --exclude="./__MACOSX" -zxf "${archive_file}"
     rm -f "${archive_file}"
 elif [[ "${archive_file}" =~ \.gz$ ]]; then
     gunzip "${archive_file}"

@@ -1,7 +1,7 @@
 FROM alpine:3.6
 
 ENV GOTPL_VER 0.1.5
-ENV MARIADB_VER 10.1.22-r1
+ENV MARIADB_VER 10.1.26-r0
 ENV GOTPL_URL https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz
 
 RUN set -xe && \

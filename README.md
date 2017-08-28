@@ -13,7 +13,7 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/mariadb) and publis
 
 | MariaDB version (Dockerfile) | Alpine Linux version |
 | ---------------------------- | -------------------- |
-| [10.1.22](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile) | 3.6 |  
+| [10.1.26](https://github.com/wodby/mariadb/tree/master/10.1/Dockerfile) | 3.6 |  
 
 ## Environment Variables
 

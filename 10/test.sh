@@ -19,7 +19,7 @@ cid="$(
 		-e MYSQL_USER \
 		-e MYSQL_PASSWORD \
 		-e MYSQL_DATABASE \
-		--name "${NAME}" \
+		--name "${MYSQL_HOST}" \
 		"${IMAGE}"
 )"
 trap "docker rm -vf ${cid} > /dev/null" EXIT
@@ -28,7 +28,7 @@ mariadb() {
 	docker run --rm -i \
 	    -e DEBUG -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
 	    -v /tmp:/mnt \
-	    --link "${NAME}":"${MYSQL_HOST}" \
+	    --link "${MYSQL_HOST}":"${MYSQL_HOST}" \
 	    "${IMAGE}" \
 	    "${@}" \
 	    host="${MYSQL_HOST}"

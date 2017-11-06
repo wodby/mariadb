@@ -6,6 +6,8 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
+sudo fix-permissions.sh mysql mysql /var/lib/mysql
+
 gotpl "/etc/gotpl/my.cnf.tpl" > "/etc/mysql/my.cnf"
 
 # if command starts with an option, prepend mysqld

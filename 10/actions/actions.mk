@@ -7,6 +7,7 @@ __check_defined = \
     $(if $(value $1),, \
       $(error Required parameter is missing: $1$(if $2, ($2))))
 
+command = mysqladmin -uroot -p${root_password} -h${host} status &> /dev/null
 user ?= $(MYSQL_USER)
 password ?= $(MYSQL_PASSWORD)
 db ?= $(MYSQL_DATABASE)
@@ -40,7 +41,7 @@ query-root:
 	mysql -p$(root_password) -h$(host) -e "$(query)" $(db)
 
 check-ready:
-	wait-for-mariadb.sh $(root_password) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+	wait-for.sh "$(command)" "MariaDB" $(host) $(max_try) $(wait_seconds) $(delay_seconds)
 
 check-live:
 	@echo "OK"

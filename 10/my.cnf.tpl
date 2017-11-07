@@ -74,6 +74,11 @@ innodb_stats_on_metadata                = {{ getenv "MYSQL_INNODB_STATS_ON_METAD
 innodb_strict_mode                      = {{ getenv "MYSQL_INNODB_STRICT_MODE" "0" }}
 innodb_write_io_threads                 = {{ getenv "MYSQL_INNODB_WRITE_IO_THREADS" "4" }}
 
+innodb_force_load_corrupted             = {{ getenv "MYSQL_INNODB_FORCE_LOAD_CORRUPTED" "0" }}
+innodb_recovery_stats                   = {{ getenv "MYSQL_INNODB_RECOVERY_STATS" "0" }}
+innodb_recovery_update_relay_log        = {{ getenv "MYSQL_INNODB_RECOVERY_UPDATE_RELAY_LOG" "0" }}
+innodb_fast_shutdown                    = {{ getenv "MYSQL_INNODB_FAST_SHUTDOWN" "1" }}
+
 performance_schema                      = {{ getenv "MYSQL_PERFORMANCE_SCHEMA" "0" }}
 
 long_query_time                         = {{ getenv "MYSQL_LONG_QUERY_TIME" "2" }}

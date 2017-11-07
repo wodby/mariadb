@@ -17,7 +17,7 @@ For better reliability we release images with stability tags (`wodby/mariadb:10.
 | Image tag (Dockerfile)                                                       | MariaDB  |
 | ---------------------------------------------------------------------------- | -------- |
 | [10, 10.2 (latest)](https://github.com/wodby/mariadb/tree/master/Dockerfile) | 10.2.10  |
-| [10.](https://github.com/wodby/mariadb/tree/master/Dockerfile)               | 10.1.28  |
+| [10.1](https://github.com/wodby/mariadb/tree/master/Dockerfile)              | 10.1.28  |
 
 ## Environment Variables
 
@@ -86,7 +86,7 @@ make COMMAND [params ...]
  
 commands:
     import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db root_password host ignore="table1;table2;cache_%"] 
-    backup filepath=</path/to/backup.sql.gz> [root_password host db] 
+    backup filepath=</path/to/backup.sql.gz> [root_password host db nice ionice] 
     query query [db user password host] 
     query-silent query [db user password host] 
     query-root query [db root_password host]
@@ -101,6 +101,8 @@ default params values:
     max_try 1
     wait_seconds 1
     ignore ""
+    nice 10
+    ionice 7
 ```
 
 ## Deployment

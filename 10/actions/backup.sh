@@ -11,6 +11,9 @@ host=$2
 db=$3
 filepath=$4
 ignore_tables=$5
+nice=$6
+ionice=$7
+
 filename="dump.sql"
 tmp_dir="/tmp/$RANDOM"
 ignore=()
@@ -31,8 +34,8 @@ done
 
 mkdir -p "${tmp_dir}"
 cd "${tmp_dir}"
-mysqldump --single-transaction --no-data --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" > "${filename}"
-mysqldump --single-transaction --no-create-info "${ignore[@]}" --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" >> "${filename}"
+nice -n "${nice}" ionice -c2 -n "${ionice}" mysqldump --single-transaction --no-data --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" > "${filename}"
+nice -n "${nice}" ionice -c2 -n "${ionice}" mysqldump --single-transaction --no-create-info "${ignore[@]}" --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" >> "${filename}"
 gzip "${filename}"
 mv "${filename}.gz" "${filepath}"
 stat -c "RESULT=%s" "${filepath}"

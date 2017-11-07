@@ -15,6 +15,7 @@ RUN set -xe && \
 
     apk add --update --no-cache --virtual .mariadb-run-deps \
         libaio \
+        libstdc++ \
         make \
         pwgen \
         sudo \

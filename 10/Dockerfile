@@ -31,6 +31,7 @@ RUN set -xe && \
         libressl-dev \
         linux-headers \
         ncurses-dev \
+        patch \
         readline-dev \
         zlib-dev && \
 
@@ -39,9 +40,7 @@ RUN set -xe && \
     cd /tmp/mariadb-* && \
 
     # From alpine repository https://git.alpinelinux.org/cgit/aports/tree/main/mariadb?h=3.6-stable
-    patch -p1 -i /tmp/patches/fix-mysql-install-db-path.patch && \
-	patch -p1 -i /tmp/patches/fix-ucontext-check.patch && \
-	patch -p1 -i /tmp/patches/ppc-remove-glibc-dep.patch && \
+    for i in /tmp/patches/"${MARIADB_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done && \
 
     cmake . -DBUILD_CONFIG=mysql_release \
     		-DCMAKE_INSTALL_PREFIX=/usr \

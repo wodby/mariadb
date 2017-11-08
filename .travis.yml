@@ -20,7 +20,7 @@ install:
 
 script:
   - cd ./"${LINE}"
-  - make && make test
+  - travis_wait 50 make && make test
 
 after_success: |
   if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then

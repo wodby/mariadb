@@ -73,10 +73,7 @@ innodb_read_io_threads                  = {{ getenv "MYSQL_INNODB_READ_IO_THREAD
 innodb_stats_on_metadata                = {{ getenv "MYSQL_INNODB_STATS_ON_METADATA" "OFF" }}
 innodb_strict_mode                      = {{ getenv "MYSQL_INNODB_STRICT_MODE" "0" }}
 innodb_write_io_threads                 = {{ getenv "MYSQL_INNODB_WRITE_IO_THREADS" "4" }}
-
 innodb_force_load_corrupted             = {{ getenv "MYSQL_INNODB_FORCE_LOAD_CORRUPTED" "0" }}
-innodb_recovery_stats                   = {{ getenv "MYSQL_INNODB_RECOVERY_STATS" "0" }}
-innodb_recovery_update_relay_log        = {{ getenv "MYSQL_INNODB_RECOVERY_UPDATE_RELAY_LOG" "0" }}
 innodb_fast_shutdown                    = {{ getenv "MYSQL_INNODB_FAST_SHUTDOWN" "1" }}
 
 performance_schema                      = {{ getenv "MYSQL_PERFORMANCE_SCHEMA" "0" }}
@@ -89,3 +86,5 @@ net_write_timeout                       = {{ getenv "MYSQL_NET_WRITE_TIMEOUT" "9
 net_read_timeout                        = {{ getenv "MYSQL_NET_READ_TIMEOUT" "90" }}
 wait_timeout                            = {{ getenv "MYSQL_WAIT_TIMEOUT" "420" }}
 interactive_timeout                     = {{ getenv "MYSQL_INTERACTIVE_TIMEOUT" "420" }}
+
+relay_log_recovery                      = {{ getenv "MYSQL_RELAY_LOG_RECOVERY" "0" }}

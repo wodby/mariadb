@@ -100,7 +100,7 @@ For better reliability we release images with stability tags (`wodby/mariadb:10.
 | [MYSQL_INNODB_LOG_FILE_SIZE]           | 128M                           | 128M                           |
 | [MYSQL_INNODB_LOG_FILES_IN_GROUP]      | 2                              | 2                              |
 | [MYSQL_INNODB_OLD_BLOCKS_TIME]         | 1000                           | 1000                           |
-| [MYSQL_INNODB_OPEN_FILES]              | autosized                      | autosized                      |
+| [MYSQL_INNODB_OPEN_FILES]              | 1024                           | 1024                           |
 | [MYSQL_INNODB_READ_IO_THREADS]         | 4                              | 4                              |
 | [MYSQL_INNODB_STATS_ON_METADATA]       | OFF                            | OFF                            |
 | [MYSQL_INNODB_STRICT_MODE]             | OFF                            | OFF                            |

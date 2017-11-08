@@ -90,7 +90,7 @@ RUN set -xe && \
 USER mysql
 
 COPY actions /usr/local/bin
-COPY my.cnf.tpl /etc/gotpl/
+COPY templates /etc/gotpl/
 COPY docker-entrypoint.sh /
 
 WORKDIR /var/lib/mysql

@@ -8,7 +8,7 @@ fi
 
 sudo fix-permissions.sh mysql mysql /var/lib/mysql
 
-gotpl "/etc/gotpl/my.cnf.tpl" > "/etc/mysql/my.cnf"
+gotpl "/etc/gotpl/${MARIADB_VER:0:4}/my.cnf.tpl" > "/etc/mysql/my.cnf"
 
 init-mariadb.sh "${@}"
 

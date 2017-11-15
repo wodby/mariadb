@@ -94,7 +94,6 @@ RUN set -xe && \
         /usr/lib/libmysqld.so.* \
         /usr/bin/mysql_config \
         /usr/bin/mysql_client_test \
-        find /usr/bin/mysql_* -type f -perm +0111 -exec strip --strip-all '{}' + || true && \
 
     find /usr/lib -name '*.a' -maxdepth 1 -print0 | xargs -0 rm && \
     find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm && \

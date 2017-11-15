@@ -93,7 +93,7 @@ RUN set -xe && \
         /usr/lib/libmysqlclient.so* \
         /usr/lib/libmysqld.so.* \
         /usr/bin/mysql_config \
-        /usr/bin/mysql_client_test \
+        /usr/bin/mysql_client_test && \
 
     find /usr/lib -name '*.a' -maxdepth 1 -print0 | xargs -0 rm && \
     find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm && \

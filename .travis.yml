@@ -12,7 +12,7 @@ env:
   matrix:
     - LINE=10 TAG=10 MARIADB_VER=10.2.10
     - LINE=10 TAG=10.2 MARIADB_VER=10.2.10
-    - LINE=10 TAG=10.1 MARIADB_VER=10.1.28
+    - LINE=10 TAG=10.1 MARIADB_VER=10.1.29
 
 install:
   - sudo apt-get update

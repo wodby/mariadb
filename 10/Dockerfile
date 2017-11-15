@@ -22,6 +22,7 @@ RUN set -xe && \
         tzdata && \
 
     apk add --update --no-cache --virtual .mariadb-build-deps \
+        attr \
         autoconf \
         bison \
         build-base \
@@ -82,6 +83,32 @@ RUN set -xe && \
     echo 'mysql ALL=(root) NOPASSWD: /usr/local/bin/fix-permissions.sh' > /etc/sudoers.d/mysql && \
     mkdir -p /var/run/mysqld /var/lib/mysql /etc/mysql /docker-entrypoint-initdb.d && \
     chown -R mysql:mysql /var/run/mysqld /var/lib/mysql /etc/mysql /docker-entrypoint-initdb.d && \
+
+    # Remove dev, test, doc, bench related files.
+    rm -rf \
+        /usr/share/man \
+        /usr/include/mysql \
+        /usr/mysql-test \
+        /usr/sql-bench \
+        /usr/lib/libmysqlclient.so* \
+        /usr/lib/libmysqld.so.* \
+        /usr/bin/mysql_config \
+        /usr/bin/mysql_client_test \
+        find /usr/bin/mysql_* -type f -perm +0111 -exec strip --strip-all '{}' + || true && \
+
+    find /usr/lib -name '*.a' -maxdepth 1 -print0 | xargs -0 rm && \
+    find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm && \
+
+    # Stripping binaries.
+    scanelf --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" /usr/bin/my* \
+        | while read type osabi filename; do \
+        [ "$osabi" != "STANDALONE" ] || continue; \
+        XATTR=$(getfattr --match="" --dump "${filename}"); \
+        strip "${filename}"; \
+        if [ -n "$XATTR" ]; then \
+            echo "$XATTR" | setfattr --restore=-; \
+        fi; \
+    done; \
 
     # Clean up.
     apk del --purge .mariadb-build-deps && \

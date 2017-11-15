@@ -10,8 +10,9 @@ env:
     - DOCKER_VERSION=17.06.2
     - LATEST_TAG=10
   matrix:
-    - LINE=10 TAG=10 MARIADB_VER=10.2.10
-    - LINE=10 TAG=10.2 MARIADB_VER=10.2.10
+# 10.2 exceeds max 50 min build on travis.
+#    - LINE=10 TAG=10 MARIADB_VER=10.2.10
+#    - LINE=10 TAG=10.2 MARIADB_VER=10.2.10
     - LINE=10 TAG=10.1 MARIADB_VER=10.1.29
 
 install:

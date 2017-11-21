@@ -99,7 +99,7 @@ RUN set -xe && \
     find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm && \
 
     # Stripping binaries.
-    scanelf --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" /usr/bin/my* \
+    scanelf --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" /usr/bin/ \
         | while read type osabi filename; do \
         [ "$osabi" != "STANDALONE" ] || continue; \
         XATTR=$(getfattr --match="" --dump "${filename}"); \

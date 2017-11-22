@@ -101,7 +101,7 @@ RUN set -xe && \
     # Stripping binaries.
     scanelf --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" /usr/bin/* \
         | while read type osabi filename; do \
-        [ "$osabi" != "STANDALONE" && "${filename}" != "/usr/bin/strip" ] || continue; \
+        ([ "$osabi" != "STANDALONE" ] && [ "${filename}" != "/usr/bin/strip" ]) || continue; \
         XATTR=$(getfattr --match="" --dump "${filename}"); \
         strip "${filename}"; \
         if [ -n "$XATTR" ]; then \

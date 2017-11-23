@@ -11,7 +11,7 @@ env:
     - LATEST_VER=10.2
   matrix:
 # 10.2 exceeds max 50 min build on travis.
-#    - MAJOR_VER=10 MINOR_VER=10.2 MARIADB_VER=10.2.10 LATEST_MAJOR=1
+#    - MAJOR_VER=10 MINOR_VER=10.2 LATEST_MAJOR=1
     - MAJOR_VER=10 MINOR_VER=10.1 MARIADB_VER=10.1.29
 
 install:

@@ -12,14 +12,14 @@ env:
   matrix:
 # 10.2 exceeds max 50 min build on travis.
 #    - MAJOR_VER=10 MINOR_VER=10.2 MARIADB_VER=10.2.10 LATEST_MAJOR=1
-    - MAJOR_VER=10 MINOR_VER=10.1
+    - MAJOR_VER=10 MINOR_VER=10.1 MARIADB_VER=10.1.29
 
 install:
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce="${DOCKER_VERSION}~ce-0~ubuntu"
 
 script:
-  - cd ./"${LINE}"
+  - cd ./"${MAJOR_VER}"
   - make && make test
 
 after_success: |

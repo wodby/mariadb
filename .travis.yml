@@ -8,12 +8,11 @@ services:
 env:
   global:
     - DOCKER_VERSION=17.06.2
-    - LATEST_TAG=10
+    - LATEST_VER=10.2
   matrix:
 # 10.2 exceeds max 50 min build on travis.
-#    - LINE=10 TAG=10 MARIADB_VER=10.2.10
-#    - LINE=10 TAG=10.2 MARIADB_VER=10.2.10
-    - LINE=10 TAG=10.1 MARIADB_VER=10.1.29
+#    - MAJOR_VER=10 MINOR_VER=10.2 MARIADB_VER=10.2.10 LATEST_MAJOR=1
+    - MAJOR_VER=10 MINOR_VER=10.1
 
 install:
   - sudo apt-get update
@@ -26,11 +25,15 @@ script:
 after_success: |
   if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
     docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
     make release
+    make release TAG="${MINOR_VER}"
+
+    [[ -n "${LATEST_MAJOR}" ]] && make release TAG="${MAJOR_VER}"
 
     if [[ -n "${TRAVIS_TAG}" ]]; then
       make release TAG="${TAG}-${TRAVIS_TAG}"
-    elif [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+    elif [[ "${MINOR_VER}" == "${LATEST_VER}" ]]; then
       make release TAG="latest"
     fi
   fi

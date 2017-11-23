@@ -1,7 +1,7 @@
 -include env_make
 
 MARIADB_VER ?= 10.2.10
-TAG ?= 10.2
+TAG ?= $(MARIADB_VER)
 
 REPO = wodby/mariadb
 NAME = mariadb-$(MARIADB_VER)

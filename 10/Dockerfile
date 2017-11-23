@@ -91,6 +91,7 @@ RUN set -xe && \
         /usr/mysql-test \
         /usr/sql-bench \
         /usr/lib/libmysqlclient.so* \
+        /usr/lib/libmysqlclient_r.so* \
         /usr/lib/libmysqld.so.* \
         /usr/bin/mysql_config \
         /usr/bin/mysql_client_test && \
@@ -99,7 +100,7 @@ RUN set -xe && \
     find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm && \
 
     # Stripping binaries.
-    scanelf --symlink --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" /usr/bin/* \
+    scanelf --symlink --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" /usr/bin/* /usr/lib/mysql/plugin/* \
         | while read type osabi filename; do \
         ([ "$osabi" != "STANDALONE" ] && [ "${filename}" != "/usr/bin/strip" ]) || continue; \
         XATTR=$(getfattr --match="" --dump "${filename}"); \

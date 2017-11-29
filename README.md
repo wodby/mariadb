@@ -16,8 +16,8 @@ For better reliability we release images with stability tags (`wodby/mariadb:10.
 
 Supported tags and respective `Dockerfile` links:
 
-* `10`, `10.2`, `10.2.11`, `latest` [_Dockerfile_](https://github.com/wodby/mariadb/tree/master/Dockerfile)
-* `10.1`, `10.1.28` [_Dockerfile_](https://github.com/wodby/mariadb/tree/master/Dockerfile)
+* `10`, `10.2`, `10.2.11`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/Dockerfile)
+* `10.1`, `10.1.28` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/Dockerfile)
 
 ## Environment Variables
 

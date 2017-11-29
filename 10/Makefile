@@ -3,6 +3,10 @@
 MARIADB_VER ?= 10.2.11
 TAG ?= $(MARIADB_VER)
 
+ifneq ($(STABILITY_TAG),)
+    override TAG := $(TAG)-$(STABILITY_TAG)
+endif
+
 REPO = wodby/mariadb
 NAME = mariadb-$(MARIADB_VER)
 

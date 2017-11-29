@@ -14,10 +14,10 @@
 
 For better reliability we release images with stability tags (`wodby/mariadb:10.1-X.X.X`) which correspond to git tags. We **strongly recommend** using images only with stability tags. Below listed basic tags:
 
-| Image tag (Dockerfile)                                                                | MariaDB  |
-| ------------------------------------------------------------------------------------- | -------- |
-| [10, 10.2, 10.2.10 (latest)](https://github.com/wodby/mariadb/tree/master/Dockerfile) | 10.2.10  |
-| [10.1, 10.1.28](https://github.com/wodby/mariadb/tree/master/Dockerfile)              | 10.1.28  |
+Supported tags and respective `Dockerfile` links:
+
+* `10`, `10.2`, `10.2.11`, `latest` [_Dockerfile_](https://github.com/wodby/mariadb/tree/master/Dockerfile)
+* `10.1`, `10.1.28` [_Dockerfile_](https://github.com/wodby/mariadb/tree/master/Dockerfile)
 
 ## Environment Variables
 

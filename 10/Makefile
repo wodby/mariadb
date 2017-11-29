@@ -4,7 +4,9 @@ MARIADB_VER ?= 10.2.11
 TAG ?= $(MARIADB_VER)
 
 ifneq ($(STABILITY_TAG),)
-    override TAG := $(TAG)-$(STABILITY_TAG)
+ifneq ($(TAG),latest)
+	override TAG := $(TAG)-$(STABILITY_TAG)
+endif
 endif
 
 REPO = wodby/mariadb

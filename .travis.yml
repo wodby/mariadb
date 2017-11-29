@@ -26,16 +26,13 @@ after_success: |
   if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
     docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
+    [[ -n "${TRAVIS_TAG}" ]] && export STABILITY_TAG="${TRAVIS_TAG}"
+
     make release
     make release TAG="${MINOR_VER}"
 
     [[ -n "${LATEST_MAJOR}" ]] && make release TAG="${MAJOR_VER}"
-
-    if [[ -n "${TRAVIS_TAG}" ]]; then
-      make release STABILITY_TAG="${TRAVIS_TAG}"
-    elif [[ "${MINOR_VER}" == "${LATEST_VER}" ]]; then
-      make release TAG="latest"
-    fi
+    [[ "${MINOR_VER}" == "${LATEST_VER}" ]] && make release TAG="latest"
   fi
 
 notifications:

@@ -8,11 +8,11 @@ services:
 env:
   global:
     - DOCKER_VERSION=17.06.2
-    - LATEST_VER=10.2
+    - LATEST_TAG=10.2
   matrix:
 # 10.2 exceeds max 50 min build on travis.
-#    - MAJOR_VER=10 MINOR_VER=10.2 LATEST_MAJOR=1
-    - MAJOR_VER=10 MINOR_VER=10.1 MARIADB_VER=10.1.29
+    - MAJOR_VER=10 TAG=10.2
+    - MAJOR_VER=10 TAG=10.1 MARIADB_VER=10.1.29
 
 install:
   - sudo apt-get update
@@ -31,13 +31,12 @@ after_success: |
     fi
 
     make release
-    make release TAG="${MINOR_VER}"
 
-    if [[ -n "${LATEST_MAJOR}" ]]; then
+    if [[ -z "${MARIADB_VER}" ]]; then
       make release TAG="${MAJOR_VER}"
     fi
 
-    if [[ "${MINOR_VER}" == "${LATEST_VER}" ]]; then
+    if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
       make release TAG="latest"
     fi
   fi
@@ -45,4 +44,4 @@ after_success: |
 notifications:
   slack:
     on_failure: never
-    secure: FLhbmjh9ii6KpahHeojuKD8r0br2oRYQTlFeqRd+/44xgM9KLFZd4j58Gz4BqE6lytbBlhq3Gsr/ce0mwP7+SmW3t9RgJmQtbHloZ9gRyLWw0Jgr72fCYvIDWrVEYiUJHJyb5wvRdNXbJ4YDm6FMt5tM91Wmqq8fo5f3Rp1+pD45C5n3tzvZ2TuCByNSieLpKohsmyWImFHPLjJyvhru/XUkp8d4ld9xgUfPZNiOyEA/rnXJWfEtEYirZjrtOSWvbhC/tzsAZemSHdm3qGhtm5SAcDeBTHmpkiW5xn75l6OYb2nQMv2d3VPHUe1/wdC9j5N6/MWXuDgeJB6GYUcpsm45mNKCMB98nVmz5Z+Pgc1l+RfHzuDdC6T3c7twsvtLGxJGnRTiAmthlFhiBJi499X5B88R2Ysg9Fmo4YD88iQBL6tzTuRJ8KIq8iMo5ZCvH01RZnlTnLby29dmq/gQ7o54BBbzhN6ZLpTbr9Hn8bePLdfefc5vpunzl+LhGmJhxdn8fBb4XysxnyU4rgJN4eQQMTL6nUMW7Uwj7qyBnlj1P4lkKM/RFS26eXR4vQQXOcQ3bPH9ydD6Gfra3lqLOjUHLvz2aLemoXrWB+KAcggplwB2Px9YzE/1XlfuzngVXJdK2tTpvINeInhw/zBh7jsN8+MLAszvhOHLQZvw4ak=
+    secure: "FLhbmjh9ii6KpahHeojuKD8r0br2oRYQTlFeqRd+/44xgM9KLFZd4j58Gz4BqE6lytbBlhq3Gsr/ce0mwP7+SmW3t9RgJmQtbHloZ9gRyLWw0Jgr72fCYvIDWrVEYiUJHJyb5wvRdNXbJ4YDm6FMt5tM91Wmqq8fo5f3Rp1+pD45C5n3tzvZ2TuCByNSieLpKohsmyWImFHPLjJyvhru/XUkp8d4ld9xgUfPZNiOyEA/rnXJWfEtEYirZjrtOSWvbhC/tzsAZemSHdm3qGhtm5SAcDeBTHmpkiW5xn75l6OYb2nQMv2d3VPHUe1/wdC9j5N6/MWXuDgeJB6GYUcpsm45mNKCMB98nVmz5Z+Pgc1l+RfHzuDdC6T3c7twsvtLGxJGnRTiAmthlFhiBJi499X5B88R2Ysg9Fmo4YD88iQBL6tzTuRJ8KIq8iMo5ZCvH01RZnlTnLby29dmq/gQ7o54BBbzhN6ZLpTbr9Hn8bePLdfefc5vpunzl+LhGmJhxdn8fBb4XysxnyU4rgJN4eQQMTL6nUMW7Uwj7qyBnlj1P4lkKM/RFS26eXR4vQQXOcQ3bPH9ydD6Gfra3lqLOjUHLvz2aLemoXrWB+KAcggplwB2Px9YzE/1XlfuzngVXJdK2tTpvINeInhw/zBh7jsN8+MLAszvhOHLQZvw4ak="

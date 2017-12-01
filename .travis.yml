@@ -11,15 +11,15 @@ env:
     - LATEST_TAG=10.2
   matrix:
 # 10.2 exceeds max 50 min build on travis.
-#    - TAG=10.2 MAJOR_VER=10
-    - TAG=10.1 MAJOR_VER=10 MARIADB_VER=10.1.29
+#    - TAG=10.2 MARIADB_VER=10.2.11 EXTRA_TAG=10
+    - TAG=10.1 MARIADB_VER=10.1.29
 
 install:
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce="${DOCKER_VERSION}~ce-0~ubuntu"
 
 script:
-  - cd ./"${MAJOR_VER}"
+  - cd ./"${MARIADB_VER:0:2}"
   - make && make test
 
 after_success: |
@@ -32,8 +32,8 @@ after_success: |
 
     make release
 
-    if [[ -z "${MARIADB_VER}" ]]; then
-      make release TAG="${MAJOR_VER}"
+    if [[ -n "${EXTRA_TAG}" ]]; then
+      make release TAG="${EXTRA_TAG}"
     fi
 
     if [[ "${TAG}" == "${LATEST_TAG}" ]]; then

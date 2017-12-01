@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/wodby/mariadb.svg?branch=master)](https://travis-ci.org/wodby/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
+[![Docker Layers](https://images.microbadger.com/badges/image/wodby/mariadb.svg)](https://microbadger.com/images/wodby/mariadb)
 [![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
 ## Docker Images

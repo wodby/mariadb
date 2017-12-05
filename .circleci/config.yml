@@ -19,8 +19,8 @@ jobs:
       - run:
           name: Build and test
           command: |
-            ls -la
-            ls -la 10
+            cd 10
+            make test
 #      - deploy:
 #          name: Push docker image
 #          command: |

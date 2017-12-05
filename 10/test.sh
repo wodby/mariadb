@@ -27,7 +27,7 @@ trap "docker rm -vf ${cid} > /dev/null" EXIT
 mariadb() {
 	docker run --rm -i \
 	    -e DEBUG -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
-	    -v /tmp:/mnt \
+	    -v /tmp:/mnt/backups \
 	    --link "${MYSQL_HOST}":"${MYSQL_HOST}" \
 	    "${IMAGE}" \
 	    "${@}" \
@@ -60,9 +60,9 @@ mariadb make query query="CREATE TABLE test2 (a INT, b INT, c VARCHAR(255))"
 mariadb make query query="INSERT INTO test1 VALUES (1, 2, 'hello')"
 mariadb make query query="INSERT INTO test2 VALUES (1, 2, 'hello!')"
 
-mariadb make backup filepath="/mnt/export.sql.gz" 'ignore="test1;test2;cache_%;test3"'
+mariadb make backup filepath="/mnt/backups/export.sql.gz" 'ignore="test1;test2;cache_%;test3"'
 mariadb make query query="DROP DATABASE mariadb"
-mariadb make import source="/mnt/export.sql.gz"
+mariadb make import source="/mnt/backups/export.sql.gz"
 
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_this')" = 0 ]
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_that')" = 0 ]

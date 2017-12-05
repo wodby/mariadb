@@ -1,0 +1,82 @@
+version: 2
+jobs:
+  mariadb-10.2:
+    working_directory: /app
+    docker:
+      - image: docker:17.06.0-ce-git
+    environment:
+      - TAG: 10.2
+      - MARIADB_VER: 10.2.11
+      - EXTRA_TAG: 10
+      - LATEST_TAG: 10.2
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and test
+          command: |
+            cd 10
+            make && make test
+      - deploy:
+          name: Push docker image
+          command: |
+            if [[ -z "${CIRCLE_PULL_REQUEST}" && ("${CIRCLE_BRANCH}" == "master"  || -n "${CIRCLE_TAG}") ]]; then
+              docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
+              if [[ -n "${CIRCLE_TAG}" ]]; then
+                export STABILITY_TAG="${CIRCLE_TAG}"
+              fi
+
+              make release
+
+              if [[ -n "${EXTRA_TAG}" ]]; then
+                make release TAG="${EXTRA_TAG}"
+              fi
+
+              if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+                make release TAG="latest"
+              fi
+            fi
+  mariadb-10.1:
+    working_directory: /app
+    docker:
+      - image: docker:17.06.0-ce-git
+    environment:
+      - TAG: 10.1
+      - MARIADB_VER: 10.1.29
+      - EXTRA_TAG: 10
+      - LATEST_TAG: 10.2
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and test
+          command: |
+            cd 10
+            make && make test
+      - deploy:
+          name: Push docker image
+          command: |
+            if [[ -z "${CIRCLE_PULL_REQUEST}" && ("${CIRCLE_BRANCH}" == "master"  || -n "${CIRCLE_TAG}") ]]; then
+              docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
+              if [[ -n "${CIRCLE_TAG}" ]]; then
+                export STABILITY_TAG="${CIRCLE_TAG}"
+              fi
+
+              make release
+
+              if [[ -n "${EXTRA_TAG}" ]]; then
+                make release TAG="${EXTRA_TAG}"
+              fi
+
+              if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+                make release TAG="latest"
+              fi
+            fi
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - mariadb-10.2
+      - mariadb-10.1

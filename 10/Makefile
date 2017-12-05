@@ -22,6 +22,8 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg MARIADB_VER=$(MARIADB_VER) ./
 
 test:
+	echo $0
+	ls -la
 	IMAGE=$(REPO):$(TAG) ./test.sh
 
 push:

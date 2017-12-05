@@ -19,8 +19,6 @@ jobs:
       - run:
           name: Build and test
           command: |
-#            cd 10
-#            make && make test
             ls -la
             ls -la 10
 #      - deploy:

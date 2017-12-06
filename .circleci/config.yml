@@ -55,7 +55,6 @@ jobs:
     environment:
       - TAG: 10.1
       - MARIADB_VER: 10.1.29
-      - EXTRA_TAG: 10
       - LATEST_TAG: 10.2
     steps:
       - checkout

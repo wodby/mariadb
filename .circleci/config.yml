@@ -16,16 +16,16 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache bash make
-#      - run:
-#          name: Build
-#          command: |
-#            cd "${MARIADB_VER:0:2}"
-#            make
-#      - run:
-#          name: Test
-#          command: |
-#            cd "${MARIADB_VER:0:2}"
-#            make test
+      - run:
+          name: Build
+          command: |
+            cd "${MARIADB_VER:0:2}"
+            make
+      - run:
+          name: Test
+          command: |
+            cd "${MARIADB_VER:0:2}"
+            make test
       - deploy:
           name: Push docker image
           shell: /bin/bash
@@ -75,6 +75,7 @@ jobs:
             make test
       - deploy:
           name: Push docker image
+          shell: /bin/bash
           command: |
             if [[ -z "${CIRCLE_PULL_REQUEST}" && ("${CIRCLE_BRANCH}" == "master"  || -n "${CIRCLE_TAG}") ]]; then
               docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
@@ -98,4 +99,4 @@ workflows:
   build_and_test:
     jobs:
       - mariadb-10.2
-#      - mariadb-10.1
+      - mariadb-10.1

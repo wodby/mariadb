@@ -1,6 +1,6 @@
 # MariaDB Docker Container Image
 
-[![Build Status](https://travis-ci.org/wodby/mariadb.svg?branch=master)](https://travis-ci.org/wodby/mariadb)
+[![Build Status](https://circleci.com/gh/wodby/mariadb/tree/master.svg?style=shield&circle-token=cc886e09fd6fd0458c7d0e4563ab90d072ccd0bc)](https://circleci.com/gh/wodby/mariadb)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/mariadb.svg)](https://microbadger.com/images/wodby/mariadb)
@@ -10,7 +10,7 @@
 
 * All images are based on Alpine Linux
 * Base image: [wodby/alpine](https://github.com/wodby/alpine)
-* [Travis CI builds](https://travis-ci.org/wodby/mariadb) 
+* [CircleCI builds](https://circleci.com/gh/wodby/mariadb) 
 * [Docker Hub](https://hub.docker.com/r/wodby/mariadb)
 
 Supported tags and respective `Dockerfile` links:

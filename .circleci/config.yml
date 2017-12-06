@@ -1,7 +1,7 @@
 version: 2
 jobs:
   mariadb-10.2:
-    working_directory: /app
+    working_directory: /app/10
     docker:
       - image: docker:17.06.0-ce-git
     environment:
@@ -18,14 +18,10 @@ jobs:
             apk add --no-cache bash make
       - run:
           name: Build
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make
+          command: make
       - run:
           name: Test
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make test
+          command: make test
       - deploy:
           name: Push docker image
           shell: /bin/bash
@@ -48,7 +44,7 @@ jobs:
               fi
             fi
   mariadb-10.1:
-    working_directory: /app
+    working_directory: /app/10
     docker:
       - image: docker:17.06.0-ce-git
     environment:
@@ -65,14 +61,10 @@ jobs:
             apk add --no-cache bash make
       - run:
           name: Build
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make
+          command: make
       - run:
           name: Test
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make test
+          command: make test
       - deploy:
           name: Push docker image
           shell: /bin/bash

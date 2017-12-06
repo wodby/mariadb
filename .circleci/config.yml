@@ -12,44 +12,42 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - checkout:
-          path: ~/10
       - run:
           name: Install dependencies
           command: |
             apk add --no-cache bash make
-#      - run:
-#          name: Build
-#          command: |
-#            cd "${MARIADB_VER:0:2}"
-#            make
-#      - run:
-#          name: Test
-#          command: |
-#            cd "${MARIADB_VER:0:2}"
-#            make test
+      - run:
+          name: Build
+          command: |
+            cd "${MARIADB_VER:0:2}"
+            make
+      - run:
+          name: Test
+          command: |
+            cd "${MARIADB_VER:0:2}"
+            make test
       - deploy:
           name: Push docker image
           shell: /bin/bash
           command: |
-            ls -la
-#            if [[ -z "${CIRCLE_PULL_REQUEST}" && ("${CIRCLE_BRANCH}" == "master"  || -n "${CIRCLE_TAG}") ]]; then
-#              docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
-#
-#              if [[ -n "${CIRCLE_TAG}" ]]; then
-#                export STABILITY_TAG="${CIRCLE_TAG}"
-#              fi
-#
-#              make release
-#
-#              if [[ -n "${EXTRA_TAG}" ]]; then
-#                make release TAG="${EXTRA_TAG}"
-#              fi
-#
-#              if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
-#                make release TAG="latest"
-#              fi
-#            fi
+            if [[ -z "${CIRCLE_PULL_REQUEST}" && ("${CIRCLE_BRANCH}" == "master"  || -n "${CIRCLE_TAG}") ]]; then
+              docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
+              if [[ -n "${CIRCLE_TAG}" ]]; then
+                export STABILITY_TAG="${CIRCLE_TAG}"
+              fi
+
+              cd "${MARIADB_VER:0:2}"
+              make release
+
+              if [[ -n "${EXTRA_TAG}" ]]; then
+                make release TAG="${EXTRA_TAG}"
+              fi
+
+              if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+                make release TAG="latest"
+              fi
+            fi
   mariadb-10.1:
     working_directory: /app
     docker:
@@ -87,6 +85,7 @@ jobs:
                 export STABILITY_TAG="${CIRCLE_TAG}"
               fi
 
+              cd "${MARIADB_VER:0:2}"
               make release
 
               if [[ -n "${EXTRA_TAG}" ]]; then
@@ -102,4 +101,4 @@ workflows:
   build_and_test:
     jobs:
       - mariadb-10.2
-#      - mariadb-10.1
+      - mariadb-10.1

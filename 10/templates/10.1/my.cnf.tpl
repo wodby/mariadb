@@ -58,6 +58,7 @@ innodb_file_format                      = {{ getenv "MYSQL_INNODB_FILE_FORMAT" "
 innodb_flush_method                     = {{ getenv "MYSQL_INNODB_FLUSH_METHOD" "O_DIRECT" }}
 innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "2" }}
 innodb_io_capacity                      = {{ getenv "MYSQL_INNODB_IO_CAPACITY" "200" }}
+innodb_large_prefix                     = {{ getenv "MYSQL_INNODB_LARGE_PREFIX" "1" }}
 innodb_lock_wait_timeout                = {{ getenv "MYSQL_INNODB_LOCK_WAIT_TIMEOUT" "50" }}
 innodb_log_buffer_size                  = {{ getenv "MYSQL_INNODB_LOG_BUFFER_SIZE" "8M" }}
 innodb_log_file_size                    = {{ getenv "MYSQL_INNODB_LOG_FILE_SIZE" "128M" }}

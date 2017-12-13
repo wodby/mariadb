@@ -6,9 +6,9 @@ MARIADB_VER ?= 10.2.11
 TAG ?= $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+?')
 
 ifneq ($(STABILITY_TAG),)
-ifneq ($(TAG),latest)
-    override TAG := $(TAG)-$(STABILITY_TAG)
-endif
+    ifneq ($(TAG),latest)
+        override TAG := $(TAG)-$(STABILITY_TAG)
+    endif
 endif
 
 REPO = wodby/mariadb

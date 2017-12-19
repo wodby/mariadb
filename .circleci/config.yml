@@ -99,5 +99,11 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - mariadb-10.2
-      - mariadb-10.1
+      - mariadb-10.2:
+          filters:
+            tags:
+              only: /.*/
+      - mariadb-10.1:
+          filters:
+            tags:
+              only: /.*/

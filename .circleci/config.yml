@@ -6,7 +6,7 @@ jobs:
       - image: docker:17.06.0-ce-git
     environment:
       - TAG: 10.2
-      - MARIADB_VER: 10.2.11
+      - MARIADB_VER: 10.2.12
       - EXTRA_TAG: 10
       - LATEST_TAG: 10.2
     steps:

@@ -4,9 +4,12 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/mariadb.svg)](https://microbadger.com/images/wodby/mariadb)
-[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
 ## Docker Images
+
+!!! For better reliability we release images with stability tags (`wodby/mariadb:10.1-X.X.X`) which correspond to [git tags](https://github.com/wodby/mariadb/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
+
+Overview:
 
 * All images are based on Alpine Linux
 * Base image: [wodby/alpine](https://github.com/wodby/alpine)
@@ -17,8 +20,6 @@ Supported tags and respective `Dockerfile` links:
 
 * `10`, `10.2`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 * `10.1` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-
-For better reliability we additionally release images with stability tags (`wodby/mariadb:10.1-X.X.X`) which correspond to [git tags](https://github.com/wodby/mariadb/releases). We **strongly recommend** using images only with stability tags. 
 
 ## Environment Variables
 

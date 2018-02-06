@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.6-1.0.0
+FROM wodby/alpine:3.6-1.1.1
 
 ARG MARIADB_VER
 

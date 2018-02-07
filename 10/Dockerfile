@@ -1,9 +1,8 @@
-FROM wodby/alpine:3.6-1.1.1
+FROM wodby/alpine:3.6-1.2.0
 
 ARG MARIADB_VER
 
 ENV MARIADB_VER="${MARIADB_VER}" \
-    MARIADB_URL="https://downloads.mariadb.org/interstitial/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz" \
     BACKUPS_DIR="/mnt/backups"
 
 COPY patches /tmp/patches
@@ -14,7 +13,7 @@ RUN set -xe; \
 	adduser -u 100 -D -S -s /bin/bash -G mysql mysql; \
 	echo "PS1='\w\$ '" >> /home/mysql/.bashrc; \
     \
-    apk add --update --no-cache --virtual .mariadb-run-deps \
+    apk add --update --no-cache -t .mariadb-run-deps \
         libaio \
         libstdc++ \
         make \
@@ -22,13 +21,14 @@ RUN set -xe; \
         sudo \
         tzdata; \
     \
-    apk add --update --no-cache --virtual .mariadb-build-deps \
+    apk add --update --no-cache -t .mariadb-build-deps \
         attr \
         autoconf \
         bison \
         build-base \
         cmake \
         coreutils \
+        gnupg \
         libaio-dev \
         libressl-dev \
         linux-headers \
@@ -37,10 +37,13 @@ RUN set -xe; \
         readline-dev \
         zlib-dev; \
     \
-    wget -qO- ${MARIADB_URL} | tar xz -C /tmp; \
+    mariadb_url="https://downloads.mariadb.com/MariaDB/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
+    curl -fSL "${mariadb_url}" -o /tmp/mariadb.tar.gz; \
+    curl -fSL "${mariadb_url}.asc" -o /tmp/mariadb.tar.gz.asc; \
+    GPG_KEYS=199369E5404BD5FC7D2FE43BCBCB082A1BB943DB gpg-verify.sh /tmp/mariadb.tar.gz.asc /tmp/mariadb.tar.gz; \
     \
-    cd /tmp/mariadb-*; \
-    \
+    tar zxf /tmp/mariadb.tar.gz -C /tmp; \
+    cd "/tmp/mariadb-${MARIADB_VER}"; \
     # From alpine repository https://git.alpinelinux.org/cgit/aports/tree/main/mariadb?h=3.6-stable
     for i in /tmp/patches/"${MARIADB_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
     \

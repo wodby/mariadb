@@ -84,7 +84,11 @@ RUN set -xe; \
     make; \
     make install; \
     \
-    echo 'mysql ALL=(root) NOPASSWD: /usr/local/bin/fix-permissions.sh' > /etc/sudoers.d/mysql; \
+    # Script to fix volumes permissions via sudo.
+    echo "chown mysql:mysql /var/lib/mysql ${BACKUPS_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
+    chmod +x /usr/local/bin/fix-volumes-permissions.sh; \
+    echo 'mysql ALL=(root) NOPASSWD: /usr/local/bin/fix-volumes-permissions.sh' > /etc/sudoers.d/mysql; \
+    \
     mkdir -p \
         /var/run/mysqld \
         /var/lib/mysql \

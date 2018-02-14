@@ -1,6 +1,6 @@
 -include env_make
 
-MARIADB_VER ?= 10.2.12
+MARIADB_VER ?= 10.2.13
 
 # Remove minor version from tag
 TAG ?= $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+?')

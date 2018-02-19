@@ -10,9 +10,10 @@ sudo fix-volumes-permissions.sh
 
 gotpl "/etc/gotpl/${MARIADB_VER:0:4}/my.cnf.tpl" > "/etc/mysql/my.cnf"
 
+init_mariadb "${@}"
+
 if [[ $1 == 'make' ]]; then
     exec "${@}" -f /usr/local/bin/actions.mk
 else
-    init_mariadb "${@}"
     exec "${@}"
 fi

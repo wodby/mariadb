@@ -136,7 +136,7 @@ RUN set -xe; \
 
 USER mysql
 
-COPY actions /usr/local/bin
+COPY bin /usr/local/bin
 COPY templates /etc/gotpl/
 COPY docker-entrypoint.sh /
 

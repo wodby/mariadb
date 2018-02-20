@@ -129,8 +129,6 @@ RUN set -xe; \
         fi; \
     done; \
     \
-    sed -i '/Monty Program/a set -x' /usr/bin/mysql_install_db; \
-    \
     # Clean up.
     apk del --purge .mariadb-build-deps; \
     rm -rf /tmp/*; \

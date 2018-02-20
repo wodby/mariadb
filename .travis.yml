@@ -1,0 +1,17 @@
+language: bash
+
+services:
+  - docker
+
+env:
+  global:
+    - LATEST_TAG=10.2
+  matrix:
+    - TAG=10.2 MARIADB_VER=10.2.13 EXTRA_TAG=10
+    - TAG=10.1 MARIADB_VER=10.1.31
+
+script:
+  - make && make test
+
+after_success:
+  - bash "${TRAVIS_BUILD_DIR}/travis-release.sh"

@@ -11,6 +11,7 @@ env:
     - TAG=10.1 MARIADB_VER=10.1.31
 
 script:
+  - cd $(echo "${MARIADB_VER}" | grep -oE '^[0-9]+')
   - make && make test
 
 after_success:

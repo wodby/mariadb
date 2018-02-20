@@ -81,7 +81,7 @@ RUN set -xe; \
     		-DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
     		-DWITHOUT_PBXT_STORAGE_ENGINE=1; \
     \
-    make; \
+    make -j "$(nproc)"; \
     make install; \
     \
     # Script to fix volumes permissions via sudo.

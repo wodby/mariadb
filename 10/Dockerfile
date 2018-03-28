@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.7-1.2.0
+FROM wodby/alpine:3.7-2.0.0
 
 ARG MARIADB_VER
 
@@ -40,7 +40,7 @@ RUN set -xe; \
     mariadb_url="https://downloads.mariadb.com/MariaDB/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
     curl -fSL "${mariadb_url}" -o /tmp/mariadb.tar.gz; \
     curl -fSL "${mariadb_url}.asc" -o /tmp/mariadb.tar.gz.asc; \
-    GPG_KEYS=199369E5404BD5FC7D2FE43BCBCB082A1BB943DB gpg-verify.sh /tmp/mariadb.tar.gz.asc /tmp/mariadb.tar.gz; \
+    GPG_KEYS=199369E5404BD5FC7D2FE43BCBCB082A1BB943DB gpg_verify /tmp/mariadb.tar.gz.asc /tmp/mariadb.tar.gz; \
     \
     tar zxf /tmp/mariadb.tar.gz -C /tmp; \
     cd "/tmp/mariadb-${MARIADB_VER}"; \

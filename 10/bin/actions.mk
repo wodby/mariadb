@@ -43,7 +43,7 @@ query-root:
 	mysql -p$(root_password) -h$(host) -e "$(query)" $(db)
 
 check-ready:
-	wait-for.sh "$(command)" "MariaDB" $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+	wait_for "$(command)" "MariaDB" $(host) $(max_try) $(wait_seconds) $(delay_seconds)
 
 check-live:
 	@echo "OK"

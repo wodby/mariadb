@@ -27,7 +27,7 @@ jobs:
             make test
       - deploy:
           name: Push docker image
-          command: . "${CIRCLE_WORKING_DIRECTORY}/.circleci/release"
+          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release"
 
   mariadb-10.1:
     working_directory: /app
@@ -56,7 +56,7 @@ jobs:
             make test
       - deploy:
           name: Push docker image
-          command: . "${CIRCLE_WORKING_DIRECTORY}/.circleci/release"
+          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release"
 
 workflows:
   version: 2

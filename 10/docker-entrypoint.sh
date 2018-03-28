@@ -6,9 +6,10 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
-sudo fix-volumes-permissions.sh
+sudo init_volumes
 
-gotpl "/etc/gotpl/${MARIADB_VER:0:4}/my.cnf.tpl" > "/etc/mysql/my.cnf"
+minor_ver=$(echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
+gotpl "/etc/gotpl/${minor_ver}/my.cnf.tpl" > "/etc/mysql/my.cnf"
 
 init_mariadb "${@}"
 

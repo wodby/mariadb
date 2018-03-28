@@ -1,9 +1,10 @@
 -include env_make
 
 MARIADB_VER ?= 10.2.12
+MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 # Remove minor version from tag
-TAG ?= $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+?')
+TAG ?= $(MARIADB_VER_MINOR)
 
 ifneq ($(STABILITY_TAG),)
     ifneq ($(TAG),latest)
@@ -12,7 +13,7 @@ ifneq ($(STABILITY_TAG),)
 endif
 
 REPO = wodby/mariadb
-NAME = mariadb-$(MARIADB_VER)
+NAME = mariadb-$(MARIADB_VER_MINOR)
 
 .PHONY: build test push shell run start stop logs clean release
 
@@ -22,7 +23,7 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg MARIADB_VER=$(MARIADB_VER) ./
 
 test:
-	IMAGE=$(REPO):$(TAG) ./test.sh
+	IMAGE=$(REPO):$(TAG) ./test
 
 push:
 	docker push $(REPO):$(TAG)

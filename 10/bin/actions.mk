@@ -24,11 +24,11 @@ default: query
 
 import:
 	$(call check_defined, source)
-	import.sh $(user) $(root_password) $(host) $(db) $(source)
+	import $(user) $(root_password) $(host) $(db) $(source)
 
 backup:
 	$(call check_defined, filepath)
-	backup.sh $(root_password) $(host) $(db) $(filepath) $(ignore) $(nice) $(ionice)
+	backup $(root_password) $(host) $(db) $(filepath) $(ignore) $(nice) $(ionice)
 
 query:
 	$(call check_defined, query)

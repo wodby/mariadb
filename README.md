@@ -60,6 +60,8 @@ Supported tags and respective `Dockerfile` links:
 [`MYSQL_MAX_HEAP_TABLE_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#max_heap_table_size
 [`MYSQL_NET_READ_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables#net_read_timeout
 [`MYSQL_NET_WRITE_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables#net_write_timeout
+[`MYSQL_OPTIMIZER_PRUNE_LEVEL`]: https://mariadb.com/kb/en/library/server-system-variables/#optimizer_prune_level
+[`MYSQL_OPTIMIZER_SEARCH_DEPTH`]: https://mariadb.com/kb/en/library/server-system-variables/#optimizer_search_depth
 [`MYSQL_PERFORMANCE_SCHEMA`]: https://mariadb.com/kb/en/library/performance-schema-system-variables#performance_schema
 [`MYSQL_QUERY_CACHE_LIMIT`]: https://mariadb.com/kb/en/library/server-system-variables#query_cache_limit
 [`MYSQL_QUERY_CACHE_MIN_RES_UNIT`]: https://mariadb.com/kb/en/library/server-system-variables#query_cache_min_res_unit
@@ -116,6 +118,8 @@ Supported tags and respective `Dockerfile` links:
 | [`MYSQL_MAX_HEAP_TABLE_SIZE`]            | `16M`                            | `16M`                            |
 | [`MYSQL_NET_READ_TIMEOUT`]               | `90`                             | `90`                             |
 | [`MYSQL_NET_WRITE_TIMEOUT`]              | `90`                             | `90`                             |
+| [`MYSQL_OPTIMIZER_PRUNE_LEVEL`]          | `1`                              | `1`                              |
+| [`MYSQL_OPTIMIZER_SEARCH_DEPTH`]         | `62`                             | `62`                             |
 | `MYSQL_PASSWORD`                         |                                  |                                  |
 | [`MYSQL_PERFORMANCE_SCHEMA`]             | `OFF`                            | `OFF`                            |
 | `MYSQL_PORT`                             | `3306`                           | `3306`                           |
@@ -135,6 +139,10 @@ Supported tags and respective `Dockerfile` links:
 | [`MYSQL_WAIT_TIMEOUT`]                   | `420`                            | `420`                            |
 
 > "-" - Not available for this version
+
+## Performance Tuning Recommendations
+
+* Decrease the value of `MYSQL_OPTIMIZER_SEARCH_DEPTH` to 7-8 if you have many queries with more than 15 tables ([source](https://mariadb.com/resources/blog/setting-optimizer-search-depth-mysql))
 
 ## Orchestration Actions
 

@@ -82,3 +82,6 @@ wait_timeout                            = {{ getenv "MYSQL_WAIT_TIMEOUT" "420" }
 interactive_timeout                     = {{ getenv "MYSQL_INTERACTIVE_TIMEOUT" "420" }}
 
 relay_log_recovery                      = {{ getenv "MYSQL_RELAY_LOG_RECOVERY" "0" }}
+
+optimizer_prune_level                   = {{ getenv "MYSQL_OPTIMIZER_PRUNE_LEVEL" "1" }}
+optimizer_search_depth                  = {{ getenv "MYSQL_OPTIMIZER_SEARCH_DEPTH" "62" }}

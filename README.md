@@ -5,6 +5,14 @@
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/mariadb.svg)](https://microbadger.com/images/wodby/mariadb)
 
+## !!! KNOWN ISSUE ON macOS and Windows
+
+Latest MariaDB will fail to start on macOS and Windows with `Probably out of disk space` if you **use bind mounts** (volumes mounted from host). This (likely) happens because of recent changes in InnoDB, this bug addressed in [MariaDB JIRA](https://jira.mariadb.org/browse/MDEV-16015). 
+
+Solutions:
+* Use older MariaDB versions with `-2.x.x` stability tag, e.g. `wodby/mariadb:10.1-2.3.4` (version 10.1.22)
+* Not to use bind mounts, let docker manage volumes, since docker-ce 17.06 it won't clean up your volumes with `docker system prune` unless you specify `--volumes` flag
+
 ## Docker Images
 
 !!! For better reliability we release images with stability tags (`wodby/mariadb:10.1-X.X.X`) which correspond to [git tags](https://github.com/wodby/mariadb/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 

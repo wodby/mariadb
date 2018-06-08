@@ -1,14 +1,14 @@
 version: 2
 jobs:
-  mariadb-10.2:
+  mariadb-10.3:
     working_directory: /app/10
     docker:
       - image: docker:17.06.0-ce-git
     environment:
-      - TAG: 10.2
-      - MARIADB_VER: 10.2.14
+      - TAG: 10.3
+      - MARIADB_VER: 10.3.7
       - EXTRA_TAG: 10
-      - LATEST_TAG: 10.2
+      - LATEST_TAG: 10.3
     steps:
       - checkout
       - setup_remote_docker
@@ -27,7 +27,35 @@ jobs:
             make test
       - deploy:
           name: Push docker image
-          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release"
+          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release.sh"
+
+  mariadb-10.2:
+    working_directory: /app/10
+    docker:
+      - image: docker:17.06.0-ce-git
+    environment:
+      - TAG: 10.2
+      - MARIADB_VER: 10.2.15
+      - LATEST_TAG: 10.3
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: apk add --no-cache bash make
+      - run:
+          name: Build
+          command: |
+            cd "${MARIADB_VER:0:2}"
+            make
+      - run:
+          name: Test
+          command: |
+            cd "${MARIADB_VER:0:2}"
+            make test
+      - deploy:
+          name: Push docker image
+          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release.sh"
 
   mariadb-10.1:
     working_directory: /app
@@ -35,8 +63,8 @@ jobs:
       - image: docker:17.06.0-ce-git
     environment:
       - TAG: 10.1
-      - MARIADB_VER: 10.1.32
-      - LATEST_TAG: 10.2
+      - MARIADB_VER: 10.1.33
+      - LATEST_TAG: 10.3
     steps:
       - checkout
       - setup_remote_docker
@@ -56,12 +84,16 @@ jobs:
             make test
       - deploy:
           name: Push docker image
-          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release"
+          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release.sh"
 
 workflows:
   version: 2
   build_and_test:
     jobs:
+      - mariadb-10.3:
+          filters:
+            tags:
+              only: /.*/
       - mariadb-10.2:
           filters:
             tags:

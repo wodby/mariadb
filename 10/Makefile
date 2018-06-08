@@ -1,6 +1,6 @@
 -include env_make
 
-MARIADB_VER ?= 10.2.14
+MARIADB_VER ?= 10.3.7
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 # Remove minor version from tag
@@ -23,7 +23,7 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg MARIADB_VER=$(MARIADB_VER) ./
 
 test:
-	IMAGE=$(REPO):$(TAG) ./test
+	IMAGE=$(REPO):$(TAG) ./test.sh
 
 push:
 	docker push $(REPO):$(TAG)

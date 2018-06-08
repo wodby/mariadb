@@ -97,8 +97,8 @@ Supported tags and respective `Dockerfile` links:
 | `MYSQL_DUMP_MAX_ALLOWED_PACKET`          | `1G`                | `1G`                | `1G`              |
 | [`MYSQL_GENERAL_LOG`]                    | `1`                 | `1`                 | `1`               |
 | [`MYSQL_INIT_CONNECT`]                   | `SET NAMES utf8`    | `SET NAMES utf8`    | `SET NAMES utf8`  |
-| [`MYSQL_INNODB_BUFFER_POOL_INSTANCES`]   | `4`                 | `4`                 | `4`               |
-| [`MYSQL_INNODB_BUFFER_POOL_SIZE`]        | `1G`                | `1G`                | `1G`              |
+| [`MYSQL_INNODB_BUFFER_POOL_INSTANCES`]   | `1`                 | `1`                 | `1`               |
+| [`MYSQL_INNODB_BUFFER_POOL_SIZE`]        | `128M`              | `128M`              | `128M`            |
 | [`MYSQL_INNODB_DATA_FILE_PATH`]          | `ibdata1:10M:autoextend:max:10G` | `ibdata1:10M:autoextend:max:10G` | `ibdata1:10M:autoextend:max:10G` |
 | [`MYSQL_INNODB_FAST_SHUTDOWN`]           | `1`                 | `1`                 | `1`               |
 | [`MYSQL_INNODB_FILE_FORMAT`]             | `-`                 | `-`                 | `barracuda`       |

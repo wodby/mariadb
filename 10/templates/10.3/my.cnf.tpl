@@ -51,7 +51,7 @@ max_connect_errors                      = {{ getenv "MYSQL_MAX_CONNECT_ERRORS" "
 max_connections                         = {{ getenv "MYSQL_MAX_CONNECTIONS" "100" }}
 
 innodb_buffer_pool_instances            = {{ getenv "MYSQL_INNODB_BUFFER_POOL_INSTANCES" "4" }}
-innodb_buffer_pool_size                 = {{ getenv "MYSQL_INNODB_BUFFER_POOL_SIZE" "1G" }}
+innodb_buffer_pool_size                 = {{ getenv "MYSQL_INNODB_BUFFER_POOL_SIZE" "128M" }}
 innodb_data_file_path                   = {{ getenv "MYSQL_INNODB_DATA_FILE_PATH" "ibdata1:10M:autoextend:max:10G" }}
 innodb_file_per_table                   = {{ getenv "MYSQL_INNODB_FILE_PER_TABLE" "1" }}
 innodb_flush_method                     = {{ getenv "MYSQL_INNODB_FLUSH_METHOD" "O_DIRECT" }}

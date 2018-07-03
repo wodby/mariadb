@@ -13,7 +13,7 @@ filepath=$4
 ignore_tables=$5
 ionice=$6
 
-archive="${filepath}/dump.sql.gz"
+archive="dump.sql.gz"
 tmp_dir="/tmp/$RANDOM"
 ignore=()
 
@@ -44,4 +44,5 @@ ionice -c2 -n "${ionice}" \
     --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
     "${db}" | gzip >> "${archive}"
 
-stat -c "RESULT=%s" "${archive}"
+mv "${archive}" "${filepath}"
+stat -c "RESULT=%s" "${filepath}"

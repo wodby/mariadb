@@ -44,4 +44,4 @@ ionice -c2 -n "${ionice}" \
     --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
     "${db}" | gzip >> "${archive}"
 
-stat -c "RESULT=%s" "${filepath}"
+stat -c "RESULT=%s" "${archive}"

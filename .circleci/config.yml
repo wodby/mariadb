@@ -1,6 +1,7 @@
 version: 2
 jobs:
   mariadb-103:
+    # workaround https://discuss.circleci.com/t/post-clone-working-directory/15333/4
     working_directory: ~/repo/10
     machine: true
     environment:
@@ -9,31 +10,32 @@ jobs:
     steps:
       - checkout:
           path: ~/repo
-      - run: ls -la
       - run: make
       - run: make test
       - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
 
   mariadb-102:
-    working_directory: ~/project/10
+    working_directory: ~/repo/10
     machine: true
     environment:
       - MARIADB_VER: 10.2.16
       - TAGS: 10.2
     steps:
-      - checkout
+      - checkout:
+          path: ~/repo
       - run: make
       - run: make test
       - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
 
   mariadb-101:
-    working_directory: ~/project/10
+    working_directory: ~/repo/10
     machine: true
     environment:
       - MARIADB_VER: 10.1.34
       - TAGS: 10.1
     steps:
-      - checkout
+      - checkout:
+          path: ~/repo
       - run: make
       - run: make test
       - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"

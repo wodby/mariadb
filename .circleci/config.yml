@@ -12,7 +12,7 @@ jobs:
           path: ~/repo
       - run: make
       - run: make test
-      - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
+      - run: . ../release.sh
 
   mariadb-102:
     working_directory: ~/repo/10
@@ -25,7 +25,7 @@ jobs:
           path: ~/repo
       - run: make
       - run: make test
-      - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
+      - run: . ../release.sh
 
   mariadb-101:
     working_directory: ~/repo/10
@@ -38,7 +38,7 @@ jobs:
           path: ~/repo
       - run: make
       - run: make test
-      - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
+      - run: . ../release.sh
 
 workflows:
   version: 2

@@ -1,104 +1,54 @@
 version: 2
 jobs:
-  mariadb-10.3:
+  mariadb-103:
     working_directory: /app/10
-    docker:
-      - image: docker:17.06.0-ce-git
+    machine: true
     environment:
-      - TAG: 10.3
       - MARIADB_VER: 10.3.7
-      - EXTRA_TAG: 10
-      - LATEST_TAG: 10.3
+      - TAGS: 10.3,10,latest
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: apk add --no-cache bash make
-      - run:
-          name: Build
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make
-      - run:
-          name: Test
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make test
-      - deploy:
-          name: Push docker image
-          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release.sh"
+      - run: make
+      - run: make test
+      - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
 
-  mariadb-10.2:
+  mariadb-102:
     working_directory: /app/10
-    docker:
-      - image: docker:17.06.0-ce-git
+    machine: true
     environment:
-      - TAG: 10.2
-      - MARIADB_VER: 10.2.15
-      - LATEST_TAG: 10.3
+      - MARIADB_VER: 10.2.16
+      - TAGS: 10.2
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: apk add --no-cache bash make
-      - run:
-          name: Build
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make
-      - run:
-          name: Test
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make test
-      - deploy:
-          name: Push docker image
-          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release.sh"
+      - run: make
+      - run: make test
+      - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
 
-  mariadb-10.1:
-    working_directory: /app
-    docker:
-      - image: docker:17.06.0-ce-git
+  mariadb-101:
+    working_directory: /app/10
+    machine: true
     environment:
-      - TAG: 10.1
       - MARIADB_VER: 10.1.34
-      - LATEST_TAG: 10.3
+      - TAGS: 10.1
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache bash make
-      - run:
-          name: Build
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make
-      - run:
-          name: Test
-          command: |
-            cd "${MARIADB_VER:0:2}"
-            make test
-      - deploy:
-          name: Push docker image
-          command: bash "${CIRCLE_WORKING_DIRECTORY}/.circleci/release.sh"
+      - run: make
+      - run: make test
+      - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - mariadb-10.3:
+      - mariadb-103:
           filters:
             tags:
               only: /.*/
-      - mariadb-10.2:
+      - mariadb-102:
           filters:
             tags:
               only: /.*/
-      - mariadb-10.1:
+      - mariadb-101:
           filters:
             tags:
               only: /.*/

@@ -7,6 +7,8 @@ jobs:
       - TAGS: 10.3,10,latest
     steps:
       - checkout
+      - run: ls -la
+      - run: echo "${MARIADB_VER:0:2}"
       - run: cd "${MARIADB_VER:0:2}"
       - run: make
       - run: make test

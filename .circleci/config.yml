@@ -7,7 +7,7 @@ jobs:
       - MARIADB_VER: 10.3.7
       - TAGS: 10.3,10,latest
     steps:
-      - checkout
+      - checkout:
           path: ~/repo
       - run: ls -la
       - run: make

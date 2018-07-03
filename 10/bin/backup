@@ -11,10 +11,9 @@ host=$2
 db=$3
 filepath=$4
 ignore_tables=$5
-nice=$6
-ionice=$7
+ionice=$6
 
-filename="dump.sql"
+archive="${filepath}/dump.sql.gz"
 tmp_dir="/tmp/$RANDOM"
 ignore=()
 
@@ -34,8 +33,15 @@ done
 
 mkdir -p "${tmp_dir}"
 cd "${tmp_dir}"
-nice -n "${nice}" ionice -c2 -n "${ionice}" mysqldump --single-transaction --no-data --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" > "${filename}"
-nice -n "${nice}" ionice -c2 -n "${ionice}" mysqldump --single-transaction --no-create-info "${ignore[@]}" --allow-keywords -h"${host}" -uroot -p"${root_password}" "${db}" >> "${filename}"
-gzip "${filename}"
-mv "${filename}.gz" "${filepath}"
+
+ionice -c2 -n "${ionice}" \
+    mysqldump -h"${host}" -uroot -p"${root_password}" \
+    --single-transaction --no-data --allow-keywords \
+    "${db}" | gzip > "${archive}"
+
+ionice -c2 -n "${ionice}" \
+    mysqldump -h"${host}" -uroot -p"${root_password}" \
+    --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
+    "${db}" | gzip >> "${archive}"
+
 stat -c "RESULT=%s" "${filepath}"

@@ -8,6 +8,7 @@ jobs:
       - TAGS: 10.3,10,latest
     steps:
       - checkout
+      - run: ls -la
       - run: make
       - run: make test
       - run: . "${CIRCLE_WORKING_DIRECTORY}/release.sh"

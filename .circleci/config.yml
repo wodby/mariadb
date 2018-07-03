@@ -1,13 +1,14 @@
 version: 2
 jobs:
   mariadb-103:
-    working_directory: ~/project/10
+    working_directory: ~/repo/10
     machine: true
     environment:
       - MARIADB_VER: 10.3.7
       - TAGS: 10.3,10,latest
     steps:
       - checkout
+          path: ~/repo
       - run: ls -la
       - run: make
       - run: make test

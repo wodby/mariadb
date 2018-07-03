@@ -177,7 +177,6 @@ default params values:
     max_try 1
     wait_seconds 1
     ignore ""
-    nice 10
     ionice 7
 ```
 

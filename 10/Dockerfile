@@ -45,7 +45,7 @@ RUN set -xe; \
     tar zxf /tmp/mariadb.tar.gz -C /tmp; \
     cd "/tmp/mariadb-${MARIADB_VER}"; \
     # From alpine repository https://git.alpinelinux.org/cgit/aports/tree/main/mariadb?h=3.6-stable
-    for i in /tmp/patches/"${MARIADB_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
+    find /tmp/patches/"${MARIADB_VER:0:4}" -maxdepth 1 -name '*.patch' -print0 | xargs -0 -n1 patch -p1 -t -i '{}' \
     \
     cmake . -DBUILD_CONFIG=mysql_release \
     		-DCMAKE_INSTALL_PREFIX=/usr \
@@ -115,8 +115,8 @@ RUN set -xe; \
         /usr/bin/mysql_config \
         /usr/bin/mysql_client_test; \
     \
-    find /usr/lib -name '*.a' -maxdepth 1 -print0 | xargs -0 rm; \
-    find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm; \
+    find /usr/lib -maxdepth 1 -name '*.a' -print0 | xargs -0 rm; \
+    find /usr/lib -maxdepth 1 -name '*.so' -type l -print0 | xargs -0 rm; \
     \
     # Stripping binaries and .so files.
     scanelf --symlink --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" \

@@ -23,7 +23,7 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg MARIADB_VER=$(MARIADB_VER) ./
 
 test:
-	IMAGE=$(REPO):$(TAG) ./test.sh
+	cd ./tests && IMAGE=$(REPO):$(TAG) ./run.sh
 
 push:
 	docker push $(REPO):$(TAG)

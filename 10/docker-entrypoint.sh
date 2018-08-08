@@ -9,7 +9,7 @@ fi
 sudo init_volumes
 
 minor_ver=$(echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
-gotpl "/etc/gotpl/${minor_ver}/my.cnf.tpl" > "/etc/mysql/my.cnf"
+gotpl "/etc/gotpl/${minor_ver}/my.cnf.tmpl" > "/etc/mysql/my.cnf"
 
 init_mariadb "${@}"
 

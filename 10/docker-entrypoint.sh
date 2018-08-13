@@ -13,7 +13,7 @@ gotpl "/etc/gotpl/${minor_ver}/my.cnf.tmpl" > "/etc/mysql/my.cnf"
 
 init_mariadb "${@}"
 
-if [[ $1 == 'make' ]]; then
+if [[ "${1}" == 'make' ]]; then
     exec "${@}" -f /usr/local/bin/actions.mk
 else
     exec "${@}"

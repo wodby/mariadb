@@ -17,7 +17,6 @@ max_try ?= 1
 wait_seconds ?= 1
 delay_seconds ?= 0
 ignore ?= ""
-ionice ?= 7
 
 default: query
 
@@ -27,7 +26,7 @@ import:
 
 backup:
 	$(call check_defined, filepath)
-	backup $(root_password) $(host) $(db) $(filepath) $(ignore) $(ionice)
+	backup $(root_password) $(host) $(db) $(filepath) $(ignore)
 
 query:
 	$(call check_defined, query)

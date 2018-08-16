@@ -162,7 +162,7 @@ make COMMAND [params ...]
  
 commands:
     import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db root_password host ignore="table1;table2;cache_%"] 
-    backup filepath=</path/to/backup.sql.gz> [root_password host db nice ionice] 
+    backup filepath=</path/to/backup.sql.gz> [root_password host db] 
     query query [db user password host] 
     query-silent query [db user password host] 
     query-root query [db root_password host]
@@ -177,7 +177,6 @@ default params values:
     max_try 1
     wait_seconds 1
     ignore ""
-    ionice 7
 ```
 
 ## Deployment

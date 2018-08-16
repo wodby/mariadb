@@ -31,11 +31,10 @@ if [[ "${count}" == 1 ]]; then
     query "DROP DATABASE IF EXISTS ${db};"
     query "CREATE DATABASE ${db};"
 
-    trap 'restore_privileges' EXIT
-    mysql -h"${host}" -uroot -p"${root_password}" "${db}" < "${sql_file}"
-
     restore_privileges
     query 'FLUSH PRIVILEGES;'
+
+    mysql -h"${host}" -uroot -p"${root_password}" "${db}" < "${sql_file}"
 
     rm -rf "${tmp_dir}"
 else

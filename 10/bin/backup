@@ -35,7 +35,7 @@ cd "${tmp_dir}"
 
 ionice -c2 -n "${ionice}" \
     mysqldump -h"${host}" -uroot -p"${root_password}" \
-    --single-transaction --no-data --allow-keywords \
+    --single-transaction --no-data --allow-keywords --skip-triggers \
     "${db}" | gzip > dump.sql.gz
 
 ionice -c2 -n "${ionice}" \

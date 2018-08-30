@@ -181,4 +181,4 @@ default params values:
 
 ## Deployment
 
-Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://cloud.wodby.com/stackhub/3aa42a7c-db8b-40e9-aa3c-06218724fae6/overview).
+Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com/stacks/mariadb).

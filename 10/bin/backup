@@ -34,11 +34,10 @@ cd "${tmp_dir}"
 
 mysqldump -h"${host}" -uroot -p"${root_password}" \
     --single-transaction --no-data --allow-keywords --skip-triggers \
-    "${db}" | gzip > dump.sql.gz
+    "${db}" | gzip > "${filepath}"
 
 mysqldump -h"${host}" -uroot -p"${root_password}" \
     --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
-    "${db}" | gzip >> dump.sql.gz
+    "${db}" | gzip >> "${filepath}"
 
-mv dump.sql.gz "${filepath}"
 stat -c "RESULT=%s" "${filepath}"

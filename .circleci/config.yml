@@ -68,4 +68,4 @@ commands:
           name: 'Notify about failure by email'
           command: |
             aws ses send-email --region us-east-1 --from $FROM_EMAIL --to $TO_EMAIL \
-              --subject "MariaDB build failed" --text "${CIRCLE_BUILD_URL}"
+              --subject "MariaDB ${MARIADB_VER} build failed" --text "Build URL: ${CIRCLE_BUILD_URL}"

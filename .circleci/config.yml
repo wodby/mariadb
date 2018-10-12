@@ -10,10 +10,10 @@ jobs:
     steps:
       - checkout:
           path: ~/repo
+      - run: exit 1
       - run: make
       - run: make test
       - run: . ../release.sh
-      - run: exit 1
       - run:
           when: on_fail
           command: notify-about-failure

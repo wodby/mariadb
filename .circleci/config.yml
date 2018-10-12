@@ -14,8 +14,8 @@ jobs:
       - run: make test
       - run: . ../release.sh
       - when: on_fail
-        steps:
-          - notify-about-failure
+          steps:
+            - notify-about-failure
 
   mariadb-102:
     working_directory: ~/repo/10
@@ -30,8 +30,8 @@ jobs:
       - run: make test
       - run: . ../release.sh
       - when: on_fail
-        steps:
-          - notify-about-failure
+          steps:
+            - notify-about-failure
 
   mariadb-101:
     working_directory: ~/repo/10
@@ -46,8 +46,8 @@ jobs:
       - run: make test
       - run: . ../release.sh
       - when: on_fail
-        steps:
-          - notify-about-failure
+          steps:
+            - notify-about-failure
 
 workflows:
   build-test-release:

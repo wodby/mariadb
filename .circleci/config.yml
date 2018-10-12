@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   mariadb-103:
     # workaround https://discuss.circleci.com/t/post-clone-working-directory/15333/4
@@ -13,6 +13,10 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
+      - run:
+          when: on_fail
+          steps:
+            - notify-about-failure
 
   mariadb-102:
     working_directory: ~/repo/10
@@ -26,6 +30,10 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
+      - run:
+          when: on_fail
+          steps:
+            - notify-about-failure
 
   mariadb-101:
     working_directory: ~/repo/10
@@ -39,6 +47,10 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
+      - run:
+          when: on_fail
+          steps:
+            - notify-about-failure
 
 workflows:
   version: 2
@@ -56,3 +68,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+
+commands:
+  notify-about-failure:
+    steps:
+    - run:
+        name: 'Notify about failure by email'
+        command: |
+          aws ses send-email --region us-east-1 --from $FROM_EMAIL --to $TO_EMAIL \
+            --subject "MariaDB build failed" --text "${CIRCLE_BUILD_URL}"

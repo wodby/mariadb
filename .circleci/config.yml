@@ -10,7 +10,6 @@ jobs:
     steps:
       - checkout:
           path: ~/repo
-      - run: exit 1
       - run: make
       - run: make test
       - run: . ../release.sh

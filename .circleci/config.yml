@@ -33,7 +33,7 @@ jobs:
     working_directory: ~/repo/10
     machine: true
     environment:
-      - MARIADB_VER: 10.1.36
+      - MARIADB_VER: 10.1.37
       - TAGS: 10.1
     steps:
       - checkout:

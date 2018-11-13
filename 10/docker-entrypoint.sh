@@ -13,8 +13,6 @@ gotpl "/etc/gotpl/${minor_ver}/my.cnf.tmpl" > "/etc/mysql/my.cnf"
 
 init_mariadb "${@}"
 
-mysql_upgrade -uroot -p"${MYSQL_ROOT_PASSWORD}"
-
 if [[ "${1}" == 'make' ]]; then
     exec "${@}" -f /usr/local/bin/actions.mk
 else

@@ -35,6 +35,7 @@ mariadb() {
 }
 
 mariadb make check-ready delay_seconds=5 wait_seconds=5 max_try=12
+mariadb make mysql-upgrade
 mariadb make query query="CREATE TABLE test (a INT, b INT, c VARCHAR(255))"
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 0 ]
 mariadb make query query="INSERT INTO test VALUES (1, 2, 'hello')"

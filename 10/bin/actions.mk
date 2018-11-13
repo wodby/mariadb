@@ -40,6 +40,9 @@ query-root:
 	$(call check_defined, query)
 	mysql -p$(root_password) -h$(host) -e "$(query)" $(db)
 
+mysql-upgrade:
+	mysql_upgrade -uroot -p$(root_password)
+
 check-ready:
 	wait_for "$(command)" "MariaDB" $(host) $(max_try) $(wait_seconds) $(delay_seconds)
 

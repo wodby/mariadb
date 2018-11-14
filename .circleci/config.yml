@@ -13,7 +13,7 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
-      - notify-about-failure
+#      - notify-about-failure
 
   mariadb-102:
     working_directory: ~/repo/10
@@ -27,7 +27,7 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
-      - notify-about-failure
+#      - notify-about-failure
 
   mariadb-101:
     working_directory: ~/repo/10
@@ -41,7 +41,7 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
-      - notify-about-failure
+#      - notify-about-failure
 
 workflows:
   build-test-release:
@@ -66,5 +66,5 @@ commands:
           when: on_fail
           name: 'Notify about failure by email'
           command: |
-#            aws ses send-email --region us-east-1 --from $FROM_EMAIL --to $TO_EMAIL \
-#              --subject "MariaDB ${MARIADB_VER} build failed" --text "Build URL: ${CIRCLE_BUILD_URL}"
+            aws ses send-email --region us-east-1 --from $FROM_EMAIL --to $TO_EMAIL \
+              --subject "MariaDB ${MARIADB_VER} build failed" --text "Build URL: ${CIRCLE_BUILD_URL}"

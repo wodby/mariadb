@@ -169,7 +169,7 @@ commands:
     query-silent query [db user password host] 
     query-root query [db root_password host]
     check-ready [root_password host max_try wait_seconds]  
-    mysql-upgrade [root_password]  
+    mysql-upgrade [root_password host]  
     
 default params values:
     user $MYSQL_USER

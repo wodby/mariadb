@@ -41,7 +41,7 @@ query-root:
 	mysql -p$(root_password) -h$(host) -e "$(query)" $(db)
 
 mysql-upgrade:
-	mysql_upgrade -uroot -p$(root_password)
+	mysql_upgrade -uroot -p$(root_password) -h$(host)
 
 check-ready:
 	wait_for "$(command)" "MariaDB" $(host) $(max_try) $(wait_seconds) $(delay_seconds)

@@ -19,7 +19,7 @@ jobs:
     working_directory: ~/repo/10
     machine: true
     environment:
-      - MARIADB_VER: 10.2.18
+      - MARIADB_VER: 10.2.19
       - TAGS: 10.2
     steps:
       - checkout:
@@ -33,7 +33,7 @@ jobs:
     working_directory: ~/repo/10
     machine: true
     environment:
-      - MARIADB_VER: 10.1.37
+      - MARIADB_VER: 10.1.36
       - TAGS: 10.1
     steps:
       - checkout:
@@ -66,5 +66,5 @@ commands:
           when: on_fail
           name: 'Notify about failure by email'
           command: |
-            aws ses send-email --region us-east-1 --from $FROM_EMAIL --to $TO_EMAIL \
-              --subject "MariaDB ${MARIADB_VER} build failed" --text "Build URL: ${CIRCLE_BUILD_URL}"
+#            aws ses send-email --region us-east-1 --from $FROM_EMAIL --to $TO_EMAIL \
+#              --subject "MariaDB ${MARIADB_VER} build failed" --text "Build URL: ${CIRCLE_BUILD_URL}"

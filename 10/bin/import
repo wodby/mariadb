@@ -23,7 +23,7 @@ tmp_dir="/tmp/import"
 
 get_archive "${source}" "${tmp_dir}" "zip tgz tar.gz gz"
 
-sql_file=$(find "${tmp_dir}" -type f -name "*.sql")
+sql_file=$(find "${tmp_dir}" -type f -name "*.sql" -o -name "*.mysql")
 count=$(echo "${sql_file}" | wc -l | grep -Eo '[0-9]+')
 
 if [[ "${count}" == 1 ]]; then

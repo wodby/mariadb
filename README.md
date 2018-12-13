@@ -155,6 +155,7 @@ Supported tags and respective `Dockerfile` links:
 ## Performance Tuning Recommendations
 
 * Decrease the value of `MYSQL_OPTIMIZER_SEARCH_DEPTH` to 7-8 if you have many queries with more than 15 tables ([source](https://mariadb.com/resources/blog/setting-optimizer-search-depth-mysql))
+* [Calculating the optimal size of `innodb_buffer_pool_size`](https://wodby.com/docs/stacks/mariadb/#calculating-the-optimal-size-of-innodb_buffer_pool_size)
 
 ## Orchestration Actions
 

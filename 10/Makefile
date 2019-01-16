@@ -3,6 +3,14 @@
 MARIADB_VER ?= 10.3.12
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
+ALPINE_VER ?= 3.8
+
+ifeq ($(BASE_IMAGE_STABILITY_TAG),)
+    BASE_IMAGE_TAG := $(ALPINE_VER)
+else
+    BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_STABILITY_TAG)
+endif
+
 # Remove minor version from tag
 TAG ?= $(MARIADB_VER_MINOR)
 
@@ -20,7 +28,9 @@ NAME = mariadb-$(MARIADB_VER_MINOR)
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --build-arg MARIADB_VER=$(MARIADB_VER) ./
+	docker build -t $(REPO):$(TAG)
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg MARIADB_VER=$(MARIADB_VER) ./
 
 test:
 	cd ./tests && IMAGE=$(REPO):$(TAG) ./run.sh

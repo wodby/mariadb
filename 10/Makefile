@@ -28,7 +28,7 @@ NAME = mariadb-$(MARIADB_VER_MINOR)
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG)
+	docker build -t $(REPO):$(TAG) \
 	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 	    --build-arg MARIADB_VER=$(MARIADB_VER) ./
 

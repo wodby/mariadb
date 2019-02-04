@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/repo/10
     machine: true
     environment:
-      - ALPINE_VER: 3.9
+      - ALPINE_VER: 3.8
       - BASE_IMAGE_STABILITY_TAG: 2.2.0
       - MARIADB_VER: 10.3.12
       - TAGS: 10.3,10,latest
@@ -21,7 +21,7 @@ jobs:
     working_directory: ~/repo/10
     machine: true
     environment:
-      - ALPINE_VER: 3.9
+      - ALPINE_VER: 3.8
       - BASE_IMAGE_STABILITY_TAG: 2.2.0
       - MARIADB_VER: 10.2.21
       - TAGS: 10.2
@@ -37,7 +37,7 @@ jobs:
     working_directory: ~/repo/10
     machine: true
     environment:
-      - ALPINE_VER: 3.9
+      - ALPINE_VER: 3.8
       - BASE_IMAGE_STABILITY_TAG: 2.2.0
       - MARIADB_VER: 10.1.36
       - TAGS: 10.1

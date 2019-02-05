@@ -32,7 +32,7 @@ RUN set -xe; \
         coreutils \
         gnupg \
         libaio-dev \
-        openssl-dev \
+        libressl-dev \
         linux-headers \
         ncurses-dev \
         patch \

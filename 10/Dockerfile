@@ -19,6 +19,7 @@ RUN set -xe; \
         libaio \
         libstdc++ \
         make \
+        openssl \
         pwgen \
         sudo \
         tzdata; \
@@ -32,7 +33,7 @@ RUN set -xe; \
         coreutils \
         gnupg \
         libaio-dev \
-        libressl-dev \
+        openssl-dev \
         linux-headers \
         ncurses-dev \
         patch \

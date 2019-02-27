@@ -32,7 +32,8 @@ RUN set -xe; \
         coreutils \
         gnupg \
         libaio-dev \
-        openssl-dev \
+        # MariaDB 10.1 does not support OpenSSL 1.1.
+        $(test "${MARIADB_VER:0:4}" = "10.1" && echo 'libressl-dev' || echo 'openssl-dev') \
         linux-headers \
         ncurses-dev \
         patch \

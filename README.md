@@ -197,6 +197,7 @@ commands:
     query-root query [db root_password host]
     check-ready [root_password host max_try wait_seconds]  
     mysql-upgrade [root_password host]  
+    mysql-check [root_password host db]  
     
 default params values:
     user $MYSQL_USER

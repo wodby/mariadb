@@ -36,6 +36,8 @@ mariadb() {
 
 mariadb make check-ready delay_seconds=5 wait_seconds=5 max_try=12
 mariadb make mysql-upgrade
+mariadb make mysql-check
+
 mariadb make query query="CREATE TABLE test (a INT, b INT, c VARCHAR(255))"
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 0 ]
 mariadb make query query="INSERT INTO test VALUES (1, 2, 'hello')"
@@ -47,11 +49,13 @@ mariadb make query query="DELETE FROM test WHERE a = 1"
 mariadb make query query="DELETE FROM test WHERE a = 1"
 [ "$(mariadb make query-silent query='SELECT c FROM test')" = 'goodbye!' ]
 mariadb make query query="DELETE FROM test WHERE a = 1"
+mariadb make mysql-check
 
 mariadb make query query="CREATE TABLE cache_this (a INT, b INT, c VARCHAR(255))"
 mariadb make query query="CREATE TABLE cache_that (a INT, b INT, c VARCHAR(255))"
 mariadb make query query="INSERT INTO cache_this VALUES (1, 2, 'hello')"
 mariadb make query query="INSERT INTO cache_that VALUES (1, 2, 'hello')"
+mariadb make mysql-check
 
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_this')" = 1 ]
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_that')" = 1 ]
@@ -60,10 +64,12 @@ mariadb make query query="CREATE TABLE test1 (a INT, b INT, c VARCHAR(255))"
 mariadb make query query="CREATE TABLE test2 (a INT, b INT, c VARCHAR(255))"
 mariadb make query query="INSERT INTO test1 VALUES (1, 2, 'hello')"
 mariadb make query query="INSERT INTO test2 VALUES (1, 2, 'hello!')"
+mariadb make mysql-check
 
 mariadb make backup filepath="/mnt/backups/export.sql.gz" 'ignore="test1;test2;cache_%;test3"'
 mariadb make query query="DROP DATABASE mariadb"
 mariadb make import source="/mnt/backups/export.sql.gz"
+mariadb make mysql-check
 
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_this')" = 0 ]
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_that')" = 0 ]
@@ -74,3 +80,4 @@ mariadb make import source="/mnt/backups/export.sql.gz"
 
 mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.zip"
 mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.tar.gz"
+mariadb make mysql-check

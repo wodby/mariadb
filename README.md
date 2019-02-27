@@ -50,6 +50,7 @@ Supported tags and respective `Dockerfile` links:
 [`MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_flush_log_at_trx_commit
 [`MYSQL_INNODB_FLUSH_METHOD`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_flush_method
 [`MYSQL_INNODB_FORCE_LOAD_CORRUPTED`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_force_load_corrupted
+[`MYSQL_INNODB_FORCE_RECOVERY`]: https://mariadb.com/kb/en/library/innodb-system-variables/#innodb_force_recovery
 [`MYSQL_INNODB_IO_CAPACITY`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_io_capacity
 [`MYSQL_INNODB_LARGE_PREFIX`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_large_prefix
 [`MYSQL_INNODB_LOCK_WAIT_TIMEOUT`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_lock_wait_timeout
@@ -58,6 +59,7 @@ Supported tags and respective `Dockerfile` links:
 [`MYSQL_INNODB_LOG_FILES_IN_GROUP`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_log_files_in_group
 [`MYSQL_INNODB_OLD_BLOCKS_TIME`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_old_blocks_time
 [`MYSQL_INNODB_OPEN_FILES`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_open_files
+[`MYSQL_INNODB_PURGE_THREADS`]: https://mariadb.com/kb/en/library/innodb-system-variables/#innodb_purge_threads
 [`MYSQL_INNODB_READ_IO_THREADS`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_read_io_threads
 [`MYSQL_INNODB_STATS_ON_METADATA`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_stats_on_metadata
 [`MYSQL_INNODB_STRICT_MODE`]: https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables#innodb_strict_mode
@@ -109,6 +111,7 @@ Supported tags and respective `Dockerfile` links:
 | [`MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT`] | `2`                              | `2`                              | `2`                              |
 | [`MYSQL_INNODB_FLUSH_METHOD`]            | `O_DIRECT`                       | `O_DIRECT`                       | `O_DIRECT`                       |
 | [`MYSQL_INNODB_FORCE_LOAD_CORRUPTED`]    | `0`                              | `0`                              | `0`                              |
+| [`MYSQL_INNODB_FORCE_RECOVERY`]          | `0`                              | `0`                              | `0`                              |
 | [`MYSQL_INNODB_IO_CAPACITY`]             | `200`                            | `200`                            | `200`                            |
 | [`MYSQL_INNODB_LARGE_PREFIX`]            | `-`                              | `-`                              | `1`                              |
 | [`MYSQL_INNODB_LOCK_WAIT_TIMEOUT`]       | `50`                             | `50`                             | `50`                             |
@@ -117,6 +120,7 @@ Supported tags and respective `Dockerfile` links:
 | [`MYSQL_INNODB_LOG_FILES_IN_GROUP`]      | `2`                              | `2`                              | `2`                              |
 | [`MYSQL_INNODB_OLD_BLOCKS_TIME`]         | `1000`                           | `1000`                           | `1000`                           |
 | [`MYSQL_INNODB_OPEN_FILES`]              | `1024`                           | `1024`                           | `1024`                           |
+| [`MYSQL_INNODB_PURGE_THREADS`]           | `4`                              | `4`                              | `1`                              |
 | [`MYSQL_INNODB_READ_IO_THREADS`]         | `4`                              | `4`                              | `4`                              |
 | [`MYSQL_INNODB_STATS_ON_METADATA`]       | `OFF`                            | `OFF`                            | `OFF`                            |
 | [`MYSQL_INNODB_STRICT_MODE`]             | `OFF`                            | `OFF`                            | `OFF`                            |

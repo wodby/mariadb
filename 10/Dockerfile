@@ -108,15 +108,20 @@ RUN set -xe; \
     \
     # Remove dev, test, doc, benchmark related files.
     rm -rf \
-        /usr/share/man \
+        /usr/bin/mysql_client_test \
+        /usr/bin/mysql_client_test_embedded \
+        /usr/bin/mysql_config \
+        /usr/bin/mysqltest \
+        /usr/bin/mysqltest_embedded \
         /usr/include/mysql \
-        /usr/mysql-test \
-        /usr/sql-bench \
+        /usr/lib/libmariadb.so* \
+        /usr/lib/libmariadbd.so.* \
         /usr/lib/libmysqlclient.so* \
         /usr/lib/libmysqlclient_r.so* \
         /usr/lib/libmysqld.so.* \
-        /usr/bin/mysql_config \
-        /usr/bin/mysql_client_test; \
+        /usr/mysql-test \
+        /usr/share/man \
+        /usr/sql-bench; \
     \
     find /usr/lib -name '*.a' -maxdepth 1 -print0 | xargs -0 rm; \
     find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm; \

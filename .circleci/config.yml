@@ -72,5 +72,5 @@ commands:
           when: on_fail
           name: 'Notify about failure by email'
           command: |
-            aws ses send-email --region us-east-1 --from $FROM_EMAIL --to $TO_EMAIL \
+            aws ses send-email --region us-east-1 --from robot@wodby.com --to circleci@wodby.com \
               --subject "MariaDB ${MARIADB_VER} build failed" --text "Build URL: ${CIRCLE_BUILD_URL}"

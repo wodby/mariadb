@@ -79,6 +79,8 @@ long_query_time                         = {{ getenv "MYSQL_LONG_QUERY_TIME" "2" 
 slow_query_log                          = {{ getenv "MYSQL_SLOW_QUERY_LOG" "OFF" }}
 general_log                             = {{ getenv "MYSQL_GENERAL_LOG" "0" }}
 
+log_warnings                            = {{ getenv "MYSQL_LOG_WARNINGS" "2" }}
+
 net_write_timeout                       = {{ getenv "MYSQL_NET_WRITE_TIMEOUT" "90" }}
 net_read_timeout                        = {{ getenv "MYSQL_NET_READ_TIMEOUT" "90" }}
 wait_timeout                            = {{ getenv "MYSQL_WAIT_TIMEOUT" "420" }}

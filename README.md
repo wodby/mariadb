@@ -35,6 +35,7 @@ Supported tags and respective `Dockerfile` links:
 
 | Variable                                 | 10.3                             | 10.2                             | 10.1                             |
 | ---------------------------------------- | -------------------              | -------------------              | -----------------                |
+| [`MARIADB_PLUGIN_LOAD`]                  |                                  |                                  |                                  |
 | [`MYSQL_BACK_LOG`]                       | `100`                            | `100`                            | `100`                            |
 | [`MYSQL_CHARACTER_SET_FILESYSTEM`]       | `utf8`                           | `utf8`                           | `utf8`                           |
 | [`MYSQL_CHARACTER_SET_SERVER`]           | `utf8`                           | `utf8`                           | `utf8`                           |
@@ -160,6 +161,7 @@ default params values:
 Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com/stacks/mariadb).
 
 
+[`MARIADB_PLUGIN_LOAD`]: https://mariadb.com/kb/en/library/plugin-overview/#installing-a-plugin-with-plugin-load
 [`MYSQL_BACK_LOG`]: https://mariadb.com/kb/en/library/server-system-variables#back_log
 [`MYSQL_CHARACTER_SET_FILESYSTEM`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_filesystem 
 [`MYSQL_CHARACTER_SET_SERVER`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_server 

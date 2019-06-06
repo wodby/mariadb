@@ -19,6 +19,7 @@ cid="$(
 		-e MYSQL_USER \
 		-e MYSQL_PASSWORD \
 		-e MYSQL_DATABASE \
+		-e MARIADB_PLUGIN_LOAD=auth_pam \
 		--name "${MYSQL_HOST}" \
 		"${IMAGE}"
 )"

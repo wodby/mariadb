@@ -18,6 +18,7 @@ RUN set -xe; \
     apk add --update --no-cache -t .mariadb-run-deps \
         libaio \
         libstdc++ \
+        linux-pam \
         make \
         pwgen \
         sudo \
@@ -32,6 +33,7 @@ RUN set -xe; \
         coreutils \
         gnupg \
         libaio-dev \
+        linux-pam-dev \
         # MariaDB 10.1 does not support OpenSSL 1.1.
         $(test "${MARIADB_VER:0:4}" = "10.1" && echo 'libressl-dev' || echo 'openssl-dev') \
         linux-headers \

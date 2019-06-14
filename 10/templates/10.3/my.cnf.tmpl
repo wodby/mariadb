@@ -23,6 +23,7 @@ user                                    = mysql
 bind-address                            = 0.0.0.0
 basedir                                 = /usr
 datadir                                 = /var/lib/mysql
+connect_timeout                         = {{ getenv "MYSQL_CONNECT_TIMEOUT" "10" }}
 socket                                  = /var/run/mysqld/mysqld.sock
 log-warnings
 

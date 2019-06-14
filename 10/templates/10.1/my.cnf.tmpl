@@ -24,6 +24,7 @@ bind-address                            = 0.0.0.0
 basedir                                 = /usr
 datadir                                 = /var/lib/mysql
 socket                                  = /var/run/mysqld/mysqld.sock
+connect_timeout                         = {{ getenv "MYSQL_CONNECT_TIMEOUT" "10" }}
 log-warnings
 
 collation-server                        = {{ getenv "MYSQL_COLLATION_SERVER" "utf8_unicode_ci" }}

@@ -41,6 +41,7 @@ Supported tags and respective `Dockerfile` links:
 | [`MYSQL_CHARACTER_SET_SERVER`]           | `utf8`                           | `utf8`                           | `utf8`                           |
 | `MYSQL_CLIENT_DEFAULT_CHARACTER_SET`     | `utf8`                           | `utf8`                           | `utf8`                           |
 | [`MYSQL_COLLATION_SERVER`]               | `utf8_unicode_ci`                | `utf8_unicode_ci`                | `utf8_unicode_ci`                |
+| [`MYSQL_CONNECT_TIMEOUT`]                | `10`                             | `10`                             | `10`                             |
 | `MYSQL_DATABASE`                         |                                  |                                  |                                  |
 | [`MYSQL_DEFAULT_STORAGE_ENGINE`]         | `InnoDB`                         | `InnoDB`                         | `InnoDB`                         |
 | `MYSQL_DUMP_MAX_ALLOWED_PACKET`          | `1G`                             | `1G`                             | `1G`                             |
@@ -166,6 +167,7 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 [`MYSQL_CHARACTER_SET_FILESYSTEM`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_filesystem 
 [`MYSQL_CHARACTER_SET_SERVER`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_server 
 [`MYSQL_COLLATION_SERVER`]: https://mariadb.com/kb/en/library/server-system-variables#collation_server
+[`MYSQL_CONNECT_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables/#connect_timeout
 [`MYSQL_DEFAULT_STORAGE_ENGINE`]: https://mariadb.com/kb/en/library/server-system-variables#default_storage_engine
 [`MYSQL_GENERAL_LOG`]: https://mariadb.com/kb/en/library/server-system-variables#general_log
 [`MYSQL_INIT_CONNECT`]: https://mariadb.com/kb/en/library/server-system-variables#init_connect

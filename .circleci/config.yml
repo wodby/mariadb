@@ -1,21 +1,35 @@
 version: 2.1
 jobs:
-  mariadb-103:
+  mariadb-104:
     # workaround https://discuss.circleci.com/t/post-clone-working-directory/15333/4
+    working_directory: ~/repo/10
+    machine: true
+    environment:
+    - ALPINE_VER: 3.9
+    - BASE_IMAGE_STABILITY_TAG: 2.2.3
+    - MARIADB_VER: 10.4.6
+    - TAGS: 10.4,10,latest
+    steps:
+    - checkout:
+        path: ~/repo
+    - run: make
+    - run: make test
+    - run: . ../release.sh
+
+  mariadb-103:
     working_directory: ~/repo/10
     machine: true
     environment:
       - ALPINE_VER: 3.9
       - BASE_IMAGE_STABILITY_TAG: 2.2.3
       - MARIADB_VER: 10.3.16
-      - TAGS: 10.3,10,latest
+      - TAGS: 10.3
     steps:
       - checkout:
           path: ~/repo
       - run: make
       - run: make test
       - run: . ../release.sh
-#      - notify-about-failure
 
   mariadb-102:
     working_directory: ~/repo/10
@@ -31,7 +45,6 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
-#      - notify-about-failure
 
   mariadb-101:
     working_directory: ~/repo/10
@@ -47,11 +60,14 @@ jobs:
       - run: make
       - run: make test
       - run: . ../release.sh
-#      - notify-about-failure
 
 workflows:
   build-test-release:
     jobs:
+      - mariadb-104:
+          filters:
+            tags:
+              only: /.*/
       - mariadb-103:
           filters:
             tags:
@@ -64,13 +80,3 @@ workflows:
           filters:
             tags:
               only: /.*/
-
-commands:
-  notify-about-failure:
-    steps:
-      - run:
-          when: on_fail
-          name: 'Notify about failure by email'
-          command: |
-            aws ses send-email --region us-east-1 --from robot@wodby.com --to circleci@wodby.com \
-              --subject "MariaDB ${MARIADB_VER} build failed" --text "Build URL: ${CIRCLE_BUILD_URL}"

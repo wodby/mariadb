@@ -104,6 +104,7 @@ RUN set -xe; \
     chown -R mysql:mysql \
         /var/run/mysqld \
         /var/lib/mysql \
+        /usr/lib/mysql/plugin \
         /etc/mysql \
         /docker-entrypoint-initdb.d \
         "${BACKUPS_DIR}"; \

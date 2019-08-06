@@ -51,6 +51,7 @@ table_definition_cache                  = {{ getenv "MYSQL_TABLE_DEFINITION_CACH
 table_open_cache                        = {{ getenv "MYSQL_TABLE_OPEN_CACHE" "4096" }}
 thread_cache_size                       = {{ getenv "MYSQL_THREAD_CACHE_SIZE" "75" }}
 tmp_table_size                          = {{ getenv "MYSQL_TMP_TABLE_SIZE" "16M" }}
+open_files_limit                        = {{ getenv "MYSQL_OPEN_FILES_LIMIT" "30000" }}
 
 max_allowed_packet                      = {{ getenv "MYSQL_MAX_ALLOWED_PACKET" "256M" }}
 max_connect_errors                      = {{ getenv "MYSQL_MAX_CONNECT_ERRORS" "100000" }}

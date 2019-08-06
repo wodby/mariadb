@@ -18,7 +18,9 @@ RUN set -xe; \
     apk add --update --no-cache -t .mariadb-run-deps \
         libaio \
         libstdc++ \
-        linux-pam \
+        # Build failures on 10.4 with PAM
+        # https://jira.mariadb.org/browse/MDEV-20258?jql=project%20%3D%20MDEV%20AND%20affectedVersion%20%3D%2010.4.7.
+        $(test "${MARIADB_VER:0:4}" != "10.4" && echo 'linux-pam') \
         make \
         pwgen \
         sudo \
@@ -33,7 +35,9 @@ RUN set -xe; \
         coreutils \
         gnupg \
         libaio-dev \
-        linux-pam-dev \
+        # Build failures on 10.4 with PAM
+        # https://jira.mariadb.org/browse/MDEV-20258?jql=project%20%3D%20MDEV%20AND%20affectedVersion%20%3D%2010.4.7.
+        $(test "${MARIADB_VER:0:4}" != "10.4" && echo 'linux-pam-dev') \
         # MariaDB 10.1 does not support OpenSSL 1.1.
         $(test "${MARIADB_VER:0:4}" = "10.1" && echo 'libressl-dev' || echo 'openssl-dev') \
         linux-headers \

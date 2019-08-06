@@ -55,6 +55,7 @@ tmp_table_size                          = {{ getenv "MYSQL_TMP_TABLE_SIZE" "16M"
 max_allowed_packet                      = {{ getenv "MYSQL_MAX_ALLOWED_PACKET" "256M" }}
 max_connect_errors                      = {{ getenv "MYSQL_MAX_CONNECT_ERRORS" "100000" }}
 max_connections                         = {{ getenv "MYSQL_MAX_CONNECTIONS" "100" }}
+open_files_limit                        = {{ getenv "MYSQL_OPEN_FILES_LIMIT" "0" }}
 
 innodb_buffer_pool_instances            = {{ getenv "MYSQL_INNODB_BUFFER_POOL_INSTANCES" "1" }}
 innodb_buffer_pool_size                 = {{ getenv "MYSQL_INNODB_BUFFER_POOL_SIZE" "128M" }}

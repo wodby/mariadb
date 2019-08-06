@@ -83,6 +83,7 @@ Credits to Alpine Linux team for patches for better musl compatibility of MariaD
 | [`MYSQL_MAX_HEAP_TABLE_SIZE`]            | `16M`             | `16M`             | `16M`             | `16M`             |
 | [`MYSQL_NET_READ_TIMEOUT`]               | `90`              | `90`              | `90`              | `90`              |
 | [`MYSQL_NET_WRITE_TIMEOUT`]              | `90`              | `90`              | `90`              | `90`              |
+| [`MYSQL_OPEN_FILES_LIMIT`]               | `0`               | `0`               | `0`               | `0`               |
 | [`MYSQL_OPTIMIZER_PRUNE_LEVEL`]          | `1`               | `1`               | `1`               | `1`               |
 | [`MYSQL_OPTIMIZER_SEARCH_DEPTH`]         | `62`              | `62`              | `62`              | `62`              |
 | `MYSQL_PASSWORD`                         |                   |                   |                   |                   |
@@ -217,6 +218,7 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 [`MYSQL_MAX_HEAP_TABLE_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#max_heap_table_size
 [`MYSQL_NET_READ_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables#net_read_timeout
 [`MYSQL_NET_WRITE_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables#net_write_timeout
+[`MYSQL_OPEN_FILES_LIMIT`]: https://mariadb.com/kb/en/library/server-system-variables/#open_files_limit
 [`MYSQL_OPTIMIZER_PRUNE_LEVEL`]: https://mariadb.com/kb/en/library/server-system-variables/#optimizer_prune_level
 [`MYSQL_OPTIMIZER_SEARCH_DEPTH`]: https://mariadb.com/kb/en/library/server-system-variables/#optimizer_search_depth
 [`MYSQL_PERFORMANCE_SCHEMA`]: https://mariadb.com/kb/en/library/performance-schema-system-variables#performance_schema

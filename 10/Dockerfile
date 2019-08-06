@@ -142,7 +142,7 @@ RUN set -xe; \
         fi; \
     done; \
     \
-    if [[ "${MARIADB_VER}" == "10.4" ]]; then \
+    if [[ "${MARIADB_VER:0:4}" == "10.4" ]]; then \
         # @todo remove after fix https://github.com/wodby/mariadb/issues/20
         mkdir -p /auth_pam_tool_dir/auth_pam_tool && chown -R mysql:mysql /auth_pam_tool_dir; \
     fi; \

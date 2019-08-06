@@ -100,6 +100,7 @@ Credits to Alpine Linux team for patches for better musl compatibility of MariaD
 | [`MYSQL_TABLE_OPEN_CACHE`]               | `4096`            | `4096`            | `4096`            | `4096`            |
 | [`MYSQL_THREAD_CACHE_SIZE`]              | `75`              | `75`              | `75`              | `75`              |
 | [`MYSQL_TMP_TABLE_SIZE`]                 | `16M`             | `16M`             | `16M`             | `16M`             |
+| [`MYSQL_OPEN_FILES_LIMIT`]               | `30000`           |                   |                   |                   |
 | `MYSQL_USER`                             |                   |                   |                   |                   |
 | [`MYSQL_WAIT_TIMEOUT`]                   | `420`             | `420`             | `420`             | `420`             |
 
@@ -231,4 +232,5 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 [`MYSQL_TABLE_OPEN_CACHE`]: https://mariadb.com/kb/en/library/server-system-variables#table_open_cache
 [`MYSQL_THREAD_CACHE_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#thread_cache_size
 [`MYSQL_TMP_TABLE_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#tmp_table_size
+[`MYSQL_OPEN_FILES_LIMIT`]: https://mariadb.com/kb/en/library/server-system-variables/#open_files_limit
 [`MYSQL_WAIT_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables#wait_timeout

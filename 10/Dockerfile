@@ -18,8 +18,7 @@ RUN set -xe; \
     apk add --update --no-cache -t .mariadb-run-deps \
         libaio \
         libstdc++ \
-        # Build failures on 10.4 with PAM https://github.com/wodby/mariadb/issues/20
-        $(test "${MARIADB_VER:0:4}" != "10.4" && echo 'linux-pam') \
+        linux-pam \
         make \
         pwgen \
         sudo \
@@ -34,8 +33,7 @@ RUN set -xe; \
         coreutils \
         gnupg \
         libaio-dev \
-        # Build failures on 10.4 with PAM https://github.com/wodby/mariadb/issues/20
-        $(test "${MARIADB_VER:0:4}" != "10.4" && echo 'linux-pam-dev') \
+        linux-pam-dev \
         # MariaDB 10.1 does not support OpenSSL 1.1.
         $(test "${MARIADB_VER:0:4}" = "10.1" && echo 'libressl-dev' || echo 'openssl-dev') \
         linux-headers \
@@ -142,10 +140,6 @@ RUN set -xe; \
         fi; \
     done; \
     \
-    if [[ "${MARIADB_VER:0:4}" == "10.4" ]]; then \
-        # @todo remove after fix https://github.com/wodby/mariadb/issues/20
-        mkdir -p /auth_pam_tool_dir/auth_pam_tool && chown -R mysql:mysql /auth_pam_tool_dir; \
-    fi; \
     # Clean up.
     apk del --purge .mariadb-build-deps; \
     rm -rf /tmp/*; \

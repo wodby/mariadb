@@ -1,0 +1,14 @@
+--- a/plugin/auth_pam/testing/pam_mariadb_mtr.c	2019-08-16 20:14:57.616597030 +0000
++++ b/plugin/auth_pam/testing/pam_mariadb_mtr.c	2019-08-16 20:12:37.638243716 +0000
+@@ -15,6 +15,11 @@
+ 
+ #define N 3
+ 
++#if defined(__EMX__) || !defined(HAVE_UINT)
++typedef unsigned int uint;
++typedef unsigned short ushort;
++#endif
++
+ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
+                         int argc, const char *argv[])
+ {

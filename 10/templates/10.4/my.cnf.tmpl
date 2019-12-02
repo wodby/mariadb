@@ -20,7 +20,7 @@ plugin_load                             = {{ getenv "MARIADB_PLUGIN_LOAD" }}
 
 [mysqld]
 user                                    = mysql
-bind-address                            = 0.0.0.0
+bind-address                            = {{ getenv "MARIADB_BIND_ADDRESS" "0.0.0.0" }}
 basedir                                 = /usr
 datadir                                 = /var/lib/mysql
 connect_timeout                         = {{ getenv "MYSQL_CONNECT_TIMEOUT" "10" }}

@@ -30,7 +30,7 @@ directly was the first solution adopted in MariaDB [2].
 @@ -86,8 +86,7 @@
     independent way by using YieldProcessor. */
  #  define UT_RELAX_CPU() YieldProcessor()
- # elif defined(__powerpc__)
+ # elif defined(__powerpc__) && defined __GLIBC__
 -#include <sys/platform/ppc.h>
 -#  define UT_RELAX_CPU() __ppc_get_timebase()
 +#  define UT_RELAX_CPU() __builtin_ppc_get_timebase()

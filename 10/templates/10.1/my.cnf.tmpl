@@ -99,3 +99,5 @@ relay_log_recovery                      = {{ getenv "MYSQL_RELAY_LOG_RECOVERY" "
 
 optimizer_prune_level                   = {{ getenv "MYSQL_OPTIMIZER_PRUNE_LEVEL" "1" }}
 optimizer_search_depth                  = {{ getenv "MYSQL_OPTIMIZER_SEARCH_DEPTH" "62" }}
+
+transaction-isolation                   = {{ getenv "MYSQL_TRANSACTION_ISOLATION" "REPEATABLE-READ" }}

@@ -103,7 +103,7 @@ Credits to Alpine Linux team for patches for better musl compatibility of MariaD
 | [`MYSQL_TMP_TABLE_SIZE`]                 | `16M`             | `16M`             | `16M`             | `16M`             |
 | `MYSQL_USER`                             |                   |                   |                   |                   |
 | [`MYSQL_WAIT_TIMEOUT`]                   | `420`             | `420`             | `420`             | `420`             |
-
+| [`MYSQL_TRANSACTION_ISOLATION`]          | `REPEATABLE-READ` | `REPEATABLE-READ` | `REPEATABLE-READ` | `REPEATABLE-READ` |
 > "-" - Not available for this version
 
 ### Additional environment variables
@@ -234,3 +234,4 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 [`MYSQL_THREAD_CACHE_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#thread_cache_size
 [`MYSQL_TMP_TABLE_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#tmp_table_size
 [`MYSQL_WAIT_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables#wait_timeout
+[`MYSQL_TRANSACTION_ISOLATION`]: https://mariadb.com/kb/en/library/server-system-variables#tx_isolation

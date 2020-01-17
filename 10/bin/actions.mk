@@ -41,7 +41,7 @@ query-root:
 	mysql -p$(root_password) -h$(host) -e "$(query)" $(db)
 
 mysql-upgrade:
-	mysql_upgrade --verbose -uroot -p$(root_password) -h$(host)
+	mysql_upgrade ---upgrade-system-tables --verbose -uroot -p$(root_password) -h$(host)
 
 mysql-check:
 	mysqlcheck --verbose -uroot -p$(root_password) -h$(host) $(db)

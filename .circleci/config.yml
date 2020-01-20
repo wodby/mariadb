@@ -6,7 +6,7 @@ jobs:
     machine: true
     environment:
     - ALPINE_VER: "3.10"
-    - BASE_IMAGE_STABILITY_TAG: 2.4.1
+    - BASE_IMAGE_STABILITY_TAG: 2.4.2
     - MARIADB_VER: 10.4.11
     - TAGS: 10.4,10,latest
     steps:
@@ -21,7 +21,7 @@ jobs:
     machine: true
     environment:
       - ALPINE_VER: "3.10"
-      - BASE_IMAGE_STABILITY_TAG: 2.4.1
+      - BASE_IMAGE_STABILITY_TAG: 2.4.2
       - MARIADB_VER: 10.3.21
       - TAGS: 10.3
     steps:
@@ -36,7 +36,7 @@ jobs:
     machine: true
     environment:
       - ALPINE_VER: "3.10"
-      - BASE_IMAGE_STABILITY_TAG: 2.4.1
+      - BASE_IMAGE_STABILITY_TAG: 2.4.2
       - MARIADB_VER: 10.2.30
       - TAGS: 10.2
     steps:
@@ -51,7 +51,7 @@ jobs:
     machine: true
     environment:
       - ALPINE_VER: 3.8
-      - BASE_IMAGE_STABILITY_TAG: 2.4.1
+      - BASE_IMAGE_STABILITY_TAG: 2.4.2
       - MARIADB_VER: 10.1.43
       - TAGS: 10.1
     steps:

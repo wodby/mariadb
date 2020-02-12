@@ -3,7 +3,12 @@
 MARIADB_VER ?= 10.4.12
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
-ALPINE_VER ?= 3.10
+GALERA_VER ?= 26.4.3
+WSREP_VER = $(shell echo "${GALERA_VER}" | grep -oE '^[0-9]+')
+
+ALPINE_VER ?= 3.11
+
+NPROC =
 
 ifeq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(ALPINE_VER)
@@ -30,7 +35,10 @@ default: build
 build:
 	docker build -t $(REPO):$(TAG) \
 	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
-	    --build-arg MARIADB_VER=$(MARIADB_VER) ./
+	    --build-arg MARIADB_VER=$(MARIADB_VER) \
+	    --build-arg GALERA_VER=$(GALERA_VER) \
+	    --build-arg WSREP_VER=$(WSREP_VER) \
+	    --build-arg NPROC=$(NPROC) ./
 
 test:
 	cd ./tests && IMAGE=$(REPO):$(TAG) ./run.sh

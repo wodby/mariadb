@@ -3,8 +3,12 @@ ARG BASE_IMAGE_TAG
 FROM wodby/alpine:${BASE_IMAGE_TAG}
 
 ARG MARIADB_VER
+ARG GALERA_VER
+ARG WSREP_VER
+ARG NPROC
 
 ENV MARIADB_VER="${MARIADB_VER}" \
+    GALERA_VER="${GALERA_VER}" \
     BACKUPS_DIR="/mnt/backups"
 
 COPY patches /tmp/patches
@@ -12,8 +16,8 @@ COPY patches /tmp/patches
 RUN set -xe; \
     \
     addgroup -g 101 -S mysql; \
-	adduser -u 100 -D -S -s /bin/bash -G mysql mysql; \
-	echo "PS1='\w\$ '" >> /home/mysql/.bashrc; \
+    adduser -u 100 -D -S -s /bin/bash -G mysql mysql; \
+    echo "PS1='\w\$ '" >> /home/mysql/.bashrc; \
     \
     apk add --update --no-cache -t .mariadb-run-deps \
         libaio \
@@ -42,12 +46,28 @@ RUN set -xe; \
         readline-dev \
         zlib-dev; \
     \
+    apk add --update --no-cache -t .galera-build-deps \
+        boost-dev \
+        check-dev \
+        scons; \
+    \
     mariadb_url="https://downloads.mariadb.com/MariaDB/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
+    galera_url="https://github.com/codership/galera/archive/release_${GALERA_VER}.tar.gz"; \
     curl -fSL "${mariadb_url}" -o /tmp/mariadb.tar.gz; \
     curl -fSL "${mariadb_url}.asc" -o /tmp/mariadb.tar.gz.asc; \
+    curl -fSL "${galera_url}" -o /tmp/galera.tar.gz; \
     GPG_KEYS="199369E5404BD5FC7D2FE43BCBCB082A1BB943DB;430BDF5C56E7C94E848EE60C1C4CBDCDCD2EFD2A;4D1BB29D63D98E422B2113B19334A25F8507EFA5" gpg_verify /tmp/mariadb.tar.gz.asc /tmp/mariadb.tar.gz; \
     \
     tar zxf /tmp/mariadb.tar.gz -C /tmp; \
+    tar zxf /tmp/galera.tar.gz -C /tmp; \
+    rmdir "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
+    ln -s "/tmp/mariadb-${MARIADB_VER}/wsrep-lib/wsrep-API/v${WSREP_VER}" "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
+    \
+    cd "/tmp/galera-release_${GALERA_VER}"; \
+    for i in /tmp/patches/galera/"${GALERA_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
+    RUN_TESTS=0 scripts/build.sh -j "${NPROC:-$(nproc)}"; \
+    apk del --purge .galera-build-deps; \
+    \
     cd "/tmp/mariadb-${MARIADB_VER}"; \
     # From alpine repository https://git.alpinelinux.org/cgit/aports/tree/main/mariadb?h=3.6-stable
     for i in /tmp/patches/"${MARIADB_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
@@ -86,7 +106,7 @@ RUN set -xe; \
     		-DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
     		-DWITHOUT_PBXT_STORAGE_ENGINE=1; \
     \
-    make -j "$(nproc)"; \
+    make -j "${NPROC:-$(nproc)}"; \
     make install; \
     \
     # Script to fix volumes permissions via sudo.
@@ -129,9 +149,12 @@ RUN set -xe; \
     find /usr/lib -name '*.a' -maxdepth 1 -print0 | xargs -0 rm; \
     find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm; \
     \
+    # install Galera wsrep provider library
+    cp "/tmp/galera-release_${GALERA_VER}/libgalera_smm.so" /usr/lib; \
+    \
     # Stripping binaries and .so files.
     scanelf --symlink --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" \
-        /usr/bin/* /usr/lib/mysql/plugin/* | while read type osabi filename; do \
+        /usr/bin/* /usr/lib/mysql/plugin/* /usr/lib/libgalera_smm.so | while read type osabi filename; do \
         ([ "$osabi" != "STANDALONE" ] && [ "${filename}" != "/usr/bin/strip" ]) || continue; \
         XATTR=$(getfattr --match="" --dump "${filename}"); \
         strip "${filename}"; \

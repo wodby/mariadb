@@ -46,28 +46,41 @@ RUN set -xe; \
         readline-dev \
         zlib-dev; \
     \
-    apk add --update --no-cache -t .galera-build-deps \
-        boost-dev \
-        check-dev \
-        scons; \
-    \
     mariadb_url="https://downloads.mariadb.com/MariaDB/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
-    galera_url="https://github.com/codership/galera/archive/release_${GALERA_VER}.tar.gz"; \
     curl -fSL "${mariadb_url}" -o /tmp/mariadb.tar.gz; \
     curl -fSL "${mariadb_url}.asc" -o /tmp/mariadb.tar.gz.asc; \
-    curl -fSL "${galera_url}" -o /tmp/galera.tar.gz; \
     GPG_KEYS="199369E5404BD5FC7D2FE43BCBCB082A1BB943DB;430BDF5C56E7C94E848EE60C1C4CBDCDCD2EFD2A;4D1BB29D63D98E422B2113B19334A25F8507EFA5" gpg_verify /tmp/mariadb.tar.gz.asc /tmp/mariadb.tar.gz; \
     \
     tar zxf /tmp/mariadb.tar.gz -C /tmp; \
-    tar zxf /tmp/galera.tar.gz -C /tmp; \
-    rmdir "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
-    ln -s "/tmp/mariadb-${MARIADB_VER}/wsrep-lib/wsrep-API/v${WSREP_VER}" "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
+    #
+    # Optional Galera Build/Install
+    #
+    if [ -n "${GALERA_VER}" ]; then \
+        apk add --update --no-cache -t .galera-build-deps \
+            boost-dev \
+            check-dev \
+            scons; \
+        galera_url="https://github.com/codership/galera/archive/release_${GALERA_VER}.tar.gz"; \
+        curl -fSL "${galera_url}" -o /tmp/galera.tar.gz; \
+        tar zxf /tmp/galera.tar.gz -C /tmp; \
+        rmdir "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
+        ln -s "/tmp/mariadb-${MARIADB_VER}/wsrep-lib/wsrep-API/v${WSREP_VER}" "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
+        \
+        cd "/tmp/galera-release_${GALERA_VER}"; \
+        for i in /tmp/patches/galera/"${GALERA_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
+        RUN_TESTS=0 scripts/build.sh -j "${NPROC:-$(nproc)}"; \
+        apk del --purge .galera-build-deps; \
+        \
+        mkdir -p /usr/lib/galera; \
+        cp -a "/tmp/galera-release_${GALERA_VER}/libgalera_smm.so" /usr/lib/galera; \
+        chown -R mysql:mysql /usr/lib/galera; \
+        \
+        cp -a "/tmp/galera-release_${GALERA_VER}/garb/garbd" /usr/sbin; \
+    fi; \
     \
-    cd "/tmp/galera-release_${GALERA_VER}"; \
-    for i in /tmp/patches/galera/"${GALERA_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
-    RUN_TESTS=0 scripts/build.sh -j "${NPROC:-$(nproc)}"; \
-    apk del --purge .galera-build-deps; \
-    \
+    #
+    # MariaDB Build
+    #
     cd "/tmp/mariadb-${MARIADB_VER}"; \
     # From alpine repository https://git.alpinelinux.org/cgit/aports/tree/main/mariadb?h=3.6-stable
     for i in /tmp/patches/"${MARIADB_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
@@ -149,12 +162,9 @@ RUN set -xe; \
     find /usr/lib -name '*.a' -maxdepth 1 -print0 | xargs -0 rm; \
     find /usr/lib -name '*.so' -type l -maxdepth 1 -print0 | xargs -0 rm; \
     \
-    # install Galera wsrep provider library
-    cp "/tmp/galera-release_${GALERA_VER}/libgalera_smm.so" /usr/lib; \
-    \
     # Stripping binaries and .so files.
     scanelf --symlink --recursive --nobanner --osabi --etype "ET_DYN,ET_EXEC" \
-        /usr/bin/* /usr/lib/mysql/plugin/* /usr/lib/libgalera_smm.so | while read type osabi filename; do \
+        /usr/bin/* /usr/sbin/* /usr/lib/mysql/plugin/* /usr/lib/galera/* | while read type osabi filename; do \
         ([ "$osabi" != "STANDALONE" ] && [ "${filename}" != "/usr/bin/strip" ]) || continue; \
         XATTR=$(getfattr --match="" --dump "${filename}"); \
         strip "${filename}"; \

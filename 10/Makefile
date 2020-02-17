@@ -3,10 +3,10 @@
 MARIADB_VER ?= 10.4.12
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
-GALERA_VER ?= 26.4.3
-WSREP_VER = $(shell echo "${GALERA_VER}" | grep -oE '^[0-9]+')
+GALERA_VER ?=
+WSREP_VER ?= $(shell echo "${GALERA_VER}" | grep -oE '^[0-9]+')
 
-ALPINE_VER ?= 3.11
+ALPINE_VER ?= 3.10
 
 NPROC =
 

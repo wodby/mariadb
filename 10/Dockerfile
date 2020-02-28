@@ -57,6 +57,7 @@ RUN set -xe; \
     #
     if [ -n "${GALERA_VER}" ]; then \
         apk add --update --no-cache -t .galera-run-deps \
+            boost-program_options \
             rsync \
             socat; \
         apk add --update --no-cache -t .galera-build-deps \

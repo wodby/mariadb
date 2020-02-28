@@ -28,6 +28,7 @@ Overview:
 Supported tags and respective `Dockerfile` links:
 
 * `10.4`, `10`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+* `10.4-galera`, `10-galera`, `galera` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 * `10.3` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 * `10.2` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 * `10.1` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
@@ -200,6 +201,60 @@ Recommended_InnoDB_Buffer_Pool_Size FROM
 ```
 
 Source: from [stack exchange](https://dba.stackexchange.com/a/27472/134547).
+
+## Galera Cluster
+
+### Galera Cluster Documentation
+
+In-depth documentation about Galera would be too lengthy for this README file.
+Instead, refer to these authoritative documentation sources:
+* [MariaDB Galera Documentation](https://mariadb.com/kb/en/galera-cluster)
+* [Codership Galera Documentation](https://galeracluster.com/library/index.html)
+
+When these sources disagree (for example, `wsrep` options/system vars are slightly different), favor MariaDB's documentation over Codership's.
+
+### Galera-specific MariaDB configuration
+
+You ***must*** set the `WSREP_ON` environment variable if you want the container's `/etc/mysql/my.cnf` to include Galera/wsrep specific configuration settings.
+
+### Bootstrapping a Galera Cluster
+
+When starting a new cluster, the first node must bootstrap the cluster:
+```
+$ docker run -e WSREP_ON=ON -v data1:/var/lib/mysql --name galera-1 \
+    wodby/mariadb:galera --wsrep-new-cluster
+```
+When the first node is ready, the other nodes can join it (via its hostname or IP) and participate in the cluster:
+```
+$ docker run -e WSREP_ON=ON -v data2:/var/lib/mysql --name galera-2 \
+    wodby/mariadb:galera --wsrep-cluster-address="gcomm://<node-1>"
+```
+```
+$ docker run -e WSREP_ON=ON -v data3:/var/lib/mysql --name galera-3 \
+    wodby/mariadb:galera --wsrep-cluster-address="gcomm://<node-1>,<node-2>"
+```
+
+After the other nodes have joined the first, you should terminate the first container and `docker run` a new container without the `--wsrep-new-cluster` and join the other nodes.
+This is to prevent cluster re-bootstrap if the bootstrap container (or the host it's on) ever decided to restart.
+
+You may also want to restart the second node with a `--wsrep-cluster-address=gcomm://<node-1>,<node-3>`,
+or if you know all three node hostnames or IPs ahead of time, you can use `gcomm://<node-1>,<node-2>,<node-3>` for all node containers.
+
+### Using Galera Arbitrator Daemon for Small/Even Clusters
+
+For Galera clustering to work properly, it requires a quorum of nodes to agree on pending commits.
+
+Although a one-node cluster is possible (it will always agree with itself), the minimum number of "voters" to achieve quorum is 3.
+A two-node cluster is possible, but you must add a [Galera Arbitrator Daemon](https://galeracluster.com/library/documentation/arbitrator.html) (aka `garbd`) as add a third voter.
+In general, it's a good idea to use `garbd` for clusters with even numbers of nodes, to provide a tie-breaking vote in case half of the nodes agree and the other half disagree.
+
+The `galera`-tagged images also include `garbd`, which can be run instead of mariadb.
+```
+$ docker run wodby/mariadb:galera garbd --help
+Usage: garbd [options] [group address]
+[...]
+```
+Refer to the [documentation](https://galeracluster.com/library/documentation/arbitrator.html) for configuration details.
 
 ## Orchestration Actions
 

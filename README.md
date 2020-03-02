@@ -7,7 +7,7 @@
 
 ❗Known issue with bind mounts on macOS and Windows
 
-Latest MariaDB will fail to start on macOS and Windows with `Probably out of disk space` if you **use bind mounts** (volumes mounted from host). This (likely) happens because of recent changes in InnoDB, this bug addressed in [MariaDB JIRA](https://jira.mariadb.org/browse/MDEV-16015). 
+Latest MariaDB will fail to start on macOS and Windows with `Probably out of disk space` if you **use bind mounts** (volumes mounted from host). This (likely) happens because of recent changes in InnoDB, this bug addressed in [MariaDB JIRA](https://jira.mariadb.org/browse/MDEV-16015).
 
 Solutions:
 
@@ -16,23 +16,24 @@ Solutions:
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/mariadb:10.4-X.X.X`) which correspond to [git tags](https://github.com/wodby/mariadb/releases). We strongly recommend using images only with stability tags. 
+❗For better reliability we release images with stability tags (`wodby/mariadb:10.4-X.X.X`) which correspond to [git tags](https://github.com/wodby/mariadb/releases). We strongly recommend using images only with stability tags.
 
 Overview:
 
 * All images are based on Alpine Linux
 * Base image: [wodby/alpine](https://github.com/wodby/alpine)
-* [CircleCI builds](https://circleci.com/gh/wodby/mariadb) 
+* [CircleCI builds](https://circleci.com/gh/wodby/mariadb)
 * [Docker Hub](https://hub.docker.com/r/wodby/mariadb)
 
 Supported tags and respective `Dockerfile` links:
 
 * `10.4`, `10`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+* `10.4-galera`, `10-galera`, `galera` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 * `10.3` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 * `10.2` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 * `10.1` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 
-Credits to Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from Alpine's [packages repository](https://pkgs.alpinelinux.org/packages). 
+Credits to Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from Alpine's [packages repository](https://pkgs.alpinelinux.org/packages).
 
 ## Environment Variables
 
@@ -116,6 +117,64 @@ Default value for all versions:
 ibdata1:10M:autoextend:max:10G"
 ```
 
+### Additional Galera environment variables
+
+| Variable                                  | 10.4-galera         |
+| ----------------------------------------- | ------------------- |
+| [`WSREP_ON`]                              | `OFF`               |
+| [`MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT`]  | `0`                 |
+| [`WSREP_AUTO_INCREMENT_CONTROL`]          | `ON`                |
+| [`WSREP_CERTIFICATION_RULES`]             | `strict`            |
+| [`WSREP_CERTIFY_NONPK`]                   | `ON`                |
+| [`WSREP_CLUSTER_ADDRESS`]                 |                     |
+| [`WSREP_CLUSTER_NAME`]                    | `my_wsrep_cluster`  |
+| [`WSREP_CONVERT_LOCK_TO_TRX`]             | `OFF`               |
+| [`WSREP_DATA_HOME_DIR`]                   |                     |
+| [`WSREP_DBUG_OPTION`]                     |                     |
+| [`WSREP_DEBUG`]                           | `NONE`              |
+| [`WSREP_DESYNC`]                          | `OFF`               |
+| [`WSREP_DIRTY_READS`]                     | `OFF`               |
+| [`WSREP_DRUPAL_282555_WORKAROUND`]        | `OFF`               |
+| [`WSREP_FORCED_BINLOG_FORMAT`]            | `NONE`              |
+| [`WSREP_GTID_DOMAIN_ID`]                  | `0`                 |
+| [`WSREP_GTID_MODE`]                       | `OFF`               |
+| [`WSREP_IGNORE_APPLY_ERRORS`]             | `0`                 |
+| [`WSREP_LOAD_DATA_SPLITTING`]             | `OFF`               |
+| [`WSREP_LOG_CONFLICTS`]                   | `OFF`               |
+| [`WSREP_MAX_WS_ROWS`]                     | `0`                 |
+| [`WSREP_MAX_WS_SIZE`]                     | `2G`                |
+| [`WSREP_MYSQL_REPLICATION_BUNDLE`]        | `0`                 |
+| [`WSREP_NODE_ADDRESS`]                    | `0.0.0.0`           |
+| [`WSREP_NODE_INCOMING_ADDRESS`]           | `AUTO`              |
+| [`WSREP_NODE_NAME`]                       |                     |
+| [`WSREP_NOTIFY_CMD`]                      |                     |
+| [`WSREP_OSU_METHOD`]                      | `TOI`               |
+| [`WSREP_PROVIDER_OPTIONS`]                |                     |
+| [`WSREP_RECOVER`]                         | `OFF`               |
+| [`WSREP_REJECT_QUERIES`]                  | `NONE`              |
+| [`WSREP_REPLICATE_MYISAM`]                | `OFF`               |
+| [`WSREP_RESTART_SLAVE`]                   | `OFF`               |
+| [`WSREP_RETRY_AUTOCOMMIT`]                | `1`                 |
+| [`WSREP_SLAVE_FK_CHECKS`]                 | `ON`                |
+| [`WSREP_SLAVE_THREADS`]                   | `1`                 |
+| [`WSREP_SLAVE_UK_CHECKS`]                 | `OFF`               |
+| [`WSREP_SR_STORE`]                        | `table`             |
+| [`WSREP_SST_AUTH`]                        |                     |
+| [`WSREP_SST_DONOR`]                       |                     |
+| [`WSREP_SST_DONOR_REJECTS_QUERIES`]       | `OFF`               |
+| [`WSREP_SST_METHOD`]                      | `rsync`             |
+| [`WSREP_RECEIVE_ADDRESS`]                 | `AUTO`              |
+| [`WSREP_START_POSITION`]                  |                     |
+| [`WSREP_SYNC_WAIT`]                       | `0`                 |
+| [`WSREP_TRX_FRAGMENT_SIZE`]               | `0`                 |
+| [`WSREP_TRX_FRAGMENT_UNIT`]               | `bytes`             |
+
+| Galera Config Directive    | Override |
+| -------------------------- | -------- |
+| `binlog_format`            | `ROW`    |
+| `default_storage_engine`   | `InnoDB` |
+| `innodb_autoinc_lock_mode` | `2`      |
+
 ## Performance Tuning Recommendations
 
 ### Optimizer search depth
@@ -143,22 +202,76 @@ Recommended_InnoDB_Buffer_Pool_Size FROM
 
 Source: from [stack exchange](https://dba.stackexchange.com/a/27472/134547).
 
+## Galera Cluster
+
+### Galera Cluster Documentation
+
+In-depth documentation about Galera would be too lengthy for this README file.
+Instead, refer to these authoritative documentation sources:
+* [MariaDB Galera Documentation](https://mariadb.com/kb/en/galera-cluster)
+* [Codership Galera Documentation](https://galeracluster.com/library/index.html)
+
+When these sources disagree (for example, `wsrep` options/system vars are slightly different), favor MariaDB's documentation over Codership's.
+
+### Galera-specific MariaDB configuration
+
+You ***must*** set the `WSREP_ON` environment variable if you want the container's `/etc/mysql/my.cnf` to include Galera/wsrep specific configuration settings.
+
+### Bootstrapping a Galera Cluster
+
+When starting a new cluster, the first node must bootstrap the cluster:
+```
+$ docker run -e WSREP_ON=ON -v data1:/var/lib/mysql --name galera-1 \
+    wodby/mariadb:galera --wsrep-new-cluster
+```
+When the first node is ready, the other nodes can join it (via its hostname or IP) and participate in the cluster:
+```
+$ docker run -e WSREP_ON=ON -v data2:/var/lib/mysql --name galera-2 \
+    wodby/mariadb:galera --wsrep-cluster-address="gcomm://<node-1>"
+```
+```
+$ docker run -e WSREP_ON=ON -v data3:/var/lib/mysql --name galera-3 \
+    wodby/mariadb:galera --wsrep-cluster-address="gcomm://<node-1>,<node-2>"
+```
+
+After the other nodes have joined the first, you should terminate the first container and `docker run` a new container without the `--wsrep-new-cluster` and join the other nodes.
+This is to prevent cluster re-bootstrap if the bootstrap container (or the host it's on) ever decided to restart.
+
+You may also want to restart the second node with a `--wsrep-cluster-address=gcomm://<node-1>,<node-3>`,
+or if you know all three node hostnames or IPs ahead of time, you can use `gcomm://<node-1>,<node-2>,<node-3>` for all node containers.
+
+### Using Galera Arbitrator Daemon for Small/Even Clusters
+
+For Galera clustering to work properly, it requires a quorum of nodes to agree on pending commits.
+
+Although a one-node cluster is possible (it will always agree with itself), the minimum number of "voters" to achieve quorum is 3.
+A two-node cluster is possible, but you must add a [Galera Arbitrator Daemon](https://galeracluster.com/library/documentation/arbitrator.html) (aka `garbd`) as add a third voter.
+In general, it's a good idea to use `garbd` for clusters with even numbers of nodes, to provide a tie-breaking vote in case half of the nodes agree and the other half disagree.
+
+The `galera`-tagged images also include `garbd`, which can be run instead of mariadb.
+```
+$ docker run wodby/mariadb:galera garbd --help
+Usage: garbd [options] [group address]
+[...]
+```
+Refer to the [documentation](https://galeracluster.com/library/documentation/arbitrator.html) for configuration details.
+
 ## Orchestration Actions
 
 Usage:
 ```
 make COMMAND [params ...]
- 
+
 commands:
-    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db root_password host ignore="table1;table2;cache_%"] 
-    backup filepath=</path/to/backup.sql.gz> [root_password host db] 
-    query query [db user password host] 
-    query-silent query [db user password host] 
+    import source=</path/to/dump.zip or http://example.com/url/to/dump.sql.gz> [db root_password host ignore="table1;table2;cache_%"]
+    backup filepath=</path/to/backup.sql.gz> [root_password host db]
+    query query [db user password host]
+    query-silent query [db user password host]
     query-root query [db root_password host]
     check-ready [root_password host max_try wait_seconds]  
     mysql-upgrade [root_password host]  
     mysql-check [root_password host db]  
-    
+
 default params values:
     user $MYSQL_USER
     password $MYSQL_PASSWORD
@@ -177,8 +290,8 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 
 [`MARIADB_PLUGIN_LOAD`]: https://mariadb.com/kb/en/library/plugin-overview/#installing-a-plugin-with-plugin-load
 [`MYSQL_BACK_LOG`]: https://mariadb.com/kb/en/library/server-system-variables#back_log
-[`MYSQL_CHARACTER_SET_FILESYSTEM`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_filesystem 
-[`MYSQL_CHARACTER_SET_SERVER`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_server 
+[`MYSQL_CHARACTER_SET_FILESYSTEM`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_filesystem
+[`MYSQL_CHARACTER_SET_SERVER`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_server
 [`MYSQL_COLLATION_SERVER`]: https://mariadb.com/kb/en/library/server-system-variables#collation_server
 [`MYSQL_CONNECT_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables/#connect_timeout
 [`MYSQL_DEFAULT_STORAGE_ENGINE`]: https://mariadb.com/kb/en/library/server-system-variables#default_storage_engine
@@ -235,3 +348,49 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 [`MYSQL_TMP_TABLE_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#tmp_table_size
 [`MYSQL_WAIT_TIMEOUT`]: https://mariadb.com/kb/en/library/server-system-variables#wait_timeout
 [`MYSQL_TRANSACTION_ISOLATION`]: https://mariadb.com/kb/en/library/server-system-variables#tx_isolation
+[`WSREP_ON`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_on
+[`WSREP_AUTO_INCREMENT_CONTROL`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_auto_increment_control
+[`WSREP_CERTIFICATION_RULES`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_certification_rules
+[`WSREP_CERTIFY_NONPK`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_certify_nonpk
+[`WSREP_CLUSTER_ADDRESS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_cluster_address
+[`WSREP_CLUSTER_NAME`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_cluster_name
+[`WSREP_CONVERT_LOCK_TO_TRX`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_convert_lock_to_trx
+[`WSREP_DATA_HOME_DIR`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_data_home_dir
+[`WSREP_DBUG_OPTION`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_dbug_option
+[`WSREP_DEBUG`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_debug
+[`WSREP_DESYNC`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_desync
+[`WSREP_DIRTY_READS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_dirty_reads
+[`WSREP_DRUPAL_282555_WORKAROUND`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_drupal_282555_workaround
+[`WSREP_FORCED_BINLOG_FORMAT`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_forced_binlog_format
+[`WSREP_GTID_DOMAIN_ID`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_gtid_domain_id
+[`WSREP_GTID_MODE`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_gtid_mode
+[`WSREP_IGNORE_APPLY_ERRORS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_ignore_apply_errors
+[`WSREP_LOAD_DATA_SPLITTING`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_load_data_splitting
+[`WSREP_LOG_CONFLICTS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_log_conflicts
+[`WSREP_MAX_WS_ROWS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_max_ws_rows
+[`WSREP_MAX_WS_SIZE`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_max_ws_size
+[`WSREP_MYSQL_REPLICATION_BUNDLE`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_mysql_replication_bundle
+[`WSREP_NODE_ADDRESS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_node_address
+[`WSREP_NODE_INCOMING_ADDRESS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_node_incoming_address
+[`WSREP_NODE_NAME`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_node_name
+[`WSREP_NOTIFY_CMD`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_notify_cmd
+[`WSREP_OSU_METHOD`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_osu_method
+[`WSREP_PROVIDER_OPTIONS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_provider_options
+[`WSREP_RECOVER`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_recover
+[`WSREP_REJECT_QUERIES`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_reject_queries
+[`WSREP_REPLICATE_MYISAM`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_replicate_myisam
+[`WSREP_RESTART_SLAVE`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_restart_slave
+[`WSREP_RETRY_AUTOCOMMIT`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_retry_autocommit
+[`WSREP_SLAVE_FK_CHECKS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_slave_fk_checks
+[`WSREP_SLAVE_THREADS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_slave_threads
+[`WSREP_SLAVE_UK_CHECKS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_slave_uk_checks
+[`WSREP_SR_STORE`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_sr_store
+[`WSREP_SST_AUTH`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_sst_auth
+[`WSREP_SST_DONOR`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_sst_donor
+[`WSREP_SST_DONOR_REJECTS_QUERIES`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_sst_donor_rejects_queries
+[`WSREP_SST_METHOD`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_sst_method
+[`WSREP_RECEIVE_ADDRESS`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_sst_receive_address
+[`WSREP_START_POSITION`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_start_position
+[`WSREP_SYNC_WAIT`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_sync_wait
+[`WSREP_TRX_FRAGMENT_SIZE`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_trx_fragment_size
+[`WSREP_TRX_FRAGMENT_UNIT`]:  https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_trx_fragment_unit

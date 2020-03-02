@@ -84,6 +84,10 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - mariadb-104g:
+          filters:
+            tags:
+              only: /.*/
       - mariadb-103:
           filters:
             tags:

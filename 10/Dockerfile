@@ -47,6 +47,7 @@ RUN set -xe; \
         linux-headers \
         ncurses-dev \
         patch \
+        pcre-dev \
         pcre2-dev \
         readline-dev \
         xz-dev \

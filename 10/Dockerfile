@@ -22,11 +22,15 @@ RUN set -xe; \
     apk add --update --no-cache -t .mariadb-run-deps \
         libaio \
         libstdc++ \
+        libxml2 \
         linux-pam \
         make \
+        pcre2 \
         pwgen \
         sudo \
-        tzdata; \
+        tzdata \
+        xz-libs \
+        zlib; \
     \
     apk add --update --no-cache -t .mariadb-build-deps \
         attr \
@@ -43,7 +47,9 @@ RUN set -xe; \
         linux-headers \
         ncurses-dev \
         patch \
+        pcre2-dev \
         readline-dev \
+        xz-dev \
         zlib-dev; \
     \
     mariadb_url="https://downloads.mariadb.com/MariaDB/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
@@ -90,12 +96,13 @@ RUN set -xe; \
     for i in /tmp/patches/"${MARIADB_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
     \
     cmake . -DBUILD_CONFIG=mysql_release \
+    		-DCMAKE_BUILD_TYPE=MinSizeRel \
     		-DCMAKE_INSTALL_PREFIX=/usr \
     		-DSYSCONFDIR=/etc/mysql \
     		-DMYSQL_DATADIR=/var/lib/mysql \
     		-DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
-    		-DDEFAULT_CHARSET=utf8 \
-    		-DDEFAULT_COLLATION=utf8_general_ci \
+		    -DDEFAULT_CHARSET=utf8mb4 \
+		    -DDEFAULT_COLLATION=utf8mb4_general_ci \
     		-DENABLED_LOCAL_INFILE=ON \
     		-DINSTALL_INFODIR=share/mysql/docs \
     		-DINSTALL_MANDIR=share/man \
@@ -107,21 +114,50 @@ RUN set -xe; \
     		-DINSTALL_MYSQLSHAREDIR=share/mysql \
     		-DINSTALL_DOCDIR=share/mysql/docs \
     		-DINSTALL_SHAREDIR=share/mysql \
-    		-DWITH_READLINE=ON \
-    		-DWITH_ZLIB=system \
-    		-DWITH_SSL=system \
-    		-DWITH_LIBWRAP=OFF \
-    		-DWITH_JEMALLOC=no \
-    		-DWITH_EXTRA_CHARSETS=complex \
-    		-DWITH_EMBEDDED_SERVER=ON \
-    		-DWITH_ARCHIVE_STORAGE_ENGINE=1 \
-    		-DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
-    		-DWITH_INNOBASE_STORAGE_ENGINE=1 \
-    		-DWITH_PARTITION_STORAGE_ENGINE=1 \
-    		-DPLUGIN_TOKUDB=NO \
-    		-DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 \
-    		-DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
-    		-DWITHOUT_PBXT_STORAGE_ENGINE=1; \
+    		-DCONNECT_WITH_MYSQL=ON \
+            -DCONNECT_WITH_LIBXML2=system \
+            -DCONNECT_WITH_ODBC=NO \
+            -DCONNECT_WITH_JDBC=NO \
+    		-DPLUGIN_ARCHIVE=YES \
+            -DPLUGIN_ARIA=YES \
+            -DPLUGIN_BLACKHOLE=YES \
+            -DPLUGIN_CASSANDRA=NO \
+            -DPLUGIN_CSV=YES \
+            -DPLUGIN_MYISAM=YES \
+            -DPLUGIN_MROONGA=NO \
+            -DPLUGIN_OQGRAPH=NO \
+            -DPLUGIN_PARTITION=YES \
+            -DPLUGIN_ROCKSDB=YES \
+            -DPLUGIN_SPHINX=NO \
+            -DPLUGIN_TOKUDB=NO \
+            -DPLUGIN_AUTH_GSSAPI=NO \
+            -DPLUGIN_AUTH_GSSAPI_CLIENT=OFF \
+            -DPLUGIN_CRACKLIB_PASSWORD_CHECK=NO \
+    		-DWITH_ASAN=OFF \
+            -DWITH_EMBEDDED_SERVER=ON \
+            -DWITH_EXTRA_CHARSETS=complex \
+            -DWITH_INNODB_BZIP2=OFF \
+            -DWITH_INNODB_LZ4=OFF \
+            -DWITH_INNODB_LZMA=ON \
+            -DWITH_INNODB_LZO=OFF \
+            -DWITH_INNODB_SNAPPY=OFF \
+            -DWITH_ROCKSDB_BZIP2=OFF \
+            -DWITH_ROCKSDB_JEMALLOC=OFF \
+            -DWITH_ROCKSDB_LZ4=OFF \
+            -DWITH_ROCKSDB_ZSTD=OFF \
+            -DWITH_ROCKSDB_SNAPPY=OFF \
+            -DWITH_JEMALLOC=NO \
+            -DWITH_LIBARCHIVE=system \
+            -DWITH_LIBNUMA=NO \
+            -DWITH_LIBWRAP=OFF \
+            -DWITH_LIBWSEP=OFF \
+            -DWITH_MARIABACKUP=ON \
+            -DWITH_PCRE=system \
+            -DWITH_READLINE=ON \
+            -DWITH_SYSTEMD=no \
+            -DWITH_SSL=system \
+            -DWITH_VALGRIND=OFF \
+            -DWITH_ZLIB=system; \
     \
     make -j "${NPROC:-$(nproc)}"; \
     make install; \

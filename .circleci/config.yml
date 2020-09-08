@@ -77,21 +77,6 @@ jobs:
     - run: make test
     - run: . ../release.sh
 
-  mariadb-101:
-    working_directory: ~/repo/10
-    machine: true
-    environment:
-    - ALPINE_VER: 3.8
-    - BASE_IMAGE_STABILITY_TAG: 2.5.0
-    - MARIADB_VER: 10.1.46
-    - TAGS: 10.1
-    steps:
-    - checkout:
-        path: ~/repo
-    - run: make
-    - run: make test
-    - run: . ../release.sh
-
 workflows:
   build-test-release:
     jobs:
@@ -112,10 +97,6 @@ workflows:
           tags:
             only: /.*/
     - mariadb-102:
-        filters:
-          tags:
-            only: /.*/
-    - mariadb-101:
         filters:
           tags:
             only: /.*/

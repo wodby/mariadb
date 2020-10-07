@@ -7,7 +7,7 @@ jobs:
     environment:
     - ALPINE_VER: 3.12
     - BASE_IMAGE_STABILITY_TAG: 2.5.0
-    - MARIADB_VER: 10.5.5
+    - MARIADB_VER: 10.5.6
     - TAGS: 10.5,10,latest
     steps:
     - checkout:

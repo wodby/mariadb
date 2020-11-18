@@ -1,0 +1,67 @@
+name: Build docker image
+
+on:
+  push:
+    branches:
+    - master
+
+    tags:
+    - '*'
+
+env:
+  BASE_IMAGE_STABILITY_TAG: 2.5.1
+  ALPINE_VER: 3.12
+
+jobs:
+  mariadb-10.5:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 10.5.8
+        tags: 10.5,10,latest
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        workdir: 10
+  mariadb-10.4:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 10.4.17
+        tags: 10.4
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        workdir: 10
+  mariadb-10.3:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 10.3.27
+        tags: 10.3
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        workdir: 10
+  mariadb-10.2:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 10.2.36
+        tags: 10.2
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        workdir: 10

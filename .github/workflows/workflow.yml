@@ -13,7 +13,7 @@ env:
   ALPINE_VER: 3.12
 
 jobs:
-  mariadb-10.5:
+  mariadb-105:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: 10
-  mariadb-10.4:
+  mariadb-104:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: 10
-  mariadb-10.3:
+  mariadb-103:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -52,7 +52,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: 10
-  mariadb-10.2:
+  mariadb-102:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -e
 
 if [[ -n "${DEBUG}" ]]; then
     set -x
@@ -12,6 +12,7 @@ db=$3
 filepath=$4
 ignore_tables=$5
 
+tmp_dir="/tmp/$RANDOM"
 ignore=()
 
 IFS=';' read -ra ADDR <<< "${ignore_tables}"
@@ -28,12 +29,15 @@ for table in "${ADDR[@]}"; do
     fi
 done
 
+mkdir -p "${tmp_dir}"
+cd "${tmp_dir}"
+
 mysqldump -h"${host}" -uroot -p"${root_password}" \
     --single-transaction --no-data --allow-keywords --skip-triggers \
     "${db}" | gzip > "${filepath}"
 
 mysqldump -h"${host}" -uroot -p"${root_password}" \
     --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
-    "${db}" | gzip > "${filepath}"
+    "${db}" | gzip >> "${filepath}"
 
 stat -c "RESULT=%s" "${filepath}"

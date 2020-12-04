@@ -1,4 +1,4 @@
-.PHONY: import backup query query-silent query-root check-ready check-live
+.PHONY: import backup query query-silent query-root check-ready check-live create-db drop-db create-user grant-user drop-user
 
 check_defined = \
     $(strip $(foreach 1,$1, \
@@ -35,6 +35,26 @@ query:
 query-silent:
 	$(call check_defined, query)
 	@mysql --silent -u$(user) -p$(password) -h$(host) -e "$(query)" $(db)
+
+create-db:
+	$(call check_defined, name)
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\`;"
+
+drop-db:
+	$(call check_defined, name)
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP DATABASE \`$(name)\`;"
+
+create-user:
+	$(call check_defined, username, password)
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER '$(username)'@'%' IDENTIFIED BY '$(password)' ;"
+
+grant-user:
+	$(call check_defined, username, db)
+	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.* TO '$(username)'@'%' ;"
+
+drop-user:
+	$(call check_defined, username)
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER '$(username)'@'%'"
 
 query-root:
 	$(call check_defined, query)

@@ -42,7 +42,7 @@ create-db:
 
 drop-db:
 	$(call check_defined, name)
-	mysql -uroot -p$(root_password) -h$(host) -e "DROP DATABASE \`$(name)\`;"
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP DATABASE IF EXISTS \`$(name)\`;"
 
 create-user:
 	$(call check_defined, username, password)
@@ -54,7 +54,7 @@ grant-user:
 
 drop-user:
 	$(call check_defined, username)
-	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER '$(username)'@'%'"
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER IF EXISTS '$(username)'@'%'"
 
 query-root:
 	$(call check_defined, query)

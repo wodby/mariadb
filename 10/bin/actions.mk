@@ -1,4 +1,4 @@
-.PHONY: import backup query query-silent query-root check-ready check-live create-db drop-db create-user grant-user drop-user
+.PHONY: import backup query query-silent query-root check-ready check-live create-db drop-db create-user drop-user grant-user-db revoke-user-db
 
 check_defined = \
     $(strip $(foreach 1,$1, \
@@ -48,13 +48,17 @@ create-user:
 	$(call check_defined, username, password)
 	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER '$(username)'@'%' IDENTIFIED BY '$(password)' ;"
 
-grant-user:
-	$(call check_defined, username, db)
-	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.* TO '$(username)'@'%' ;"
-
 drop-user:
 	$(call check_defined, username)
 	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER IF EXISTS '$(username)'@'%'"
+
+grant-user-db:
+	$(call check_defined, username, db)
+	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.* TO '$(username)'@'%' ;"
+
+revoke-user-db:
+	$(call check_defined, username, db)
+	mysql -uroot -p$(root_password) -h$(host) -e "REVOKE ALL ON \`$(db)\`.* FROM '$(username)'@'%' ;"
 
 query-root:
 	$(call check_defined, query)

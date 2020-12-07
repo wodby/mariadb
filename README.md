@@ -273,8 +273,9 @@ commands:
     create-db name 
     drop-db name
     create-user username password
-    grant-user username db
     drop-user username
+    grant-user-db username db
+    revoke-user-db username db
 
 default params values:
     user $MYSQL_USER

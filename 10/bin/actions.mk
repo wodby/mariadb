@@ -17,6 +17,8 @@ max_try ?= 1
 wait_seconds ?= 1
 delay_seconds ?= 0
 ignore ?= ""
+charset ?= utf8
+collation ?= utf8_general_ci
 
 default: query
 
@@ -38,7 +40,7 @@ query-silent:
 
 create-db:
 	$(call check_defined, name)
-	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\`;"
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\` CHARACTER SET $(charset) COLLATE $(collation);"
 
 drop-db:
 	$(call check_defined, name)

@@ -270,7 +270,7 @@ commands:
     check-ready [root_password host max_try wait_seconds]  
     mysql-upgrade [root_password host]  
     mysql-check [root_password host db]  
-    create-db name 
+    create-db name [charset collation]
     drop-db name
     create-user username password
     drop-user username

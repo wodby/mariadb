@@ -40,27 +40,27 @@ query-silent:
 
 create-db:
 	$(call check_defined, name)
-	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE $(name) CHARACTER SET $(charset) COLLATE $(collation);"
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\` CHARACTER SET \`$(charset)\` COLLATE \`$(collation)\`;"
 
 drop-db:
 	$(call check_defined, name)
-	mysql -uroot -p$(root_password) -h$(host) -e "DROP DATABASE IF EXISTS $(name);"
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP DATABASE IF EXISTS \`$(name)\`;"
 
 create-user:
 	$(call check_defined, username, password)
-	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER $(username)@'%' IDENTIFIED BY $(password);"
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER \`$(username)\`@\`%\` IDENTIFIED BY \`$(password)\`;"
 
 drop-user:
 	$(call check_defined, username)
-	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER IF EXISTS $(username)@'%';"
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER IF EXISTS \`$(username)\`@\`%\`;"
 
 grant-user-db:
 	$(call check_defined, username, db)
-	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON $(db).* TO $(username)@'%';"
+	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.* TO \`$(username)\`@\`%\`;"
 
 revoke-user-db:
 	$(call check_defined, username, db)
-	mysql -uroot -p$(root_password) -h$(host) -e "REVOKE ALL ON $(db).* FROM $(username)@'%';"
+	mysql -uroot -p$(root_password) -h$(host) -e "REVOKE ALL ON \`$(db)\`.* FROM \`$(username)\`@\`%\`;"
 
 query-root:
 	$(call check_defined, query)

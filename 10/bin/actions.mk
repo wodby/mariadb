@@ -40,28 +40,27 @@ query-silent:
 
 create-db:
 	$(call check_defined, name)
-	# Clean up from single quotes.
-	echo "CREATE DATABASE \`$(name)\` CHARACTER SET \`$(charset)\` COLLATE \`$(collation)\`;" | sed -e "s/'//g" | mysql -uroot -p$(root_password) -h$(host)
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\` CHARACTER SET $(charset) COLLATE $(collation);"
 
 drop-db:
 	$(call check_defined, name)
-	echo "DROP DATABASE IF EXISTS \`$(name)\`;" | sed -e "s/'//g" | mysql -uroot -p$(root_password) -h$(host)
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP DATABASE IF EXISTS \`$(name)\`;"
 
 create-user:
 	$(call check_defined, username, password)
-	echo "CREATE USER \`$(username)\`@\`%\` IDENTIFIED BY \`$(password)\`;" | sed -e "s/'//g" | mysql -uroot -p$(root_password) -h$(host)
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER \`$(username)\`@\`%\` IDENTIFIED BY $(password);"
 
 drop-user:
 	$(call check_defined, username)
-	echo "DROP USER IF EXISTS \`$(username)\`@\`%\`;" | sed -e "s/'//g" | mysql -uroot -p$(root_password) -h$(host)
+	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER IF EXISTS \`$(username)\`@\`%\`;"
 
 grant-user-db:
 	$(call check_defined, username, db)
-	echo "GRANT ALL ON \`$(db)\`.* TO \`$(username)\`@\`%\`;" | sed -e "s/'//g" | mysql -uroot -p$(root_password) -h$(host)
+	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.* TO \`$(username)\`@\`%\`;"
 
 revoke-user-db:
 	$(call check_defined, username, db)
-	echo "REVOKE ALL ON \`$(db)\`.* FROM \`$(username)\`@\`%\`;" | sed -e "s/'//g" | mysql -uroot -p$(root_password) -h$(host)
+	mysql -uroot -p$(root_password) -h$(host) -e "REVOKE ALL ON \`$(db)\`.* FROM \`$(username)\`@\`%\`;"
 
 query-root:
 	$(call check_defined, query)

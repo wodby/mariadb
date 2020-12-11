@@ -40,26 +40,37 @@ query-silent:
 
 create-db:
 	$(call check_defined, name)
-	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\` CHARACTER SET $(charset) COLLATE $(collation);"
+	$(eval override charset := $(shell echo "${charset}" | tr -d \'\"))
+	$(eval override collation := $(shell echo "${collation}" | tr -d \'\"))
+	$(eval override name := $(shell echo "${name}" | tr -d \'\"))
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\` CHARACTER SET '$(charset)' COLLATE '$(collation)';"
 
 drop-db:
 	$(call check_defined, name)
+	$(eval override name := $(shell echo "${name}" | tr -d \'\"))
 	mysql -uroot -p$(root_password) -h$(host) -e "DROP DATABASE IF EXISTS \`$(name)\`;"
 
 create-user:
 	$(call check_defined, username, password)
-	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER \`$(username)\`@\`%\` IDENTIFIED BY $(password);"
+	$(eval override password := $(shell echo "${password}" | tr -d \'\"))
+	$(eval override username := $(shell echo "${username}" | tr -d \'\"))
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER \`$(username)\`@\`%\` IDENTIFIED BY '$(password)';"
 
 drop-user:
 	$(call check_defined, username)
+	$(eval override username := $(shell echo "${username}" | tr -d \'\"))
 	mysql -uroot -p$(root_password) -h$(host) -e "DROP USER IF EXISTS \`$(username)\`@\`%\`;"
 
 grant-user-db:
 	$(call check_defined, username, db)
+	$(eval override username := $(shell echo "${username}" | tr -d \'\"))
+	$(eval override db := $(shell echo "${db}" | tr -d \'\"))
 	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.\`*\` TO \`$(username)\`@\`%\`;"
 
 revoke-user-db:
 	$(call check_defined, username, db)
+	$(eval override username := $(shell echo "${username}" | tr -d \'\"))
+	$(eval override db := $(shell echo "${db}" | tr -d \'\"))
 	mysql -uroot -p$(root_password) -h$(host) -e "REVOKE ALL ON \`$(db)\`.\`*\` FROM \`$(username)\`@\`%\`;"
 
 query-root:

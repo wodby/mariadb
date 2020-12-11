@@ -56,11 +56,11 @@ drop-user:
 
 grant-user-db:
 	$(call check_defined, username, db)
-	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.* TO \`$(username)\`@\`%\`;"
+	mysql -uroot -p$(root_password) -h$(host) -e "GRANT ALL ON \`$(db)\`.\`*\` TO \`$(username)\`@\`%\`;"
 
 revoke-user-db:
 	$(call check_defined, username, db)
-	mysql -uroot -p$(root_password) -h$(host) -e "REVOKE ALL ON \`$(db)\`.* FROM \`$(username)\`@\`%\`;"
+	mysql -uroot -p$(root_password) -h$(host) -e "REVOKE ALL ON \`$(db)\`.\`*\` FROM \`$(username)\`@\`%\`;"
 
 query-root:
 	$(call check_defined, query)

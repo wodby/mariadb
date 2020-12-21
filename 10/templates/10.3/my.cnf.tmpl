@@ -13,10 +13,19 @@ port                                    = {{ getenv "MYSQL_PORT" "3306" }}
 socket                                  = /var/run/mysqld/mysqld.sock
 default-character-set                   = {{ getenv "MYSQL_CLIENT_DEFAULT_CHARACTER_SET" "utf8" }}
 
-{{ if getenv "MARIADB_PLUGIN_LOAD" }}
 [mariadb]
+{{ if getenv "MARIADB_PLUGIN_LOAD" }}
 plugin_load                             = {{ getenv "MARIADB_PLUGIN_LOAD" }}
 {{ end }}
+{{- if getenv "MARIADB_SSL_CERT" }}
+ssl_cert                                = {{ getenv "MARIADB_SSL_CERT" }}
+{{- end }}
+{{- if getenv "MARIADB_SSL_KEY" }}
+ssl_key                                 = {{ getenv "MARIADB_SSL_KEY" }}
+{{- end }}
+{{- if getenv "MARIADB_SSL_CA" }}
+ssl_ca                                  = {{ getenv "MARIADB_SSL_CA" }}
+{{- end }}
 
 [mysqld]
 user                                    = mysql

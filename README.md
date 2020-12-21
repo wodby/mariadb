@@ -39,6 +39,10 @@ Credits to Alpine Linux team for patches for better musl compatibility of MariaD
 | Variable                                 | 10.5                 | 10.4              | 10.3              | 10.2              |
 | ---------------------------------------- | ----------------     | ----------------  | ----------------  | ----------------- |
 | [`MARIADB_PLUGIN_LOAD`]                  |                      |                   |                   |                   |
+| [`MARIADB_SSL_CERT`]                     |                      |                   |                   |                   |
+| [`MARIADB_SSL_KEY`]                      |                      |                   |                   |                   |
+| [`MARIADB_SSL_CA`]                       |                      |                   |                   |                   |
+| [`MARIADB_TLS_VERSION`]                  | `TLSv1.2,TLSv1.3`    | `TLSv1.2,TLSv1.3` |                   |                   |
 | [`MYSQL_BACK_LOG`]                       | `100`                | `100`             | `100`             | `100`             |
 | [`MYSQL_CHARACTER_SET_FILESYSTEM`]       | `binary`             | `utf8`            | `utf8`            | `utf8`            |
 | [`MYSQL_CHARACTER_SET_SERVER`]           | `utf8mb4`            | `utf8`            | `utf8`            | `utf8`            |
@@ -294,6 +298,10 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 
 
 [`MARIADB_PLUGIN_LOAD`]: https://mariadb.com/kb/en/library/plugin-overview/#installing-a-plugin-with-plugin-load
+[`MARIADB_SSL_CERT`]: https://mariadb.com/kb/en/ssltls-system-variables/#ssl_cert
+[`MARIADB_SSL_KEY`]: https://mariadb.com/kb/en/ssltls-system-variables/#ssl_key
+[`MARIADB_SSL_CA`]: https://mariadb.com/kb/en/ssltls-system-variables/#ssl_ca
+[`MARIADB_TLS_VERSION`]: https://mariadb.com/kb/en/ssltls-system-variables/#tls_version
 [`MYSQL_BACK_LOG`]: https://mariadb.com/kb/en/library/server-system-variables#back_log
 [`MYSQL_CHARACTER_SET_FILESYSTEM`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_filesystem
 [`MYSQL_CHARACTER_SET_SERVER`]: https://mariadb.com/kb/en/library/server-system-variables#character_set_server

@@ -169,7 +169,7 @@ RUN set -xe; \
     mkdir -p \
         /var/run/mysqld \
         /var/lib/mysql \
-        /etc/mysql \
+        /etc/mysql/certificates \
         /docker-entrypoint-initdb.d \
         "${BACKUPS_DIR}"; \
     \

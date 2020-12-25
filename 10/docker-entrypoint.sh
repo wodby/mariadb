@@ -3,6 +3,7 @@
 set -e
 
 if [[ -n "${DEBUG}" ]]; then
+    ls -la /etc/mysql/certificates
     set -x
 fi
 

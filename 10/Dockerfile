@@ -162,7 +162,7 @@ RUN set -xe; \
     make install; \
     \
     # Script to fix volumes permissions via sudo.
-    echo "chown mysql:mysql /var/lib/mysql ${BACKUPS_DIR}" > /usr/local/bin/init_volumes; \
+    echo "chown mysql:mysql /var/lib/mysql ${BACKUPS_DIR}; chown -R mysql:mysql /etc/mysql/certificates" > /usr/local/bin/init_volumes; \
     chmod +x /usr/local/bin/init_volumes; \
     echo 'mysql ALL=(root) NOPASSWD: /usr/local/bin/init_volumes' > /etc/sudoers.d/mysql; \
     \

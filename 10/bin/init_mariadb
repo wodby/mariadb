@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # CREDITS TO https://github.com/docker-library/mariadb for this init script.
-# Replace date flags for alpine variant.
+# Changes:
+# - replace date flags for busybox variant
+# - remove exec
 
 if [[ -n "${DEBUG}" ]]; then
     set -x

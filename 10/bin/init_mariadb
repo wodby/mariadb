@@ -353,7 +353,6 @@ _main() {
 			echo
 		fi
 	fi
-	exec "$@"
 }
 
 # If we are sourced from elsewhere, don't perform any further actions

@@ -11,17 +11,17 @@
 
 Overview:
 
-* All images based on Alpine Linux
-* Base image: [wodby/alpine](https://github.com/wodby/alpine)
+- All images based on Alpine Linux
+- Base image: [wodby/alpine](https://github.com/wodby/alpine)
 - [GitHub actions builds](https://github.com/wodby/mariadb/actions)
-* [Docker Hub](https://hub.docker.com/r/wodby/mariadb)
+- [Docker Hub](https://hub.docker.com/r/wodby/mariadb)
 
 Supported tags and respective `Dockerfile` links:
 
-* `10.5`, `10`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-* `10.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-* `10.3` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-* `10.2` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+- `10.5`, `10`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+- `10.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+- `10.3` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+- `10.2` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 
 Credits to Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from Alpine's [packages repository](https://pkgs.alpinelinux.org/packages).
 

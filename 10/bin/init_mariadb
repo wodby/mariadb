@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # CREDITS TO https://github.com/docker-library/mariadb for this init script.
+# Replace date flags for alpine variant.
 
 if [[ -n "${DEBUG}" ]]; then
     set -x
@@ -12,7 +13,7 @@ shopt -s nullglob
 # logging functions
 mysql_log() {
 	local type="$1"; shift
-	printf '%s [%s] [Entrypoint]: %s\n' "$(date --rfc-3339=seconds)" "$type" "$*"
+	printf '%s [%s] [Entrypoint]: %s\n' "$(date -Iseconds)" "$type" "$*"
 }
 mysql_note() {
 	mysql_log Note "$@"

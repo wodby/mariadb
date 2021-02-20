@@ -30,7 +30,7 @@ endif
 REPO = wodby/mariadb
 NAME = mariadb-$(MARIADB_VER_MINOR)
 
-.PHONY: build buildx-build buildx-push test push shell run start stop logs clean release
+.PHONY: build buildx-build buildx-push buildx-build-amd64 test push shell run start stop logs clean release
 
 default: build
 
@@ -41,6 +41,20 @@ build:
 	    --build-arg GALERA_VER=$(GALERA_VER) \
 	    --build-arg WSREP_VER=$(WSREP_VER) \
 	    --build-arg NPROC=$(NPROC) ./
+
+# --load doesn't work with multiple platforms https://github.com/docker/buildx/issues/59
+# we need to save cache to run tests first.
+buildx-build-amd64:
+	docker buildx build --platform linux/amd64 -t $(REPO):$(TAG) \
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg MARIADB_VER=$(MARIADB_VER) \
+	    --build-arg GALERA_VER=$(GALERA_VER) \
+	    --build-arg WSREP_VER=$(WSREP_VER) \
+	    --build-arg NPROC=$(NPROC) \
+		--cache-from "type=local,src=/tmp/.buildx-cache" \
+		--cache-to "type=local,dest=/tmp/.buildx-cache" \
+		--load \
+	    ./
 
 buildx-build:
 	docker buildx build --platform $(PLATFORM) -t $(REPO):$(TAG) \

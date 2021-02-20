@@ -51,8 +51,6 @@ buildx-build-amd64:
 	    --build-arg GALERA_VER=$(GALERA_VER) \
 	    --build-arg WSREP_VER=$(WSREP_VER) \
 	    --build-arg NPROC=$(NPROC) \
-		--cache-from "type=local,src=/tmp/.buildx-cache" \
-		--cache-to "type=local,dest=/tmp/.buildx-cache" \
 		--load \
 	    ./
 

@@ -25,7 +25,7 @@ Supported tags and respective `Dockerfile` links:
 
 Credits to Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from Alpine's [packages repository](https://pkgs.alpinelinux.org/packages).
 
-All images built for `linux/amd64`, version 10.5 image additionally built for `linux/arm64`
+All images built for `linux/amd64` and `linux/arm64`
 
 ## Environment Variables
 

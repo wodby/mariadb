@@ -10,6 +10,8 @@ ALPINE_VER ?= 3.12
 
 NPROC =
 
+PLATFORM ?= linux/amd64
+
 ifeq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(ALPINE_VER)
 else
@@ -28,12 +30,28 @@ endif
 REPO = wodby/mariadb
 NAME = mariadb-$(MARIADB_VER_MINOR)
 
-.PHONY: build test push shell run start stop logs clean release
+.PHONY: build buildx-build buildx-push test push shell run start stop logs clean release
 
 default: build
 
 build:
 	docker build -t $(REPO):$(TAG) \
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg MARIADB_VER=$(MARIADB_VER) \
+	    --build-arg GALERA_VER=$(GALERA_VER) \
+	    --build-arg WSREP_VER=$(WSREP_VER) \
+	    --build-arg NPROC=$(NPROC) ./
+
+buildx-build:
+	docker buildx build --platform $(PLATFORM) -t $(REPO):$(TAG) \
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg MARIADB_VER=$(MARIADB_VER) \
+	    --build-arg GALERA_VER=$(GALERA_VER) \
+	    --build-arg WSREP_VER=$(WSREP_VER) \
+	    --build-arg NPROC=$(NPROC) ./
+
+buildx-push:
+	docker buildx build --push --platform $(PLATFORM) -t $(REPO):$(TAG) \
 	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 	    --build-arg MARIADB_VER=$(MARIADB_VER) \
 	    --build-arg GALERA_VER=$(GALERA_VER) \

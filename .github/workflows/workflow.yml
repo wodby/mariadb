@@ -11,21 +11,24 @@ on:
 env:
   BASE_IMAGE_STABILITY_TAG: 2.6.2
   ALPINE_VER: 3.12
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   mariadb-105:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
         version: 10.5.8
         tags: 10.5,10,latest
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: 10
+        platform: linux/amd64,linux/arm64
   mariadb-104:
     runs-on: ubuntu-latest
     steps:
@@ -34,10 +37,6 @@ jobs:
       with:
         version: 10.4.17
         tags: 10.4
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: 10
   mariadb-103:
     runs-on: ubuntu-latest
@@ -47,10 +46,6 @@ jobs:
       with:
         version: 10.3.27
         tags: 10.3
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: 10
   mariadb-102:
     runs-on: ubuntu-latest
@@ -60,8 +55,4 @@ jobs:
       with:
         version: 10.2.36
         tags: 10.2
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: 10

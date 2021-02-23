@@ -71,7 +71,7 @@ jobs:
           ${{ runner.os }}-buildx-
     - uses: ./.github/actions
       with:
-        version: 10.3.27
+        version: 10.3.28
         tags: 10.3
         workdir: 10
         platform: linux/amd64,linux/arm64

@@ -15,83 +15,58 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  mariadb-105:
+  mariadb-105-amd64:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
     - uses: docker/setup-buildx-action@v1
-    - uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-step1-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
     - uses: ./.github/actions
       with:
         version: 10.5.9
         tags: 10.5,10,latest
         workdir: 10
-        platform: linux/amd64,linux/arm64
-  mariadb-104:
-    runs-on: ubuntu-latest
+        platform: linux/amd64
+#  mariadb-104-amd64:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v2
+#    - uses: docker/setup-buildx-action@v1
+#    - uses: ./.github/actions
+#      with:
+#        version: 10.4.18
+#        tags: 10.4
+#        workdir: 10
+#        platform: linux/amd64
+#  mariadb-103-amd64:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v2
+#    - uses: docker/setup-buildx-action@v1
+#    - uses: ./.github/actions
+#      with:
+#        version: 10.3.28
+#        tags: 10.3
+#        workdir: 10
+#        platform: linux/amd64
+#  mariadb-102-amd64:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v2
+#    - uses: docker/setup-buildx-action@v1
+#    - uses: ./.github/actions
+#      with:
+#        version: 10.2.37
+#        tags: 10.2
+#        workdir: 10
+#        platform: linux/amd64
+  mariadb-105-arm64:
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
     - uses: docker/setup-buildx-action@v1
-    - uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-step1-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
     - uses: ./.github/actions
       with:
-        version: 10.4.18
-        tags: 10.4
+        version: 10.5.8
+        tags: 10.5,10,latest
         workdir: 10
-        platform: linux/amd64,linux/arm64
-  mariadb-103:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-step1-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
-    - uses: ./.github/actions
-      with:
-        version: 10.3.28
-        tags: 10.3
-        workdir: 10
-        platform: linux/amd64,linux/arm64
-  mariadb-102:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-step1-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
-    - uses: ./.github/actions
-      with:
-        version: 10.2.37
-        tags: 10.2
-        workdir: 10
-        platform: linux/amd64,linux/arm64
+        platform: linux/arm64

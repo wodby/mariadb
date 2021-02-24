@@ -126,7 +126,7 @@ RUN set -xe; \
             -DPLUGIN_MROONGA=NO \
             -DPLUGIN_OQGRAPH=NO \
             -DPLUGIN_PARTITION=YES \
-            -DPLUGIN_ROCKSDB=YES \
+            -DPLUGIN_ROCKSDB=NO \
             -DPLUGIN_SPHINX=NO \
             -DPLUGIN_TOKUDB=NO \
             -DPLUGIN_AUTH_GSSAPI=NO \
@@ -140,11 +140,6 @@ RUN set -xe; \
             -DWITH_INNODB_LZMA=ON \
             -DWITH_INNODB_LZO=OFF \
             -DWITH_INNODB_SNAPPY=OFF \
-            -DWITH_ROCKSDB_BZIP2=OFF \
-            -DWITH_ROCKSDB_JEMALLOC=OFF \
-            -DWITH_ROCKSDB_LZ4=OFF \
-            -DWITH_ROCKSDB_ZSTD=OFF \
-            -DWITH_ROCKSDB_SNAPPY=OFF \
             -DWITH_JEMALLOC=NO \
             -DWITH_LIBARCHIVE=system \
             -DWITH_LIBNUMA=NO \

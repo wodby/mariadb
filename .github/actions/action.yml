@@ -24,8 +24,9 @@ runs:
       PLATFORM: ${{ inputs.platform }}
     run: |
       set -e
-      make buildx-build
+      make buildx-build-amd64
       make test
-#      . $GITHUB_ACTION_PATH/release.sh
+      make buildx-build
+      . $GITHUB_ACTION_PATH/release.sh
     shell: bash
     working-directory: ${{ inputs.workdir }}

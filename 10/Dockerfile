@@ -117,8 +117,8 @@ RUN set -xe; \
             -DCONNECT_WITH_LIBXML2=system \
             -DCONNECT_WITH_ODBC=NO \
             -DCONNECT_WITH_JDBC=NO \
-    		-DPLUGIN_ARCHIVE=YES \
-            -DPLUGIN_ARIA=YES \
+    		-DPLUGIN_ARCHIVE=NO \
+            -DPLUGIN_ARIA=NO \
             -DPLUGIN_BLACKHOLE=YES \
             -DPLUGIN_CASSANDRA=NO \
             -DPLUGIN_CSV=YES \

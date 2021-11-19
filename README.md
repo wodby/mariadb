@@ -284,7 +284,8 @@ default params values:
     wait_seconds 1
     ignore ""
 ```
-
+## Custom config
+For custom config, such as enable server_audit plugin, the config for server_audit can be volumed to /etc/my.cnf.d/server-audit.conf
 ## Deployment
 
 Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com/stacks/mariadb).

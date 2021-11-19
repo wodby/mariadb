@@ -193,3 +193,4 @@ wsrep_sync_wait                         = {{ getenv "WSREP_SYNC_WAIT" "0" }}
 wsrep_trx_fragment_size                 = {{ getenv "WSREP_TRX_FRAGMENT_SIZE" "0" }}
 wsrep_trx_fragment_unit                 = {{ getenv "WSREP_TRX_FRAGMENT_UNIT" "bytes" }}
 {{- end }}
+!includedir /etc/my.cnf.d/

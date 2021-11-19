@@ -219,7 +219,7 @@ COPY templates /etc/gotpl/
 COPY docker-entrypoint.sh /
 
 WORKDIR /var/lib/mysql
-VOLUME /var/lib/mysql
+VOLUME /var/lib/mysql /etc/my.cnf.d
 
 EXPOSE 3306
 

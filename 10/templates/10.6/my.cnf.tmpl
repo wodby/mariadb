@@ -42,6 +42,8 @@ init_connect                            = '{{ getenv "MYSQL_INIT_CONNECT" "SET N
 character_set_server                    = {{ getenv "MYSQL_CHARACTER_SET_SERVER" "utf8mb4" }}
 character_set_filesystem                = {{ getenv "MYSQL_CHARACTER_SET_FILESYSTEM" "binary" }}
 
+lower_case_table_names                  = {{ getenv "MYSQL_LOWER_CASE_TABLE_NAME" "0" }}
+
 symbolic-links                          = 0
 {{- if getenv "WSREP_ON" }}
 default_storage_engine                  = InnoDB

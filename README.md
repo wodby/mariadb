@@ -75,6 +75,7 @@ All images built for `linux/amd64`
 | [`MYSQL_JOIN_BUFFER_SIZE`]               | `8M`                 | `8M`              | `8M`              | `8M`              |
 | [`MYSQL_LOG_WARNINGS`]                   | `2`                  | `2`               | `2`               | `2`               |
 | [`MYSQL_LONG_QUERY_TIME`]                | `2`                  | `2`               | `2`               | `2`               |
+| [`MYSQL_LOWER_CASE_TABLE_NAME`           | `0`                  | `0`               | `0`               | `0`               |
 | [`MYSQL_MAX_ALLOWED_PACKET`]             | `256M`               | `256M`            | `256M`            | `256M`            |
 | [`MYSQL_MAX_CONNECT_ERRORS`]             | `100000`             | `100000`          | `100000`          | `100000`          |
 | [`MYSQL_MAX_CONNECTIONS`]                | `50`                 | `50`              | `50`              | `50`              |
@@ -265,9 +266,9 @@ commands:
     query query [db user password host]
     query-silent query [db user password host]
     query-root query [db root_password host]
-    check-ready [root_password host max_try wait_seconds]  
-    mysql-upgrade [root_password host]  
-    mysql-check [root_password host db]  
+    check-ready [root_password host max_try wait_seconds]
+    mysql-upgrade [root_password host]
+    mysql-check [root_password host db]
     create-db name [charset collation]
     drop-db name
     create-user username password
@@ -332,6 +333,7 @@ Deploy MariaDB to your own server via [![Wodby](https://www.google.com/s2/favico
 [`MYSQL_JOIN_BUFFER_SIZE`]: https://mariadb.com/kb/en/library/server-system-variables#join_buffer_size
 [`MYSQL_LOG_WARNINGS`]: https://mariadb.com/kb/en/library/server-system-variables/#log_warnings
 [`MYSQL_LONG_QUERY_TIME`]: https://mariadb.com/kb/en/library/server-system-variables#long_query_time
+[`MYSQL_LOWER_CASE_TABLE_NAME`]: https://mariadb.com/kb/en/server-system-variables/#lower_case_table_names
 [`MYSQL_MAX_ALLOWED_PACKET`]: https://mariadb.com/kb/en/library/server-system-variables#max_allowed_packet
 [`MYSQL_MAX_CONNECT_ERRORS`]: https://mariadb.com/kb/en/library/server-system-variables#max_connect_errors
 [`MYSQL_MAX_CONNECTIONS`]: https://mariadb.com/kb/en/library/server-system-variables#max_connections

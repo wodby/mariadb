@@ -75,7 +75,7 @@ All images built for `linux/amd64`
 | [`MYSQL_JOIN_BUFFER_SIZE`]               | `8M`                 | `8M`              | `8M`              | `8M`              |
 | [`MYSQL_LOG_WARNINGS`]                   | `2`                  | `2`               | `2`               | `2`               |
 | [`MYSQL_LONG_QUERY_TIME`]                | `2`                  | `2`               | `2`               | `2`               |
-| [`MYSQL_LOWER_CASE_TABLE_NAME`           | `0`                  | `0`               | `0`               | `0`               |
+| [`MYSQL_LOWER_CASE_TABLE_NAME`]          | `0`                  | `0`               | `0`               | `0`               |
 | [`MYSQL_MAX_ALLOWED_PACKET`]             | `256M`               | `256M`            | `256M`            | `256M`            |
 | [`MYSQL_MAX_CONNECT_ERRORS`]             | `100000`             | `100000`          | `100000`          | `100000`          |
 | [`MYSQL_MAX_CONNECTIONS`]                | `50`                 | `50`              | `50`              | `50`              |

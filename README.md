@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/wodby/mariadb/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/mariadb/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/mariadb.svg)](https://hub.docker.com/r/wodby/mariadb)
-[![Docker Layers](https://images.microbadger.com/badges/image/wodby/mariadb.svg)](https://microbadger.com/images/wodby/mariadb)
 
 ## Docker Images
 
@@ -31,7 +30,7 @@ All images built for `linux/amd64`
 ## Environment Variables
 
 | Variable                                 | 10.5                 | 10.4              | 10.3              | 10.2              |
-| ---------------------------------------- | ----------------     | ----------------  | ----------------  | ----------------- |
+|------------------------------------------|----------------------|-------------------|-------------------|-------------------|
 | [`MARIADB_PLUGIN_LOAD`]                  |                      |                   |                   |                   |
 | [`MARIADB_SSL_CERT`]                     |                      |                   |                   |                   |
 | [`MARIADB_SSL_KEY`]                      |                      |                   |                   |                   |
@@ -117,61 +116,61 @@ ibdata1:10M:autoextend:max:10G"
 
 ### Additional Galera environment variables
 
-| Variable                                  | 10.4-galera         |
-| ----------------------------------------- | ------------------- |
-| [`WSREP_ON`]                              | `OFF`               |
-| [`MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT`]  | `0`                 |
-| [`WSREP_AUTO_INCREMENT_CONTROL`]          | `ON`                |
-| [`WSREP_CERTIFICATION_RULES`]             | `strict`            |
-| [`WSREP_CERTIFY_NONPK`]                   | `ON`                |
-| [`WSREP_CLUSTER_ADDRESS`]                 |                     |
-| [`WSREP_CLUSTER_NAME`]                    | `my_wsrep_cluster`  |
-| [`WSREP_CONVERT_LOCK_TO_TRX`]             | `OFF`               |
-| [`WSREP_DATA_HOME_DIR`]                   |                     |
-| [`WSREP_DBUG_OPTION`]                     |                     |
-| [`WSREP_DEBUG`]                           | `NONE`              |
-| [`WSREP_DESYNC`]                          | `OFF`               |
-| [`WSREP_DIRTY_READS`]                     | `OFF`               |
-| [`WSREP_DRUPAL_282555_WORKAROUND`]        | `OFF`               |
-| [`WSREP_FORCED_BINLOG_FORMAT`]            | `NONE`              |
-| [`WSREP_GTID_DOMAIN_ID`]                  | `0`                 |
-| [`WSREP_GTID_MODE`]                       | `OFF`               |
-| [`WSREP_IGNORE_APPLY_ERRORS`]             | `0`                 |
-| [`WSREP_LOAD_DATA_SPLITTING`]             | `OFF`               |
-| [`WSREP_LOG_CONFLICTS`]                   | `OFF`               |
-| [`WSREP_MAX_WS_ROWS`]                     | `0`                 |
-| [`WSREP_MAX_WS_SIZE`]                     | `2G`                |
-| [`WSREP_MYSQL_REPLICATION_BUNDLE`]        | `0`                 |
-| [`WSREP_NODE_ADDRESS`]                    | `0.0.0.0`           |
-| [`WSREP_NODE_INCOMING_ADDRESS`]           | `AUTO`              |
-| [`WSREP_NODE_NAME`]                       |                     |
-| [`WSREP_NOTIFY_CMD`]                      |                     |
-| [`WSREP_OSU_METHOD`]                      | `TOI`               |
-| [`WSREP_PROVIDER_OPTIONS`]                |                     |
-| [`WSREP_RECOVER`]                         | `OFF`               |
-| [`WSREP_REJECT_QUERIES`]                  | `NONE`              |
-| [`WSREP_REPLICATE_MYISAM`]                | `OFF`               |
-| [`WSREP_RESTART_SLAVE`]                   | `OFF`               |
-| [`WSREP_RETRY_AUTOCOMMIT`]                | `1`                 |
-| [`WSREP_SLAVE_FK_CHECKS`]                 | `ON`                |
-| [`WSREP_SLAVE_THREADS`]                   | `1`                 |
-| [`WSREP_SLAVE_UK_CHECKS`]                 | `OFF`               |
-| [`WSREP_SR_STORE`]                        | `table`             |
-| [`WSREP_SST_AUTH`]                        |                     |
-| [`WSREP_SST_DONOR`]                       |                     |
-| [`WSREP_SST_DONOR_REJECTS_QUERIES`]       | `OFF`               |
-| [`WSREP_SST_METHOD`]                      | `rsync`             |
-| [`WSREP_RECEIVE_ADDRESS`]                 | `AUTO`              |
-| [`WSREP_START_POSITION`]                  |                     |
-| [`WSREP_SYNC_WAIT`]                       | `0`                 |
-| [`WSREP_TRX_FRAGMENT_SIZE`]               | `0`                 |
-| [`WSREP_TRX_FRAGMENT_UNIT`]               | `bytes`             |
-|                                           |                     |
-| Galera Config Directive                   | Override            |
-| --------------------------                | --------            |
-| `binlog_format`                           | `ROW`               |
-| `default_storage_engine`                  | `InnoDB`            |
-| `innodb_autoinc_lock_mode`                | `2`                 |
+| Variable                                 | 10.4-galera        |
+|------------------------------------------|--------------------|
+| [`WSREP_ON`]                             | `OFF`              |
+| [`MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT`] | `0`                |
+| [`WSREP_AUTO_INCREMENT_CONTROL`]         | `ON`               |
+| [`WSREP_CERTIFICATION_RULES`]            | `strict`           |
+| [`WSREP_CERTIFY_NONPK`]                  | `ON`               |
+| [`WSREP_CLUSTER_ADDRESS`]                |                    |
+| [`WSREP_CLUSTER_NAME`]                   | `my_wsrep_cluster` |
+| [`WSREP_CONVERT_LOCK_TO_TRX`]            | `OFF`              |
+| [`WSREP_DATA_HOME_DIR`]                  |                    |
+| [`WSREP_DBUG_OPTION`]                    |                    |
+| [`WSREP_DEBUG`]                          | `NONE`             |
+| [`WSREP_DESYNC`]                         | `OFF`              |
+| [`WSREP_DIRTY_READS`]                    | `OFF`              |
+| [`WSREP_DRUPAL_282555_WORKAROUND`]       | `OFF`              |
+| [`WSREP_FORCED_BINLOG_FORMAT`]           | `NONE`             |
+| [`WSREP_GTID_DOMAIN_ID`]                 | `0`                |
+| [`WSREP_GTID_MODE`]                      | `OFF`              |
+| [`WSREP_IGNORE_APPLY_ERRORS`]            | `0`                |
+| [`WSREP_LOAD_DATA_SPLITTING`]            | `OFF`              |
+| [`WSREP_LOG_CONFLICTS`]                  | `OFF`              |
+| [`WSREP_MAX_WS_ROWS`]                    | `0`                |
+| [`WSREP_MAX_WS_SIZE`]                    | `2G`               |
+| [`WSREP_MYSQL_REPLICATION_BUNDLE`]       | `0`                |
+| [`WSREP_NODE_ADDRESS`]                   | `0.0.0.0`          |
+| [`WSREP_NODE_INCOMING_ADDRESS`]          | `AUTO`             |
+| [`WSREP_NODE_NAME`]                      |                    |
+| [`WSREP_NOTIFY_CMD`]                     |                    |
+| [`WSREP_OSU_METHOD`]                     | `TOI`              |
+| [`WSREP_PROVIDER_OPTIONS`]               |                    |
+| [`WSREP_RECOVER`]                        | `OFF`              |
+| [`WSREP_REJECT_QUERIES`]                 | `NONE`             |
+| [`WSREP_REPLICATE_MYISAM`]               | `OFF`              |
+| [`WSREP_RESTART_SLAVE`]                  | `OFF`              |
+| [`WSREP_RETRY_AUTOCOMMIT`]               | `1`                |
+| [`WSREP_SLAVE_FK_CHECKS`]                | `ON`               |
+| [`WSREP_SLAVE_THREADS`]                  | `1`                |
+| [`WSREP_SLAVE_UK_CHECKS`]                | `OFF`              |
+| [`WSREP_SR_STORE`]                       | `table`            |
+| [`WSREP_SST_AUTH`]                       |                    |
+| [`WSREP_SST_DONOR`]                      |                    |
+| [`WSREP_SST_DONOR_REJECTS_QUERIES`]      | `OFF`              |
+| [`WSREP_SST_METHOD`]                     | `rsync`            |
+| [`WSREP_RECEIVE_ADDRESS`]                | `AUTO`             |
+| [`WSREP_START_POSITION`]                 |                    |
+| [`WSREP_SYNC_WAIT`]                      | `0`                |
+| [`WSREP_TRX_FRAGMENT_SIZE`]              | `0`                |
+| [`WSREP_TRX_FRAGMENT_UNIT`]              | `bytes`            |
+|                                          |                    |
+| Galera Config Directive                  | Override           |
+| --------------------------               | --------           |
+| `binlog_format`                          | `ROW`              |
+| `default_storage_engine`                 | `InnoDB`           |
+| `innodb_autoinc_lock_mode`               | `2`                |
 
 ## Performance Tuning Recommendations
 

@@ -42,8 +42,8 @@ init_connect                            = '{{ getenv "MYSQL_INIT_CONNECT" "SET N
 character_set_server                    = {{ getenv "MYSQL_CHARACTER_SET_SERVER" "utf8" }}
 character_set_filesystem                = {{ getenv "MYSQL_CHARACTER_SET_FILESYSTEM" "utf8" }}
 
-{{- if getenv "MYSQL_LOWER_CASE_TABLE_NAME" }}
-lower_case_table_names                  = {{ getenv "MYSQL_LOWER_CASE_TABLE_NAME" }}
+{{- if getenv "MYSQL_LOWER_CASE_TABLE_NAMES" }}
+lower_case_table_names                  = {{ getenv "MYSQL_LOWER_CASE_TABLE_NAMES" }}
 {{- end }}
 
 symbolic-links                          = 0

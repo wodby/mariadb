@@ -42,7 +42,9 @@ init_connect                            = '{{ getenv "MYSQL_INIT_CONNECT" "SET N
 character_set_server                    = {{ getenv "MYSQL_CHARACTER_SET_SERVER" "utf8" }}
 character_set_filesystem                = {{ getenv "MYSQL_CHARACTER_SET_FILESYSTEM" "utf8" }}
 
-lower_case_table_names                  = {{ getenv "MYSQL_LOWER_CASE_TABLE_NAME" "0" }}
+{{- if getenv "MYSQL_LOWER_CASE_TABLE_NAME" }}
+lower_case_table_names                  = {{ getenv "MYSQL_LOWER_CASE_TABLE_NAME" }}
+{{- end }}
 
 symbolic-links                          = 0
 {{- if getenv "WSREP_ON" }}
@@ -56,12 +58,17 @@ skip-name-resolve
 
 back_log                                = {{ getenv "MYSQL_BACK_LOG" "100" }}
 
-join_buffer_size                        = {{ getenv "MYSQL_JOIN_BUFFER_SIZE" "8M" }}
+{{- if getenv "MYSQL_JOIN_BUFFER_SIZE" }}
+join_buffer_size                        = {{ getenv "MYSQL_JOIN_BUFFER_SIZE" }}
+{{- end }}
+{{- if getenv "MYSQL_JOIN_BUFFER_SPACE_LIMIT" }}
+join_buffer_space_limit                 = {{ getenv "MYSQL_JOIN_BUFFER_SPACE_LIMIT" }}
+{{- end }}
 max_heap_table_size                     = {{ getenv "MYSQL_MAX_HEAP_TABLE_SIZE" "16M" }}
 query_cache_limit                       = {{ getenv "MYSQL_QUERY_CACHE_LIMIT" "1M" }}
 query_cache_min_res_unit                = {{ getenv "MYSQL_QUERY_CACHE_MIN_RES_UNIT" "4K" }}
-query_cache_size                        = {{ getenv "MYSQL_QUERY_CACHE_SIZE" "128M" }}
-query_cache_type                        = {{ getenv "MYSQL_QUERY_CACHE_TYPE" "ON" }}
+query_cache_size                        = {{ getenv "MYSQL_QUERY_CACHE_SIZE" "1M" }}
+query_cache_type                        = {{ getenv "MYSQL_QUERY_CACHE_TYPE" "OFF" }}
 sort_buffer_size                        = {{ getenv "MYSQL_SORT_BUFFER_SIZE" "2M" }}
 table_definition_cache                  = {{ getenv "MYSQL_TABLE_DEFINITION_CACHE" "400" }}
 table_open_cache                        = {{ getenv "MYSQL_TABLE_OPEN_CACHE" "4096" }}
@@ -82,7 +89,7 @@ innodb_file_per_table                   = {{ getenv "MYSQL_INNODB_FILE_PER_TABLE
 {{- if getenv "WSREP_ON" }}
 innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "0" }}
 {{- else }}
-innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "2" }}
+innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "1" }}
 {{- end }}
 innodb_flush_method                     = {{ getenv "MYSQL_INNODB_FLUSH_METHOD" "O_DIRECT" }}
 innodb_force_load_corrupted             = {{ getenv "MYSQL_INNODB_FORCE_LOAD_CORRUPTED" "0" }}
@@ -93,7 +100,9 @@ innodb_log_buffer_size                  = {{ getenv "MYSQL_INNODB_LOG_BUFFER_SIZ
 innodb_log_file_size                    = {{ getenv "MYSQL_INNODB_LOG_FILE_SIZE" "128M" }}
 innodb_log_files_in_group               = {{ getenv "MYSQL_INNODB_LOG_FILES_IN_GROUP" "2" }}
 innodb_old_blocks_time                  = {{ getenv "MYSQL_INNODB_OLD_BLOCKS_TIME" "1000" }}
-innodb_open_files                       = {{ getenv "MYSQL_INNODB_OPEN_FILES" "1024" }}
+{{- if getenv "MYSQL_INNODB_OPEN_FILES" }}
+innodb_open_files                       = {{ getenv "MYSQL_INNODB_OPEN_FILES" }}
+{{- end }}
 innodb_purge_threads                    = {{ getenv "MYSQL_INNODB_PURGE_THREADS" "4" }}
 innodb_read_io_threads                  = {{ getenv "MYSQL_INNODB_READ_IO_THREADS" "4" }}
 innodb_stats_on_metadata                = {{ getenv "MYSQL_INNODB_STATS_ON_METADATA" "OFF" }}
@@ -117,6 +126,9 @@ relay_log_recovery                      = {{ getenv "MYSQL_RELAY_LOG_RECOVERY" "
 
 optimizer_prune_level                   = {{ getenv "MYSQL_OPTIMIZER_PRUNE_LEVEL" "1" }}
 optimizer_search_depth                  = {{ getenv "MYSQL_OPTIMIZER_SEARCH_DEPTH" "62" }}
+{{- if getenv "MYSQL_OPTIMIZER_SWITCH" }}
+optimizer_switch                        = {{ getenv "MYSQL_OPTIMIZER_SWITCH" }}
+{{- end }}
 
 transaction-isolation                   = {{ getenv "MYSQL_TRANSACTION_ISOLATION" "REPEATABLE-READ" }}
 {{- if getenv "WSREP_ON" }}

@@ -15,6 +15,21 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
+  mariadb-107:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: '10.7.3'
+        tags: '10.7,10,latest'
+        workdir: 10
+#        platform: linux/amd64,linux/arm64
+        platform: linux/amd64
   mariadb-106:
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +41,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: '10.6.7'
-        tags: '10.6,10,latest'
+        tags: '10.6'
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64

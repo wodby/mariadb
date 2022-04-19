@@ -23,12 +23,6 @@ Supported tags and respective `Dockerfile` links:
 - `10.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.3` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.2` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.7-alpine3.13`, `10-alpine3.13`, `alpine3.13` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.6-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.5-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.4-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.3-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.2-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 
 Credits to Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from Alpine's [packages repository](https://pkgs.alpinelinux.org/packages).
 

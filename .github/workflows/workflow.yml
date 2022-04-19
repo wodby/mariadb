@@ -12,12 +12,6 @@ env:
   BASE_IMAGE_STABILITY_TAG: 2.10.6
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  MARIADB107: '10.7.3'
-  MARIADB106: '10.6.7'
-  MARIADB105: '10.5.15'
-  MARIADB104: '10.4.24'
-  MARIADB103: '10.3.34'
-  MARIADB102: '10.2.43'
 
 jobs:
   mariadb-107:
@@ -30,12 +24,11 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: ${{ env.MARIADB107 }}
+        version: '10.7.3'
         tags: '10.7,10,latest'
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine_ver: 3.15
   mariadb-106:
     runs-on: ubuntu-latest
     steps:
@@ -46,12 +39,11 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: ${{ env.MARIADB106 }}
+        version: '10.6.7'
         tags: '10.6'
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine_ver: 3.15
   mariadb-105:
     runs-on: ubuntu-latest
     steps:
@@ -62,12 +54,11 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: ${{ env.MARIADB105 }}
+        version: '10.5.15'
         tags: '10.5'
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine_ver: 3.15
   mariadb-104:
     runs-on: ubuntu-latest
     steps:
@@ -78,12 +69,11 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: ${{ env.MARIADB104 }}
+        version: '10.4.24'
         tags: '10.4'
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine_ver: 3.15
   mariadb-103:
     runs-on: ubuntu-latest
     steps:
@@ -94,12 +84,11 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: ${{ env.MARIADB103 }}
+        version: '10.3.34'
         tags: '10.3'
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine_ver: 3.15
   mariadb-102:
     runs-on: ubuntu-latest
     steps:
@@ -110,106 +99,8 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: ${{ env.MARIADB102 }}
+        version: '10.2.43'
         tags: '10.2'
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine_ver: 3.15
-  mariadb-107-alpine313:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: ${{ env.MARIADB107 }}
-        tags: '10.7-alpine3.13,10-alpine3.13,alpine3.13'
-        workdir: 10
-#        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-        alpine_ver: 3.13
-  mariadb-106-alpine313:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: ${{ env.MARIADB106 }}
-        tags: '10.6-alpine3.13'
-        workdir: 10
-#        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-        alpine_ver: 3.13
-  mariadb-105-alpine313:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: ${{ env.MARIADB105 }}
-        tags: '10.5-alpine3.13'
-        workdir: 10
-#        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-        alpine_ver: 3.13
-  mariadb-104-alpine313:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: ${{ env.MARIADB104 }}
-        tags: '10.4-alpine3.13'
-        workdir: 10
-#        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-        alpine_ver: 3.13
-  mariadb-103-alpine313:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: ${{ env.MARIADB103 }}
-        tags: '10.3-alpine3.13'
-        workdir: 10
-#        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-        alpine_ver: 3.13
-  mariadb-102-alpine313:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: ${{ env.MARIADB102 }}
-        tags: '10.2-alpine3.13'
-        workdir: 10
-#        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-        alpine_ver: 3.13
-  

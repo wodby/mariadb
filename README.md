@@ -22,7 +22,6 @@ Supported tags and respective `Dockerfile` links:
 - `10.5` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.3` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.2` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 
 Credits to Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from Alpine's [packages repository](https://pkgs.alpinelinux.org/packages).
 
@@ -30,7 +29,7 @@ All images built for `linux/amd64`
 
 ## Environment Variables
 
-| Variable                                 | 10.7, 10.6, 10.5     | 10.4                 | 10.3, 10.2        |
+| Variable                                 | 10.7, 10.6, 10.5     | 10.4                 | 10.3              |
 |------------------------------------------|----------------------|----------------------|-------------------|
 | [`MARIADB_PLUGIN_LOAD`]                  |                      |                      |                   |
 | [`MARIADB_SSL_CERT`]                     |                      |                      |                   |

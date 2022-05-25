@@ -89,18 +89,3 @@ jobs:
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-  mariadb-102:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: '10.2.44'
-        tags: '10.2'
-        workdir: 10
-#        platform: linux/amd64,linux/arm64
-        platform: linux/amd64

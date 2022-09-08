@@ -43,7 +43,7 @@ create-db:
 	$(eval override charset := $(shell echo "${charset}" | tr -d \'\"))
 	$(eval override collation := $(shell echo "${collation}" | tr -d \'\"))
 	$(eval override name := $(shell echo "${name}" | tr -d \'\"))
-	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE \`$(name)\` CHARACTER SET '$(charset)' COLLATE '$(collation)';"
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE DATABASE IF NOT EXISTS \`$(name)\` CHARACTER SET '$(charset)' COLLATE '$(collation)';"
 
 drop-db:
 	$(call check_defined, name)
@@ -54,7 +54,7 @@ create-user:
 	$(call check_defined, username, password)
 	$(eval override password := $(shell echo "${password}" | tr -d \'\"))
 	$(eval override username := $(shell echo "${username}" | tr -d \'\"))
-	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER \`$(username)\`@\`%\` IDENTIFIED BY '$(password)';"
+	mysql -uroot -p$(root_password) -h$(host) -e "CREATE USER IF NOT EXISTS \`$(username)\`@\`%\` IDENTIFIED BY '$(password)';"
 
 drop-user:
 	$(call check_defined, username)

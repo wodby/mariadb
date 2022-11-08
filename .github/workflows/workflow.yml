@@ -99,7 +99,7 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: '10.3.36'
+        version: '10.3.37'
         tags: '10.3'
         workdir: 10
 #        platform: linux/amd64,linux/arm64

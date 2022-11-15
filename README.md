@@ -6,7 +6,7 @@
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/mariadb:10.4-X.X.X`) which correspond to [git tags](https://github.com/wodby/mariadb/releases). We strongly recommend using images only with stability tags.
+❗For better reliability we release images with stability tags (`wodby/mariadb:10.9-X.X.X`) which correspond to [git tags](https://github.com/wodby/mariadb/releases). We strongly recommend using images only with stability tags.
 
 Overview:
 
@@ -17,7 +17,8 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-- `10.8`, `10`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+- `10.9`, `10`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+- `10.8` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.7` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.6` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.5` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)

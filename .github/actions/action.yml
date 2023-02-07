@@ -14,6 +14,10 @@ inputs:
     description: docker platform
     required: false
     default: linux/amd64
+  alpine:
+    description: alpine version
+    required: false
+    default: '3.17'
 runs:
   using: "composite"
   steps:
@@ -22,6 +26,7 @@ runs:
       MARIADB_VER: ${{ inputs.version }}
       TAGS: ${{ inputs.tags }}
       PLATFORM: ${{ inputs.platform }}
+      ALPINE_VER: ${{ inputs.alpine }}
     run: |
       set -e
       make buildx-build-amd64

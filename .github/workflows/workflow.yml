@@ -104,6 +104,7 @@ jobs:
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
+        alpine: '3.15'
   mariadb-103:
     runs-on: ubuntu-latest
     steps:
@@ -119,3 +120,4 @@ jobs:
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
+        alpine: '3.15'

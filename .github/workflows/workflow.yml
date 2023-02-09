@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-qemu-action@v2
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
         version: '10.9.5'
@@ -33,10 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-qemu-action@v2
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
         version: '10.8.7'
@@ -48,10 +48,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-qemu-action@v2
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
         version: '10.7.8'
@@ -63,10 +63,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-qemu-action@v2
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
         version: '10.6.12'
@@ -78,10 +78,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-qemu-action@v2
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
         version: '10.5.19'
@@ -93,10 +93,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-qemu-action@v2
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
         version: '10.4.28'
@@ -109,10 +109,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-qemu-action@v2
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
         version: '10.3.38'

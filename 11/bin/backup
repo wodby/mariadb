@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
+
+root_password=$1
+host=$2
+db=$3
+filepath=$4
+ignore_tables=$5
+
+ignore=()
+
+IFS=';' read -ra ADDR <<< "${ignore_tables}"
+for table in "${ADDR[@]}"; do
+    if echo "${table}" | grep -q "%"; then
+        out=$(mysql --silent -h"${host}" -uroot -p"${root_password}" -e "SHOW TABLES LIKE '${table}'" "${db}")
+        tables=(${out//$'\n'/ })
+
+        for t in "${tables[@]}"; do
+            ignore+=("--ignore-table=${db}.${t}")
+        done
+    else
+        ignore+=("--ignore-table=${db}.${table}")
+    fi
+done
+
+mysqldump -h"${host}" -uroot -p"${root_password}" \
+    --single-transaction --no-data --allow-keywords --skip-triggers \
+    "${db}" | gzip > "${filepath}"
+
+mysqldump -h"${host}" -uroot -p"${root_password}" \
+    --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
+    "${db}" | gzip >> "${filepath}"
+
+stat -c "RESULT=%s" "${filepath}"

@@ -26,7 +26,7 @@ RUN set -xe; \
         libxml2 \
         linux-pam \
         make \
-        $(test "${MARIADB_VER_MINOR}" == "10.4" && echo 'pcre' || echo 'pcre2') \
+        pcre2 \
         pwgen \
         sudo \
         tzdata \
@@ -47,7 +47,7 @@ RUN set -xe; \
         linux-headers \
         ncurses-dev \
         patch \
-        $(test "${MARIADB_VER_MINOR}" == "10.4" && echo 'pcre-dev' || echo 'pcre2-dev') \
+        pcre2-dev \
         readline-dev \
         xz-dev \
         zlib-dev; \

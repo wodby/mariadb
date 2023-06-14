@@ -25,7 +25,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: '11.0.2'
-        tags: '11.0,11'
+        tags: '11.0,11,latest'
         workdir: 11
         #        platform: linux/amd64,linux/arm64
         platform: linux/amd64

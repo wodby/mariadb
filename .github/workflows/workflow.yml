@@ -54,7 +54,7 @@ jobs:
     - uses: docker/setup-buildx-action@v2
     - uses: ./.github/actions
       with:
-        version: '10.10.6'
+        version: '10.10.7'
         tags: '10.10'
         workdir: 10
         #        platform: linux/amd64,linux/arm64

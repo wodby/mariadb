@@ -84,13 +84,11 @@ innodb_buffer_pool_size                 = {{ getenv "MYSQL_INNODB_BUFFER_POOL_SI
 innodb_data_file_path                   = {{ getenv "MYSQL_INNODB_DATA_FILE_PATH" "ibdata1:10M:autoextend:max:10G" }}
 innodb_default_row_format               = {{ getenv "MYSQL_INNODB_DEFAULT_ROW_FORMAT" "dynamic" }}
 innodb_fast_shutdown                    = {{ getenv "MYSQL_INNODB_FAST_SHUTDOWN" "1" }}
-innodb_file_per_table                   = {{ getenv "MYSQL_INNODB_FILE_PER_TABLE" "1" }}
 {{- if getenv "WSREP_ON" }}
 innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "0" }}
 {{- else }}
 innodb_flush_log_at_trx_commit          = {{ getenv "MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT" "1" }}
 {{- end }}
-innodb_flush_method                     = {{ getenv "MYSQL_INNODB_FLUSH_METHOD" "O_DIRECT" }}
 innodb_force_load_corrupted             = {{ getenv "MYSQL_INNODB_FORCE_LOAD_CORRUPTED" "0" }}
 innodb_force_recovery                   = {{ getenv "MYSQL_INNODB_FORCE_RECOVERY" "0" }}
 innodb_io_capacity                      = {{ getenv "MYSQL_INNODB_IO_CAPACITY" "200" }}
@@ -128,7 +126,8 @@ optimizer_search_depth                  = {{ getenv "MYSQL_OPTIMIZER_SEARCH_DEPT
 optimizer_switch                        = {{ getenv "MYSQL_OPTIMIZER_SWITCH" }}
 {{- end }}
 
-transaction-isolation                   = {{ getenv "MYSQL_TRANSACTION_ISOLATION" "REPEATABLE-READ" }}
+transaction_isolation                   = {{ getenv "MYSQL_TRANSACTION_ISOLATION" "REPEATABLE-READ" }}
+transaction_read_only                   = {{ getenv "MYSQL_TRANSACTION_READ_ONLY" "OFF" }}
 {{- if getenv "WSREP_ON" }}
 
 

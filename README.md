@@ -18,10 +18,9 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-- `11.0`, `11`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
+- `11.1`, `11`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
+- `11.0` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
 - `10.11`, `10` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.10` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.9` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.6` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.5` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)

@@ -14,6 +14,21 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
+  mariadb-111:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v2
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v2
+    - uses: ./.github/actions
+      with:
+        version: '11.1.2'
+        tags: '11.1,11,latest'
+        workdir: 11
+        #        platform: linux/amd64,linux/arm64
+        platform: linux/amd64
   mariadb-110:
     runs-on: ubuntu-latest
     steps:
@@ -25,7 +40,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: '11.0.4'
-        tags: '11.0,11,latest'
+        tags: '11.0'
         workdir: 11
         #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
@@ -41,36 +56,6 @@ jobs:
       with:
         version: '10.11.6'
         tags: '10.11,10'
-        workdir: 10
-        #        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-  mariadb-1010:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v2
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v2
-    - uses: ./.github/actions
-      with:
-        version: '10.10.7'
-        tags: '10.10'
-        workdir: 10
-        #        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
-  mariadb-109:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v2
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v2
-    - uses: ./.github/actions
-      with:
-        version: '10.9.8'
-        tags: '10.9'
         workdir: 10
         #        platform: linux/amd64,linux/arm64
         platform: linux/amd64

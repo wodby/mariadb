@@ -128,7 +128,7 @@ optimizer_search_depth                  = {{ getenv "MYSQL_OPTIMIZER_SEARCH_DEPT
 optimizer_switch                        = {{ getenv "MYSQL_OPTIMIZER_SWITCH" }}
 {{- end }}
 
-tx_isolation                            = {{ getenv "MYSQL_TX_ISOLATION" "REPEATABLE-READ" }}
+transaction_isolation                   = {{ getenv "MYSQL_TRANSACTION_ISOLATION" "REPEATABLE-READ" }}
 {{- if getenv "WSREP_ON" }}
 
 

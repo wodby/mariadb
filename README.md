@@ -106,10 +106,8 @@ All images built for `linux/amd64`
 | [`MYSQL_TMP_TABLE_SIZE`]                 | `16M`                | `16M`                | `16M`                | `16M`                |
 | `MYSQL_USER`                             |                      |                      |                      |                      |
 | [`MYSQL_WAIT_TIMEOUT`]                   | `420`                | `420`                | `420`                | `420`                |
-| [`MYSQL_TRANSACTION_ISOLATION`]          | `REPEATABLE-READ`    | -                    | -                    | -                    |
+| [`MYSQL_TRANSACTION_ISOLATION`]          | `REPEATABLE-READ`    | `REPEATABLE-READ`    | `REPEATABLE-READ`    | `REPEATABLE-READ`    |
 | [`MYSQL_TRANSACTION_READ_ONLY`]          | `OFF`                | -                    | -                    | -                    |
-| [`MYSQL_TX_ISOLATION`]                   | -                    | `REPEATABLE-READ`    | `REPEATABLE-READ`    | `REPEATABLE-READ`    |
-| [`MYSQL_TX_READ_ONLY`]                   | -                    | `OFF`                | `OFF`                | `OFF`                |
 
 > "-" - Not available for this version
 
@@ -425,10 +423,6 @@ via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https:
 [`MYSQL_TRANSACTION_ISOLATION`]: https://mariadb.com/kb/en/server-system-variables/#transaction_isolation
 
 [`MYSQL_TRANSACTION_READ_ONLY`]: https://mariadb.com/kb/en/server-system-variables/#transaction_read_only
-
-[`MYSQL_TX_ISOLATION`]: https://mariadb.com/kb/en/server-system-variables/#tx_isolation
-
-[`MYSQL_TX_READ_ONLY`]: https://mariadb.com/kb/en/server-system-variables/#tx_read_only
 
 [`WSREP_ON`]: https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_on
 

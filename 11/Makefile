@@ -7,7 +7,7 @@ GALERA_VER ?=
 WSREP_VER ?= $(shell echo "${GALERA_VER}" | grep -oE '^[0-9]+')
 
 # also update default value in .github/action.yml
-ALPINE_VER ?= 3.17
+ALPINE_VER ?= 3.18
 
 NPROC =
 

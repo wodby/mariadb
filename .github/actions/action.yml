@@ -17,6 +17,7 @@ inputs:
   alpine:
     description: alpine version
     required: false
+    default: '3.18'
 runs:
   using: "composite"
   steps:

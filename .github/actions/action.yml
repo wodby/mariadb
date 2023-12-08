@@ -28,7 +28,12 @@ runs:
       ALPINE_VER: ${{ inputs.alpine }}
     run: |
       set -e
-      make buildx-build-amd64
+      # In case of multi-platform builds we explicitly build amd64 with --load to save cache, so we could run tests.
+      if [[ "${platform}" == "linux/arm64" ]]; then
+        make buildx-build-arm64
+      else 
+        make buildx-build-amd64
+      fi
       make test
       make buildx-build
       . $GITHUB_ACTION_PATH/release.sh

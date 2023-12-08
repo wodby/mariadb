@@ -120,3 +120,18 @@ jobs:
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
         alpine: '3.16'
+  mariadb-104-arm:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: docker/setup-qemu-action@v3
+      with:
+        platforms: arm64
+    - uses: docker/setup-buildx-action@v3
+    - uses: ./.github/actions
+      with:
+        version: '10.4.32'
+        tags: '10.4'
+        workdir: 10
+        platform: linux/arm64
+        alpine: '3.16'

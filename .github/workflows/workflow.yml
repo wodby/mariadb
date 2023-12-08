@@ -27,8 +27,7 @@ jobs:
         version: '11.2.2'
         tags: '11.2,11,latest'
         workdir: 11
-        #        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
+        platform: linux/amd64,linux/arm64
   mariadb-111:
     runs-on: ubuntu-latest
     steps:
@@ -72,8 +71,7 @@ jobs:
         version: '10.11.6'
         tags: '10.11,10'
         workdir: 10
-        #        platform: linux/amd64,linux/arm64
-        platform: linux/amd64
+        platform: linux/amd64,linux/arm64
   mariadb-106:
     runs-on: ubuntu-latest
     steps:
@@ -117,21 +115,5 @@ jobs:
         version: '10.4.32'
         tags: '10.4'
         workdir: 10
-#        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine: '3.16'
-  mariadb-104-arm:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '10.4.32'
-        tags: '10.4'
-        workdir: 10
-        platform: linux/arm64
         alpine: '3.16'

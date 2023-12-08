@@ -104,4 +104,4 @@ jobs:
         workdir: 10
 #        platform: linux/amd64,linux/arm64
         platform: linux/amd64
-        alpine: '3.15'
+        alpine: '3.16'

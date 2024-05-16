@@ -80,7 +80,7 @@ jobs:
     - uses: docker/setup-buildx-action@v3
     - uses: ./.github/actions
       with:
-        version: '10.6.17'
+        version: '10.6.18'
         tags: '10.6'
         workdir: 10
         platform: linux/amd64,linux/arm64

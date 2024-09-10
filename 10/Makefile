@@ -6,8 +6,7 @@ MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 GALERA_VER ?=
 WSREP_VER ?= $(shell echo "${GALERA_VER}" | grep -oE '^[0-9]+')
 
-# also update default value in .github/action.yml
-ALPINE_VER ?= 3.18
+ALPINE_VER ?= 3.20
 
 NPROC =
 

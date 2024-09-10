@@ -9,12 +9,12 @@ on:
     - '*'
 
 env:
-  BASE_IMAGE_STABILITY_TAG: 2.14.1
+  BASE_IMAGE_STABILITY_TAG: 2.15.3
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  mariadb-112:
+  mariadb-114:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -24,36 +24,8 @@ jobs:
     - uses: docker/setup-buildx-action@v3
     - uses: ./.github/actions
       with:
-        version: '11.2.5'
-        tags: '11.2,11,latest'
-        workdir: 11
-        platform: linux/amd64,linux/arm64
-  mariadb-111:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '11.1.6'
-        tags: '11.1'
-        workdir: 11
-        platform: linux/amd64,linux/arm64
-  mariadb-110:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '11.0.6'
-        tags: '11.0'
+        version: '11.4.3'
+        tags: '11.4,11,latest'
         workdir: 11
         platform: linux/amd64,linux/arm64
   mariadb-1011:

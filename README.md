@@ -24,7 +24,6 @@ Supported tags and respective `Dockerfile` links:
 - `10.11`, `10` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.6` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.5` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 
 Credits to Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from
 Alpine's [packages repository](https://pkgs.alpinelinux.org/packages).
@@ -33,82 +32,82 @@ All images built for `linux/amd64` and `linux/arm64`.
 
 ## Environment Variables
 
-| Variable                                 | 11.2, 11.1           | 11.0                 | 10.11, 10.6, 10.5    | 10.4                 |
-|------------------------------------------|----------------------|----------------------|----------------------|----------------------|
-| [`MARIADB_PLUGIN_LOAD`]                  |                      |                      |                      |                      |
-| [`MARIADB_SSL_CERT`]                     |                      |                      |                      |                      |
-| [`MARIADB_SSL_KEY`]                      |                      |                      |                      |                      |
-| [`MARIADB_SSL_CA`]                       |                      |                      |                      |                      |
-| [`MARIADB_TLS_VERSION`]                  | `TLSv1.2,TLSv1.3`    | `TLSv1.2,TLSv1.3`    | `TLSv1.2,TLSv1.3`    | `TLSv1.2,TLSv1.3`    |
-| [`MYSQL_BACK_LOG`]                       | `100`                | `100`                | `100`                | `100`                |
-| [`MYSQL_CHARACTER_SET_FILESYSTEM`]       | `binary`             | `binary`             | `binary`             | `binary`             |
-| [`MYSQL_CHARACTER_SET_SERVER`]           | `utf8mb4`            | `utf8mb4`            | `utf8mb4`            | `utf8mb4`            |
-| `MYSQL_CLIENT_DEFAULT_CHARACTER_SET`     | `utf8mb4`            | `utf8mb4`            | `utf8mb4`            | `utf8mb4`            |
-| [`MYSQL_COLLATION_SERVER`]               | `utf8mb4_unicode_ci` | `utf8mb4_unicode_ci` | `utf8mb4_unicode_ci` | `utf8mb4_unicode_ci` |
-| [`MYSQL_CONNECT_TIMEOUT`]                | `10`                 | `10`                 | `10`                 | `10`                 |
-| `MYSQL_DATABASE`                         |                      |                      |                      |                      |
-| [`MYSQL_DEFAULT_STORAGE_ENGINE`]         | `InnoDB`             | `InnoDB`             | `InnoDB`             | `InnoDB`             |
-| `MYSQL_DUMP_MAX_ALLOWED_PACKET`          | `1G`                 | `1G`                 | `1G`                 | `1G`                 |
-| [`MYSQL_GENERAL_LOG`]                    | `1`                  | `1`                  | `1`                  | `1`                  |
-| [`MYSQL_INIT_CONNECT`]                   | `SET NAMES utf8`     | `SET NAMES utf8`     | `SET NAMES utf8`     | `SET NAMES utf8`     |
-| [`MYSQL_INNODB_BUFFER_POOL_INSTANCES`]   | `-`                  | `-`                  | `-`                  | `1`                  |
-| [`MYSQL_INNODB_BUFFER_POOL_SIZE`]        | `128M`               | `128M`               | `128M`               | `128M`               |
-| [`MYSQL_INNODB_DEFAULT_ROW_FORMAT`]      | `dynamic`            | `dynamic`            | `dynamic`            | `dynamic`            |
-| [`MYSQL_INNODB_FAST_SHUTDOWN`]           | `1`                  | `1`                  | `1`                  | `1`                  |
-| [`MYSQL_INNODB_FILE_FORMAT`]             | `-`                  | `-`                  | `-`                  | `-`                  |
-| [`MYSQL_INNODB_FILE_PER_TABLE`]          | -                    | -                    | `1`                  | `1`                  |
-| [`MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT`] | `2`                  | `2`                  | `2`                  | `2`                  |
-| [`MYSQL_INNODB_FLUSH_METHOD`]            | -                    | -                    | `O_DIRECT`           | `O_DIRECT`           |
-| [`MYSQL_INNODB_FORCE_LOAD_CORRUPTED`]    | `0`                  | `0`                  | `0`                  | `0`                  |
-| [`MYSQL_INNODB_FORCE_RECOVERY`]          | `0`                  | `0`                  | `0`                  | `0`                  |
-| [`MYSQL_INNODB_IO_CAPACITY`]             | `200`                | `200`                | `200`                | `200`                |
-| [`MYSQL_INNODB_LARGE_PREFIX`]            | `-`                  | `-`                  | `-`                  | `-`                  |
-| [`MYSQL_INNODB_LOCK_WAIT_TIMEOUT`]       | `50`                 | `50`                 | `50`                 | `50`                 |
-| [`MYSQL_INNODB_LOG_BUFFER_SIZE`]         | `8M`                 | `8M`                 | `8M`                 | `8M`                 |
-| [`MYSQL_INNODB_LOG_FILE_SIZE`]           | `128M`               | `128M`               | `128M`               | `128M`               |
-| [`MYSQL_INNODB_LOG_FILES_IN_GROUP`]      | `-`                  | `-`                  | `-`                  | `2`                  |
-| [`MYSQL_INNODB_OLD_BLOCKS_TIME`]         | `1000`               | `1000`               | `1000`               | `1000`               |
-| [`MYSQL_INNODB_OPEN_FILES`]              |                      |                      |                      |                      |
-| [`MYSQL_INNODB_PURGE_THREADS`]           | `4`                  | `4`                  | `4`                  | `4`                  |
-| [`MYSQL_INNODB_READ_IO_THREADS`]         | `4`                  | `4`                  | `4`                  | `4`                  |
-| [`MYSQL_INNODB_STATS_ON_METADATA`]       | `OFF`                | `OFF`                | `OFF`                | `OFF`                |
-| [`MYSQL_INNODB_STRICT_MODE`]             | `OFF`                | `OFF`                | `OFF`                | `OFF`                |
-| [`MYSQL_INNODB_WRITE_IO_THREADS`]        | `4`                  | `4`                  | `4`                  | `4`                  |
-| [`MYSQL_INTERACTIVE_TIMEOUT`]            | `420`                | `420`                | `420`                | `420`                |
-| [`MYSQL_JOIN_BUFFER_SIZE`]               |                      |                      |                      |                      |
-| [`MYSQL_JOIN_BUFFER_SPACE_LIMIT`]        |                      |                      |                      |                      |
-| [`MYSQL_LOG_WARNINGS`]                   | `2`                  | `2`                  | `2`                  | `2`                  |
-| [`MYSQL_LONG_QUERY_TIME`]                | `2`                  | `2`                  | `2`                  | `2`                  |
-| [`MYSQL_LOWER_CASE_TABLE_NAMES`]         |                      |                      |                      |                      |
-| [`MYSQL_MAX_ALLOWED_PACKET`]             | `256M`               | `256M`               | `256M`               | `256M`               |
-| [`MYSQL_MAX_CONNECT_ERRORS`]             | `100000`             | `100000`             | `100000`             | `100000`             |
-| [`MYSQL_MAX_CONNECTIONS`]                | `50`                 | `50`                 | `50`                 | `50`                 |
-| [`MYSQL_MAX_HEAP_TABLE_SIZE`]            | `16M`                | `16M`                | `16M`                | `16M`                |
-| [`MYSQL_NET_READ_TIMEOUT`]               | `90`                 | `90`                 | `90`                 | `90`                 |
-| [`MYSQL_NET_WRITE_TIMEOUT`]              | `90`                 | `90`                 | `90`                 | `90`                 |
-| [`MYSQL_OPEN_FILES_LIMIT`]               | `0`                  | `0`                  | `0`                  | `0`                  |
-| [`MYSQL_OPTIMIZER_PRUNE_LEVEL`]          | `1`                  | `1`                  | `1`                  | `1`                  |
-| [`MYSQL_OPTIMIZER_SEARCH_DEPTH`]         | `62`                 | `62`                 | `62`                 | `62`                 |
-| [`MYSQL_OPTIMIZER_SWITCH`]               |                      |                      |                      |                      |
-| `MYSQL_PASSWORD`                         |                      |                      |                      |                      |
-| [`MYSQL_PERFORMANCE_SCHEMA`]             | `OFF`                | `OFF`                | `OFF`                | `OFF`                |
-| `MYSQL_PORT`                             | `3306`               | `3306`               | `3306`               | `3306`               |
-| [`MYSQL_QUERY_CACHE_LIMIT`]              | `1M`                 | `1M`                 | `1M`                 | `1M`                 |
-| [`MYSQL_QUERY_CACHE_MIN_RES_UNIT`]       | `2K`                 | `2K`                 | `2K`                 | `2K`                 |
-| [`MYSQL_QUERY_CACHE_SIZE`]               | `1M`                 | `1M`                 | `1M`                 | `1M`                 |
-| [`MYSQL_QUERY_CACHE_TYPE`]               | `OFF`                | `OFF`                | `OFF`                | `OFF`                |
-| [`MYSQL_RELAY_LOG_RECOVERY`]             | `0`                  | `0`                  | `0`                  | `0`                  |
-| `MYSQL_ROOT_PASSWORD`                    |                      |                      |                      |                      |
-| [`MYSQL_SLOW_QUERY_LOG`]                 | `0`                  | `0`                  | `0`                  | `0`                  |
-| [`MYSQL_SORT_BUFFER_SIZE`]               | `2M`                 | `2M`                 | `2M`                 | `2M`                 |
-| [`MYSQL_TABLE_DEFINITION_CACHE`]         | `400`                | `400`                | `400`                | `400`                |
-| [`MYSQL_TABLE_OPEN_CACHE`]               | `4096`               | `4096`               | `4096`               | `4096`               |
-| [`MYSQL_THREAD_CACHE_SIZE`]              | `75`                 | `75`                 | `75`                 | `75`                 |
-| [`MYSQL_TMP_TABLE_SIZE`]                 | `16M`                | `16M`                | `16M`                | `16M`                |
-| `MYSQL_USER`                             |                      |                      |                      |                      |
-| [`MYSQL_WAIT_TIMEOUT`]                   | `420`                | `420`                | `420`                | `420`                |
-| [`MYSQL_TRANSACTION_ISOLATION`]          | `REPEATABLE-READ`    | `REPEATABLE-READ`    | `REPEATABLE-READ`    | `REPEATABLE-READ`    |
-| [`MYSQL_TRANSACTION_READ_ONLY`]          | `OFF`                | -                    | -                    | -                    |
+| Variable                                 | 11.2, 11.1           | 11.0                 | 10.11, 10.6, 10.5    |
+|------------------------------------------|----------------------|----------------------|----------------------|
+| [`MARIADB_PLUGIN_LOAD`]                  |                      |                      |                      |
+| [`MARIADB_SSL_CERT`]                     |                      |                      |                      |
+| [`MARIADB_SSL_KEY`]                      |                      |                      |                      |
+| [`MARIADB_SSL_CA`]                       |                      |                      |                      |
+| [`MARIADB_TLS_VERSION`]                  | `TLSv1.2,TLSv1.3`    | `TLSv1.2,TLSv1.3`    | `TLSv1.2,TLSv1.3`    |
+| [`MYSQL_BACK_LOG`]                       | `100`                | `100`                | `100`                |
+| [`MYSQL_CHARACTER_SET_FILESYSTEM`]       | `binary`             | `binary`             | `binary`             |
+| [`MYSQL_CHARACTER_SET_SERVER`]           | `utf8mb4`            | `utf8mb4`            | `utf8mb4`            |
+| `MYSQL_CLIENT_DEFAULT_CHARACTER_SET`     | `utf8mb4`            | `utf8mb4`            | `utf8mb4`            |
+| [`MYSQL_COLLATION_SERVER`]               | `utf8mb4_unicode_ci` | `utf8mb4_unicode_ci` | `utf8mb4_unicode_ci` |
+| [`MYSQL_CONNECT_TIMEOUT`]                | `10`                 | `10`                 | `10`                 |
+| `MYSQL_DATABASE`                         |                      |                      |                      |
+| [`MYSQL_DEFAULT_STORAGE_ENGINE`]         | `InnoDB`             | `InnoDB`             | `InnoDB`             |
+| `MYSQL_DUMP_MAX_ALLOWED_PACKET`          | `1G`                 | `1G`                 | `1G`                 |
+| [`MYSQL_GENERAL_LOG`]                    | `1`                  | `1`                  | `1`                  |
+| [`MYSQL_INIT_CONNECT`]                   | `SET NAMES utf8`     | `SET NAMES utf8`     | `SET NAMES utf8`     |
+| [`MYSQL_INNODB_BUFFER_POOL_INSTANCES`]   | `-`                  | `-`                  | `-`                  |
+| [`MYSQL_INNODB_BUFFER_POOL_SIZE`]        | `128M`               | `128M`               | `128M`               |
+| [`MYSQL_INNODB_DEFAULT_ROW_FORMAT`]      | `dynamic`            | `dynamic`            | `dynamic`            |
+| [`MYSQL_INNODB_FAST_SHUTDOWN`]           | `1`                  | `1`                  | `1`                  |
+| [`MYSQL_INNODB_FILE_FORMAT`]             | `-`                  | `-`                  | `-`                  |
+| [`MYSQL_INNODB_FILE_PER_TABLE`]          | -                    | -                    | `1`                  |
+| [`MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT`] | `2`                  | `2`                  | `2`                  |
+| [`MYSQL_INNODB_FLUSH_METHOD`]            | -                    | -                    | `O_DIRECT`           |
+| [`MYSQL_INNODB_FORCE_LOAD_CORRUPTED`]    | `0`                  | `0`                  | `0`                  |
+| [`MYSQL_INNODB_FORCE_RECOVERY`]          | `0`                  | `0`                  | `0`                  |
+| [`MYSQL_INNODB_IO_CAPACITY`]             | `200`                | `200`                | `200`                |
+| [`MYSQL_INNODB_LARGE_PREFIX`]            | `-`                  | `-`                  | `-`                  |
+| [`MYSQL_INNODB_LOCK_WAIT_TIMEOUT`]       | `50`                 | `50`                 | `50`                 |
+| [`MYSQL_INNODB_LOG_BUFFER_SIZE`]         | `8M`                 | `8M`                 | `8M`                 |
+| [`MYSQL_INNODB_LOG_FILE_SIZE`]           | `128M`               | `128M`               | `128M`               |
+| [`MYSQL_INNODB_LOG_FILES_IN_GROUP`]      | `-`                  | `-`                  | `-`                  |
+| [`MYSQL_INNODB_OLD_BLOCKS_TIME`]         | `1000`               | `1000`               | `1000`               |
+| [`MYSQL_INNODB_OPEN_FILES`]              |                      |                      |                      |
+| [`MYSQL_INNODB_PURGE_THREADS`]           | `4`                  | `4`                  | `4`                  |
+| [`MYSQL_INNODB_READ_IO_THREADS`]         | `4`                  | `4`                  | `4`                  |
+| [`MYSQL_INNODB_STATS_ON_METADATA`]       | `OFF`                | `OFF`                | `OFF`                |
+| [`MYSQL_INNODB_STRICT_MODE`]             | `OFF`                | `OFF`                | `OFF`                |
+| [`MYSQL_INNODB_WRITE_IO_THREADS`]        | `4`                  | `4`                  | `4`                  |
+| [`MYSQL_INTERACTIVE_TIMEOUT`]            | `420`                | `420`                | `420`                |
+| [`MYSQL_JOIN_BUFFER_SIZE`]               |                      |                      |                      |
+| [`MYSQL_JOIN_BUFFER_SPACE_LIMIT`]        |                      |                      |                      |
+| [`MYSQL_LOG_WARNINGS`]                   | `2`                  | `2`                  | `2`                  |
+| [`MYSQL_LONG_QUERY_TIME`]                | `2`                  | `2`                  | `2`                  |
+| [`MYSQL_LOWER_CASE_TABLE_NAMES`]         |                      |                      |                      |
+| [`MYSQL_MAX_ALLOWED_PACKET`]             | `256M`               | `256M`               | `256M`               |
+| [`MYSQL_MAX_CONNECT_ERRORS`]             | `100000`             | `100000`             | `100000`             |
+| [`MYSQL_MAX_CONNECTIONS`]                | `50`                 | `50`                 | `50`                 |
+| [`MYSQL_MAX_HEAP_TABLE_SIZE`]            | `16M`                | `16M`                | `16M`                |
+| [`MYSQL_NET_READ_TIMEOUT`]               | `90`                 | `90`                 | `90`                 |
+| [`MYSQL_NET_WRITE_TIMEOUT`]              | `90`                 | `90`                 | `90`                 |
+| [`MYSQL_OPEN_FILES_LIMIT`]               | `0`                  | `0`                  | `0`                  |
+| [`MYSQL_OPTIMIZER_PRUNE_LEVEL`]          | `1`                  | `1`                  | `1`                  |
+| [`MYSQL_OPTIMIZER_SEARCH_DEPTH`]         | `62`                 | `62`                 | `62`                 |
+| [`MYSQL_OPTIMIZER_SWITCH`]               |                      |                      |                      |
+| `MYSQL_PASSWORD`                         |                      |                      |                      |
+| [`MYSQL_PERFORMANCE_SCHEMA`]             | `OFF`                | `OFF`                | `OFF`                |
+| `MYSQL_PORT`                             | `3306`               | `3306`               | `3306`               |
+| [`MYSQL_QUERY_CACHE_LIMIT`]              | `1M`                 | `1M`                 | `1M`                 |
+| [`MYSQL_QUERY_CACHE_MIN_RES_UNIT`]       | `2K`                 | `2K`                 | `2K`                 |
+| [`MYSQL_QUERY_CACHE_SIZE`]               | `1M`                 | `1M`                 | `1M`                 |
+| [`MYSQL_QUERY_CACHE_TYPE`]               | `OFF`                | `OFF`                | `OFF`                |
+| [`MYSQL_RELAY_LOG_RECOVERY`]             | `0`                  | `0`                  | `0`                  |
+| `MYSQL_ROOT_PASSWORD`                    |                      |                      |                      |
+| [`MYSQL_SLOW_QUERY_LOG`]                 | `0`                  | `0`                  | `0`                  |
+| [`MYSQL_SORT_BUFFER_SIZE`]               | `2M`                 | `2M`                 | `2M`                 |
+| [`MYSQL_TABLE_DEFINITION_CACHE`]         | `400`                | `400`                | `400`                |
+| [`MYSQL_TABLE_OPEN_CACHE`]               | `4096`               | `4096`               | `4096`               |
+| [`MYSQL_THREAD_CACHE_SIZE`]              | `75`                 | `75`                 | `75`                 |
+| [`MYSQL_TMP_TABLE_SIZE`]                 | `16M`                | `16M`                | `16M`                |
+| `MYSQL_USER`                             |                      |                      |                      |
+| [`MYSQL_WAIT_TIMEOUT`]                   | `420`                | `420`                | `420`                |
+| [`MYSQL_TRANSACTION_ISOLATION`]          | `REPEATABLE-READ`    | `REPEATABLE-READ`    | `REPEATABLE-READ`    |
+| [`MYSQL_TRANSACTION_READ_ONLY`]          | `OFF`                | -                    | -                    |
 
 > "-" - Not available for this version
 

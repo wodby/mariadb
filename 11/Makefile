@@ -18,7 +18,6 @@ else
     BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_STABILITY_TAG)
 endif
 
-# Remove minor version from tag
 TAG ?= $(MARIADB_VER_MINOR)
 
 ifneq ($(STABILITY_TAG),)

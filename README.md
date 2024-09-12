@@ -19,7 +19,6 @@ Overview:
 Supported tags and respective `Dockerfile` links:
 
 - `11.4`, `11`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
-- `11.2` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
 - `10.11`, `10` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.6` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.5` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
@@ -31,7 +30,7 @@ All images built for `linux/amd64` and `linux/arm64`.
 
 ## Environment Variables
 
-| Variable                                 | 11.4, 11.2           | 10.11, 10.6, 10.5    |
+| Variable                                 | 11.4                 | 10.11, 10.6, 10.5    |
 |------------------------------------------|----------------------|----------------------|
 | [`MARIADB_PLUGIN_LOAD`]                  |                      |                      |
 | [`MARIADB_SSL_CERT`]                     |                      |                      |

@@ -52,7 +52,7 @@ RUN set -xe; \
         xz-dev \
         zlib-dev; \
     \
-    mariadb_url="https://downloads.mariadb.com/MariaDB/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
+    mariadb_url="https://archive.mariadb.org/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
     curl -fSL "${mariadb_url}" -o /tmp/mariadb.tar.gz; \
     curl -fSL "${mariadb_url}.asc" -o /tmp/mariadb.tar.gz.asc; \
     GPG_KEYS="0xF1656F24C74CD1D8" gpg_verify /tmp/mariadb.tar.gz.asc /tmp/mariadb.tar.gz; \

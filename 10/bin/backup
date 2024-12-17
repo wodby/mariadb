@@ -17,7 +17,7 @@ ignore=()
 IFS=';' read -ra ADDR <<< "${ignore_tables}"
 for table in "${ADDR[@]}"; do
     if echo "${table}" | grep -q "%"; then
-        out=$(mysql --silent -h"${host}" -uroot -p"${root_password}" -e "SHOW TABLES LIKE '${table}'" "${db}")
+        out=$(mariadb --silent -h"${host}" -uroot -p"${root_password}" -e "SHOW TABLES LIKE '${table}'" "${db}")
         tables=(${out//$'\n'/ })
 
         for t in "${tables[@]}"; do
@@ -28,11 +28,11 @@ for table in "${ADDR[@]}"; do
     fi
 done
 
-mysqldump -h"${host}" -uroot -p"${root_password}" \
+mariadb-dump -h"${host}" -uroot -p"${root_password}" \
     --single-transaction --no-data --allow-keywords --skip-triggers \
     "${db}" | gzip > "${filepath}"
 
-mysqldump -h"${host}" -uroot -p"${root_password}" \
+mariadb-dump -h"${host}" -uroot -p"${root_password}" \
     --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
     "${db}" | gzip >> "${filepath}"
 

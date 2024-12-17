@@ -7,7 +7,7 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 query() {
-    mysql -h"${host}" -uroot -p"${root_password}" -e "${@}"
+    mariadb -h"${host}" -uroot -p"${root_password}" -e "${@}"
 }
 
 restore_privileges() {
@@ -34,7 +34,7 @@ if [[ "${count}" == 1 ]]; then
     restore_privileges
     query 'FLUSH PRIVILEGES;'
 
-    mysql -h"${host}" -uroot -p"${root_password}" "${db}" < "${sql_file}"
+    mariadb -h"${host}" -uroot -p"${root_password}" "${db}" < "${sql_file}"
 
     rm -rf "${tmp_dir}"
 else

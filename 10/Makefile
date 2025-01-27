@@ -10,7 +10,7 @@ ALPINE_VER ?= 3.20
 
 NPROC =
 
-PLATFORM ?= linux/amd64
+PLATFORM ?= linux/arm64
 
 ifeq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(ALPINE_VER)

@@ -58,11 +58,11 @@ buildx-push:
 	    --build-arg WSREP_VER=$(WSREP_VER) \
 	    --build-arg NPROC=$(NPROC) ./
 
-bulidx-imagetools-create:
+buildx-imagetools-create:
 	docker buildx imagetools create -t $(REPO):$(TAG) \
 				  $(REPO):$(MARIADB_VER_MINOR)-amd64 \
 				  $(REPO):$(MARIADB_VER_MINOR)-arm64
-.PHONY: bulidx-imagetools-create 
+.PHONY: buildx-imagetools-create 
 
 test:
 	cd ./tests && IMAGE=$(REPO):$(TAG) ./run.sh

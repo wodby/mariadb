@@ -10,63 +10,240 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.15.5
+  MARIADB114: '11.4.4'
+  MARIADB1011: '10.11.10'
+  MARIADB106: '10.6.20'
+  MARIADB105: '10.5.27'
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  mariadb-114:
-    runs-on: ubuntu-latest
+  mariadb114-build:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '11.4.4'
-        tags: '11.4,11,latest'
-        workdir: 11
-        platform: linux/amd64,linux/arm64
-  mariadb-1011:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-buildx-action@v3
+      - name: build and push
+        env:
+          MARIADB_VER: ${{ env.MARIADB114 }}
+          TAG: 11.4-${{ matrix.arch }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          make buildx-build
+          make buildx-push
+  mariadb114-push:
     runs-on: ubuntu-latest
+    needs:
+      - mariadb114-build
     steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '10.11.10'
-        tags: '10.11,10'
-        workdir: 10
-        platform: linux/amd64,linux/arm64
-  mariadb-106:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.MARIADB114 }}
+          latest: true
+
+  mariadb1011-build:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-buildx-action@v3
+      - name: build and push
+        env:
+          MARIADB_VER: ${{ env.MARIADB1011 }}
+          TAG: 10.11-${{ matrix.arch }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          make buildx-build
+          make buildx-push
+  mariadb1011-push:
     runs-on: ubuntu-latest
+    needs:
+      - mariadb1011-build
     steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '10.6.20'
-        tags: '10.6'
-        workdir: 10
-        platform: linux/amd64,linux/arm64
-  mariadb-105:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.MARIADB1011 }}
+
+  mariadb106-build:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-buildx-action@v3
+      - name: build and push
+        env:
+          MARIADB_VER: ${{ env.MARIADB106 }}
+          TAG: 10.6-${{ matrix.arch }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          make buildx-build
+          make buildx-push
+  mariadb106-push:
     runs-on: ubuntu-latest
+    needs:
+      - mariadb106-build
     steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3.2.0
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '10.5.27'
-        tags: '10.5'
-        workdir: 10
-        platform: linux/amd64,linux/arm64
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.MARIADB106 }}
+
+  mariadb105-build:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-buildx-action@v3
+      - name: build and push
+        env:
+          MARIADB_VER: ${{ env.MARIADB105 }}
+          TAG: 10.5-${{ matrix.arch }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          make buildx-build
+          make buildx-push
+  mariadb105-push:
+    runs-on: ubuntu-latest
+    needs:
+      - mariadb105-build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.MARIADB105 }}
+
+#  mariadb-114:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v4
+#    - uses: docker/setup-qemu-action@v3
+#      with:
+#        platforms: amd64,arm64
+#    - uses: docker/setup-buildx-action@v3
+#    - uses: ./.github/actions
+#      with:
+#        version: '11.4.4'
+#        tags: '11.4,11,latest'
+#        workdir: 11
+#        platform: linux/amd64,linux/arm64
+#  mariadb-1011:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v4
+#    - uses: docker/setup-qemu-action@v3
+#      with:
+#        platforms: amd64,arm64
+#    - uses: docker/setup-buildx-action@v3
+#    - uses: ./.github/actions
+#      with:
+#        version: '10.11.10'
+#        tags: '10.11,10'
+#        workdir: 10
+#        platform: linux/amd64,linux/arm64
+#  mariadb-106:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v4
+#    - uses: docker/setup-qemu-action@v3
+#      with:
+#        platforms: amd64,arm64
+#    - uses: docker/setup-buildx-action@v3
+#    - uses: ./.github/actions
+#      with:
+#        version: '10.6.20'
+#        tags: '10.6'
+#        workdir: 10
+#        platform: linux/amd64,linux/arm64
+#  mariadb-105:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v4
+#    - uses: docker/setup-qemu-action@v3.2.0
+#      with:
+#        platforms: amd64,arm64
+#    - uses: docker/setup-buildx-action@v3
+#    - uses: ./.github/actions
+#      with:
+#        version: '10.5.27'
+#        tags: '10.5'
+#        workdir: 10
+#        platform: linux/amd64,linux/arm64

@@ -20,14 +20,12 @@ endif
 
 TAG ?= $(MARIADB_VER_MINOR)
 
-ifneq ($(STABILITY_TAG),)
-    ifneq ($(TAG),latest)
-        override TAG := $(TAG)-$(STABILITY_TAG)
-    endif
-endif
-
 REPO = wodby/mariadb
 NAME = mariadb-$(MARIADB_VER_MINOR)
+
+ifneq ($(ARCH),)
+	override TAG := $(TAG)-$(ARCH)
+endif
 
 .PHONY: build buildx-build buildx-push test push shell run start stop logs clean release
 

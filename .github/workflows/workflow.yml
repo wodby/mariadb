@@ -42,7 +42,7 @@ jobs:
       - name: build and push
         env:
           MARIADB_VER: ${{ env.MARIADB114 }}
-          TAG: 11.4-${{ matrix.arch }}
+          ARCH: ${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
         working-directory: 11
         run: |
@@ -87,7 +87,7 @@ jobs:
       - name: build and push
         env:
           MARIADB_VER: ${{ env.MARIADB1011 }}
-          TAG: 10.11-${{ matrix.arch }}
+          ARCH: ${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
         working-directory: 10
         run: |
@@ -131,7 +131,7 @@ jobs:
       - name: build and push
         env:
           MARIADB_VER: ${{ env.MARIADB106 }}
-          TAG: 10.6-${{ matrix.arch }}
+          ARCH: ${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
         working-directory: 10
         run: |
@@ -175,7 +175,7 @@ jobs:
       - name: build and push
         env:
           MARIADB_VER: ${{ env.MARIADB105 }}
-          TAG: 10.5-${{ matrix.arch }}
+          ARCH: ${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
         working-directory: 10
         run: |

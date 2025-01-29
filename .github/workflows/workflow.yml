@@ -61,6 +61,7 @@ jobs:
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB114 }}
+          workdir: 11
           latest: true
 
   mariadb1011-build:
@@ -106,6 +107,7 @@ jobs:
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB1011 }}
+          workdir: 10
 
   mariadb106-build:
     strategy:
@@ -150,6 +152,7 @@ jobs:
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB106 }}
+          workdir: 10
 
   mariadb105-build:
     strategy:
@@ -194,60 +197,4 @@ jobs:
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB105 }}
-
-#  mariadb-114:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v4
-#    - uses: docker/setup-qemu-action@v3
-#      with:
-#        platforms: amd64,arm64
-#    - uses: docker/setup-buildx-action@v3
-#    - uses: ./.github/actions
-#      with:
-#        version: '11.4.4'
-#        tags: '11.4,11,latest'
-#        workdir: 11
-#        platform: linux/amd64,linux/arm64
-#  mariadb-1011:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v4
-#    - uses: docker/setup-qemu-action@v3
-#      with:
-#        platforms: amd64,arm64
-#    - uses: docker/setup-buildx-action@v3
-#    - uses: ./.github/actions
-#      with:
-#        version: '10.11.10'
-#        tags: '10.11,10'
-#        workdir: 10
-#        platform: linux/amd64,linux/arm64
-#  mariadb-106:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v4
-#    - uses: docker/setup-qemu-action@v3
-#      with:
-#        platforms: amd64,arm64
-#    - uses: docker/setup-buildx-action@v3
-#    - uses: ./.github/actions
-#      with:
-#        version: '10.6.20'
-#        tags: '10.6'
-#        workdir: 10
-#        platform: linux/amd64,linux/arm64
-#  mariadb-105:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v4
-#    - uses: docker/setup-qemu-action@v3.2.0
-#      with:
-#        platforms: amd64,arm64
-#    - uses: docker/setup-buildx-action@v3
-#    - uses: ./.github/actions
-#      with:
-#        version: '10.5.27'
-#        tags: '10.5'
-#        workdir: 10
-#        platform: linux/amd64,linux/arm64
+          workdir: 10

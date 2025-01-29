@@ -44,6 +44,7 @@ jobs:
           MARIADB_VER: ${{ env.MARIADB114 }}
           TAG: 11.4-${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
+        working-directory: 11
         run: |
           make buildx-build
           make buildx-push
@@ -88,6 +89,7 @@ jobs:
           MARIADB_VER: ${{ env.MARIADB1011 }}
           TAG: 10.11-${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
+        working-directory: 10
         run: |
           make buildx-build
           make buildx-push
@@ -131,6 +133,7 @@ jobs:
           MARIADB_VER: ${{ env.MARIADB106 }}
           TAG: 10.6-${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
+        working-directory: 10
         run: |
           make buildx-build
           make buildx-push
@@ -174,6 +177,7 @@ jobs:
           MARIADB_VER: ${{ env.MARIADB105 }}
           TAG: 10.5-${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
+        working-directory: 10
         run: |
           make buildx-build
           make buildx-push

@@ -63,6 +63,7 @@ jobs:
           version: ${{ env.MARIADB114 }}
           workdir: 11
           latest: true
+          latest_major: true
 
   mariadb1011-build:
     strategy:
@@ -108,6 +109,7 @@ jobs:
         with:
           version: ${{ env.MARIADB1011 }}
           workdir: 10
+          latest_major: true
 
   mariadb106-build:
     strategy:

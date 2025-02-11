@@ -47,7 +47,8 @@ buildx-build:
 	    --build-arg MARIADB_VER_MINOR=$(MARIADB_VER_MINOR) \
 	    --build-arg GALERA_VER=$(GALERA_VER) \
 	    --build-arg WSREP_VER=$(WSREP_VER) \
-	    --build-arg NPROC=$(NPROC) ./
+	    --build-arg NPROC=$(NPROC) \
+	 	--load ./
 
 buildx-push:
 	docker buildx build --push --platform $(PLATFORM) -t $(REPO):$(TAG) \

@@ -47,6 +47,7 @@ jobs:
         working-directory: 11
         run: |
           make buildx-build
+          make test
           make buildx-push
   mariadb114-push:
     runs-on: ubuntu-latest
@@ -94,6 +95,7 @@ jobs:
         working-directory: 10
         run: |
           make buildx-build
+          make test
           make buildx-push
   mariadb1011-push:
     runs-on: ubuntu-latest
@@ -140,6 +142,7 @@ jobs:
         working-directory: 10
         run: |
           make buildx-build
+          make test
           make buildx-push
   mariadb106-push:
     runs-on: ubuntu-latest
@@ -185,6 +188,7 @@ jobs:
         working-directory: 10
         run: |
           make buildx-build
+          make test
           make buildx-push
   mariadb105-push:
     runs-on: ubuntu-latest

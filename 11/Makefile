@@ -1,12 +1,12 @@
 -include env_make
 
-MARIADB_VER ?= 11.4.9
+MARIADB_VER ?= 11.8.5
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 GALERA_VER ?=
 WSREP_VER ?= $(shell echo "${GALERA_VER}" | grep -oE '^[0-9]+')
 
-ALPINE_VER ?= 3.21
+ALPINE_VER ?= 3.22
 
 NPROC =
 

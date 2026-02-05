@@ -1,6 +1,6 @@
 -include env_make
 
-MARIADB_VER ?= 10.11.15
+MARIADB_VER ?= 10.11.16
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 GALERA_VER ?=

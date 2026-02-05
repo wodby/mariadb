@@ -13,7 +13,7 @@ env:
   MARIADB118: '11.8.6'
   MARIADB114: '11.4.10'
   MARIADB1011: '10.11.16'
-  MARIADB106: '10.6.24'
+  MARIADB106: '10.6.25'
 
 jobs:
   mariadb118-build:

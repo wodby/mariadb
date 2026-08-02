@@ -282,6 +282,9 @@ default params values:
     ignore ""
 ```
 
+`create-user` is safe to retry when the existing account accepts the requested password, but fails on a same-named
+account with different credentials rather than replacing it.
+
 ## Deployment
 
 Deploy MariaDB to your own server

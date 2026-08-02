@@ -39,6 +39,17 @@ mariadb make check-ready delay_seconds=5 wait_seconds=5 max_try=12
 mariadb make mysql-upgrade
 mariadb make mysql-check
 
+mariadb make create-user username='actionuser' password='action-password'
+mariadb make create-user username='actionuser' password='action-password'
+if mariadb make create-user username='actionuser' password='unexpected-password'; then
+	echo "Create user unexpectedly replaced credentials" >&2
+	exit 1
+fi
+mariadb make grant-user-db username='actionuser' db="${MYSQL_DATABASE}"
+[ "$(mariadb make query-silent user='actionuser' password='action-password' query='SELECT 1')" = '1' ]
+mariadb make revoke-user-db username='actionuser' db="${MYSQL_DATABASE}"
+mariadb make drop-user username='actionuser'
+
 mariadb make query query="CREATE TABLE test (a INT, b INT, c VARCHAR(255))"
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 0 ]
 mariadb make query query="INSERT INTO test VALUES (1, 2, 'hello')"

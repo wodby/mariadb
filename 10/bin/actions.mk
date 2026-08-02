@@ -58,7 +58,16 @@ create-user:
 	$(call check_defined, username, password)
 	$(eval override password := $(shell echo "${password}" | tr -d \'\"))
 	$(eval override username := $(shell echo "${username}" | tr -d \'\"))
-	mariadb -uroot -p$(root_password) -h$(host) -e "CREATE USER IF NOT EXISTS \`$(username)\`@\`%\` IDENTIFIED BY '$(password)';"
+	@if mariadb -uroot -p$(root_password) -h$(host) --batch --skip-column-names -e "SELECT 1 FROM mysql.user WHERE User = '$(username)' AND Host = '%';" | grep -q 1; then \
+		if mariadb -u$(username) -p$(password) -h$(host) -e "SELECT 1;" >/dev/null 2>&1; then \
+			echo "Database user $(username) already exists with the expected credentials"; \
+		else \
+			echo "Database user $(username) already exists with different credentials; refusing to replace it" >&2; \
+			exit 1; \
+		fi; \
+	else \
+		mariadb -uroot -p$(root_password) -h$(host) -e "CREATE USER \`$(username)\`@\`%\` IDENTIFIED BY '$(password)';"; \
+	fi
 .PHONY: create-user
 
 drop-user:

@@ -13,18 +13,25 @@ export MYSQL_DATABASE='mariadb'
 export MYSQL_HOST='mariadb'
 
 unsupported_init_dir="$(mktemp -d)"
+unsupported_init_output="$(mktemp)"
+chmod 755 "${unsupported_init_dir}"
 touch "${unsupported_init_dir}/database.dump"
 if docker run --rm \
 	-e MYSQL_RANDOM_ROOT_PASSWORD=1 \
 	-v "${unsupported_init_dir}:/docker-entrypoint-initdb.d:ro" \
-	"${IMAGE}" > "${unsupported_init_dir}/output.log" 2>&1; then
+	"${IMAGE}" > "${unsupported_init_output}" 2>&1; then
 	echo "Unsupported initialization file was accepted" >&2
 	exit 1
 fi
-grep -q 'unsupported initialization file /docker-entrypoint-initdb.d/database.dump' "${unsupported_init_dir}/output.log"
+if ! grep -q 'unsupported initialization file /docker-entrypoint-initdb.d/database.dump' "${unsupported_init_output}"; then
+	cat "${unsupported_init_output}" >&2
+	exit 1
+fi
 rm -rf "${unsupported_init_dir}"
+rm "${unsupported_init_output}"
 
 archive_init_dir="$(mktemp -d)"
+chmod 755 "${archive_init_dir}"
 echo 'CREATE TABLE mariadb.archive_init_test (id INT);' > "${archive_init_dir}/database.sql"
 tar -czf "${archive_init_dir}/database.tar.gz" -C "${archive_init_dir}" database.sql
 rm "${archive_init_dir}/database.sql"

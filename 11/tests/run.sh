@@ -12,6 +12,23 @@ export MYSQL_PASSWORD='mariadb'
 export MYSQL_DATABASE='mariadb'
 export MYSQL_HOST='mariadb'
 
+unsupported_init_dir="$(mktemp -d)"
+touch "${unsupported_init_dir}/database.dump"
+if docker run --rm \
+	-e MYSQL_RANDOM_ROOT_PASSWORD=1 \
+	-v "${unsupported_init_dir}:/docker-entrypoint-initdb.d:ro" \
+	"${IMAGE}" > "${unsupported_init_dir}/output.log" 2>&1; then
+	echo "Unsupported initialization file was accepted" >&2
+	exit 1
+fi
+grep -q 'unsupported initialization file /docker-entrypoint-initdb.d/database.dump' "${unsupported_init_dir}/output.log"
+rm -rf "${unsupported_init_dir}"
+
+archive_init_dir="$(mktemp -d)"
+echo 'CREATE TABLE mariadb.archive_init_test (id INT);' > "${archive_init_dir}/database.sql"
+tar -czf "${archive_init_dir}/database.tar.gz" -C "${archive_init_dir}" database.sql
+rm "${archive_init_dir}/database.sql"
+
 cid="$(
 	docker run -d \
 	    -e DEBUG \
@@ -20,10 +37,11 @@ cid="$(
 		-e MYSQL_PASSWORD \
 		-e MYSQL_DATABASE \
 		-e MARIADB_PLUGIN_LOAD=auth_pam \
+		-v "${archive_init_dir}:/docker-entrypoint-initdb.d:ro" \
 		--name "${MYSQL_HOST}" \
 		"${IMAGE}"
 )"
-trap "docker rm -vf ${cid} > /dev/null" EXIT
+trap "docker rm -vf ${cid} > /dev/null; rm -rf ${archive_init_dir}" EXIT
 
 mariadb() {
 	docker run --rm -i \
@@ -36,6 +54,7 @@ mariadb() {
 }
 
 mariadb make check-ready delay_seconds=5 wait_seconds=5 max_try=12
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM archive_init_test')" = 0 ]
 mariadb make mysql-upgrade
 mariadb make mysql-check
 

@@ -248,6 +248,11 @@ Refer to the [documentation](https://galeracluster.com/library/documentation/arb
 
 ## Orchestration Actions
 
+During first-time database initialization, files mounted under `/docker-entrypoint-initdb.d` must use one of the
+supported extensions: `.sh`, `.sql`, `.sql.gz`, `.sql.xz`, `.gz`, `.tgz`, `.tar.gz`, or `.zip`. Archives must contain
+exactly one `.sql` or `.mysql` file. The container exits with an error for unsupported or malformed files so that a
+failed database import cannot be mistaken for a successful empty-database startup.
+
 Usage:
 
 ```

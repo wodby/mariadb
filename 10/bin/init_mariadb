@@ -60,6 +60,27 @@ _is_sourced() {
 # usage: docker_process_init_files [file [file [...]]]
 #    ie: docker_process_init_files /always-initdb.d/*
 # process initializer files, based on file extensions
+docker_process_init_archive() {
+	local archive="$1"
+	local tmp_dir
+	tmp_dir="$(mktemp -d)"
+	local archive_copy="$tmp_dir/$(basename "$archive")"
+	local extract_dir="$tmp_dir/extracted"
+	cp "$archive" "$archive_copy"
+	get_archive "$archive_copy" "$extract_dir" "zip tgz tar.gz gz"
+
+	local -a sql_files=()
+	mapfile -d '' sql_files < <(find "$extract_dir" -type f \( -name '*.sql' -o -name '*.mysql' \) -print0)
+	if [ "${#sql_files[@]}" -ne 1 ]; then
+		local count="${#sql_files[@]}"
+		rm -rf "$tmp_dir"
+		mariadb_error "$0: expected exactly one .sql or .mysql file in $archive; found $count"
+	fi
+
+	docker_process_sql < "${sql_files[0]}"
+	rm -rf "$tmp_dir"
+}
+
 docker_process_init_files() {
 	# mysql here for backwards compatibility "${mysql[@]}"
 	mysql=( docker_process_sql )
@@ -79,10 +100,10 @@ docker_process_init_files() {
 					. "$f"
 				fi
 				;;
-			*.sql)    mariadb_note "$0: running $f"; docker_process_sql < "$f"; echo ;;
-			*.sql.gz) mariadb_note "$0: running $f"; gunzip -c "$f" | docker_process_sql; echo ;;
-			*.sql.xz) mariadb_note "$0: running $f"; xzcat "$f" | docker_process_sql; echo ;;
-			*)        mariadb_warn "$0: ignoring $f" ;;
+			*.sql)                    mariadb_note "$0: running $f"; docker_process_sql < "$f"; echo ;;
+			*.tar.gz|*.tgz|*.zip|*.gz) mariadb_note "$0: running $f"; docker_process_init_archive "$f"; echo ;;
+			*.sql.xz)                 mariadb_note "$0: running $f"; xzcat "$f" | docker_process_sql; echo ;;
+			*)        mariadb_error "$0: unsupported initialization file $f" ;;
 		esac
 		echo
 	done

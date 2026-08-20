@@ -70,7 +70,13 @@ docker_process_init_archive() {
 	get_archive "$archive_copy" "$extract_dir" "zip tgz tar.gz gz"
 
 	local -a sql_files=()
-	mapfile -d '' sql_files < <(find "$extract_dir" -type f \( -name '*.sql' -o -name '*.mysql' \) -print0)
+	mapfile -d '' sql_files < <(
+		find "$extract_dir" -type f \
+			\( -name '*.sql' -o -name '*.mysql' \) \
+			! -name '._*' \
+			! -path '*/__MACOSX/*' \
+			-print0
+	)
 	if [ "${#sql_files[@]}" -ne 1 ]; then
 		local count="${#sql_files[@]}"
 		rm -rf "$tmp_dir"

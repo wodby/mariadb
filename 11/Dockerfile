@@ -40,6 +40,7 @@ RUN set -xe; \
         build-base \
         cmake \
         coreutils \
+        git \
         gnupg \
         libaio-dev \
         linux-pam-dev \

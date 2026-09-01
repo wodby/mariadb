@@ -152,7 +152,12 @@ docker run --rm \
         wait "${reader}"
         test "$(cat /stream/status)" != 0
     '
-mariadb make import source="${stream_dir}/export.sql.gz"
+docker run --rm -i \
+    -e DEBUG -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+    -v "${stream_dir}:/stream" \
+    --link "${MYSQL_HOST}":"${MYSQL_HOST}" \
+    "${IMAGE}" \
+    make import source=/stream/export.sql.gz host="${MYSQL_HOST}"
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 1 ]
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test1')" = 0 ]
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test2')" = 0 ]

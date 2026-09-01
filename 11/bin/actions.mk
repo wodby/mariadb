@@ -32,7 +32,7 @@ backup:
 
 backup-stream:
 	$(call check_defined, stream_path, status_path)
-	backup_stream $(root_password) $(host) $(db) $(stream_path) $(status_path) $(ignore)
+	backup_stream $(root_password) $(host) $(db) $(stream_path) $(status_path) "$(ignore)"
 .PHONY: backup-stream
 
 query:

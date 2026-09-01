@@ -116,6 +116,48 @@ mariadb make mysql-check
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test1')" = 0 ]
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test2')" = 0 ]
 
+stream_dir="$(mktemp -d)"
+chmod 777 "${stream_dir}"
+docker run --rm \
+    -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+    -v "${stream_dir}:/stream" \
+    --link "${MYSQL_HOST}":"${MYSQL_HOST}" \
+    "${IMAGE}" bash -ceu '
+        mkfifo /stream/data
+        touch /stream/status
+        chmod 666 /stream/data /stream/status
+        cat /stream/data > /stream/export.sql.gz &
+        reader=$!
+        make -f /usr/local/bin/actions.mk backup-stream \
+            host="'"${MYSQL_HOST}"'" \
+            ignore="test1;test2;cache_%;test3" \
+            stream_path=/stream/data \
+            status_path=/stream/status
+        wait "${reader}"
+        test "$(cat /stream/status)" = 0
+
+        rm /stream/data /stream/status
+        mkfifo /stream/data
+        touch /stream/status
+        chmod 666 /stream/data /stream/status
+        cat /stream/data >/dev/null &
+        reader=$!
+        if make -f /usr/local/bin/actions.mk backup-stream \
+            host="'"${MYSQL_HOST}"'" \
+            db=missing_stream_backup_database \
+            stream_path=/stream/data \
+            status_path=/stream/status; then
+            exit 1
+        fi
+        wait "${reader}"
+        test "$(cat /stream/status)" != 0
+    '
+mariadb make import source="${stream_dir}/export.sql.gz"
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 1 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test1')" = 0 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test2')" = 0 ]
+rm -rf "${stream_dir}"
+
 mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.zip"
 mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.tar.gz"
 mariadb make mysql-check

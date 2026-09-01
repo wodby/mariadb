@@ -30,6 +30,11 @@ backup:
 	backup $(root_password) $(host) $(db) $(filepath) $(ignore)
 .PHONY: backup
 
+backup-stream:
+	$(call check_defined, stream_path, status_path)
+	backup_stream $(root_password) $(host) $(db) $(stream_path) $(status_path) $(ignore)
+.PHONY: backup-stream
+
 query:
 	$(call check_defined, query)
 	mariadb -u$(user) -p$(password) -h$(host) -e "$(query)" $(db)

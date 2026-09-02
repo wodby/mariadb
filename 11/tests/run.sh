@@ -104,7 +104,7 @@ mariadb make query query="INSERT INTO test1 VALUES (1, 2, 'hello')"
 mariadb make query query="INSERT INTO test2 VALUES (1, 2, 'hello!')"
 mariadb make mysql-check
 
-mariadb make backup filepath="/mnt/backups/export.sql.gz" 'ignore="test1;test2;cache_%;test3"'
+mariadb make backup filepath="/mnt/backups/export.sql.gz" ignore="test1;test2;cache_%;test3"
 mariadb make query query="DROP DATABASE mariadb"
 mariadb make import source="/mnt/backups/export.sql.gz"
 mariadb make mysql-check

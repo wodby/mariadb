@@ -14,7 +14,7 @@ host ?= localhost
 max_try ?= 1
 wait_seconds ?= 1
 delay_seconds ?= 0
-ignore ?= ""
+ignore ?=
 charset ?= utf8
 collation ?= utf8_general_ci
 
@@ -27,7 +27,7 @@ import:
 
 backup:
 	$(call check_defined, filepath)
-	backup $(root_password) $(host) $(db) $(filepath) $(ignore)
+	backup $(root_password) $(host) $(db) $(filepath) "$(ignore)"
 .PHONY: backup
 
 backup-stream:

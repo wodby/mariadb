@@ -18,6 +18,7 @@ env:
 jobs:
   mariadb118-build:
     strategy:
+      fail-fast: false
       matrix:
         arch:
           - amd64
@@ -34,7 +35,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: build and push
+      - name: Build and test
+        id: build-image
         env:
           MARIADB_VER: ${{ env.MARIADB118 }}
           ARCH: ${{ matrix.arch }}
@@ -42,7 +44,21 @@ jobs:
         run: |
           make
           make test
-          make push
+          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Scan image
+        if: github.event_name == 'push'
+        uses: ./.github/actions/scout
+        with:
+          image: local://${{ steps.build-image.outputs.image }}
+          dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push scanned architecture image
+        if: github.event_name == 'push'
+        env:
+          MARIADB_VER: ${{ env.MARIADB118 }}
+          ARCH: ${{ matrix.arch }}
+        working-directory: '11'
+        run: make push
   mariadb118-push:
     runs-on: ubuntu-latest
     needs:
@@ -62,6 +78,7 @@ jobs:
   
   mariadb114-build:
     strategy:
+      fail-fast: false
       matrix:
         arch:
           - amd64
@@ -78,7 +95,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: build and push
+      - name: Build and test
+        id: build-image
         env:
           MARIADB_VER: ${{ env.MARIADB114 }}
           ARCH: ${{ matrix.arch }}
@@ -86,7 +104,21 @@ jobs:
         run: |
           make
           make test
-          make push
+          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Scan image
+        if: github.event_name == 'push'
+        uses: ./.github/actions/scout
+        with:
+          image: local://${{ steps.build-image.outputs.image }}
+          dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push scanned architecture image
+        if: github.event_name == 'push'
+        env:
+          MARIADB_VER: ${{ env.MARIADB114 }}
+          ARCH: ${{ matrix.arch }}
+        working-directory: '11'
+        run: make push
   mariadb114-push:
     runs-on: ubuntu-latest
     needs:
@@ -104,6 +136,7 @@ jobs:
 
   mariadb1011-build:
     strategy:
+      fail-fast: false
       matrix:
         arch:
           - amd64
@@ -120,7 +153,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: build and push
+      - name: Build and test
+        id: build-image
         env:
           MARIADB_VER: ${{ env.MARIADB1011 }}
           ARCH: ${{ matrix.arch }}
@@ -128,7 +162,21 @@ jobs:
         run: |
           make
           make test
-          make push
+          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Scan image
+        if: github.event_name == 'push'
+        uses: ./.github/actions/scout
+        with:
+          image: local://${{ steps.build-image.outputs.image }}
+          dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push scanned architecture image
+        if: github.event_name == 'push'
+        env:
+          MARIADB_VER: ${{ env.MARIADB1011 }}
+          ARCH: ${{ matrix.arch }}
+        working-directory: '10'
+        run: make push
   mariadb1011-push:
     runs-on: ubuntu-latest
     needs:
@@ -147,6 +195,7 @@ jobs:
 
   mariadb106-build:
     strategy:
+      fail-fast: false
       matrix:
         arch:
           - amd64
@@ -163,7 +212,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: build and push
+      - name: Build and test
+        id: build-image
         env:
           MARIADB_VER: ${{ env.MARIADB106 }}
           ARCH: ${{ matrix.arch }}
@@ -171,7 +221,21 @@ jobs:
         run: |
           make
           make test
-          make push
+          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Scan image
+        if: github.event_name == 'push'
+        uses: ./.github/actions/scout
+        with:
+          image: local://${{ steps.build-image.outputs.image }}
+          dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push scanned architecture image
+        if: github.event_name == 'push'
+        env:
+          MARIADB_VER: ${{ env.MARIADB106 }}
+          ARCH: ${{ matrix.arch }}
+        working-directory: '10'
+        run: make push
   mariadb106-push:
     runs-on: ubuntu-latest
     needs:

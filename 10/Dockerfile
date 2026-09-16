@@ -14,7 +14,9 @@ ENV MARIADB_VER="${MARIADB_VER}" \
 
 COPY patches /tmp/patches
 
+# Upgrade inherited packages even when their existing versions satisfy dependencies.
 RUN set -xe; \
+    apk upgrade --no-cache; \
     \
     addgroup -g 101 -S mysql; \
     adduser -u 100 -D -S -s /bin/bash -G mysql mysql; \

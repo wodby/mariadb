@@ -1,6 +1,9 @@
-ARG BASE_IMAGE_TAG
+# check=skip=InvalidDefaultArgInFrom
 
-FROM wodby/alpine:${BASE_IMAGE_TAG}
+# The Makefile supplies the required digest-pinned BASE_IMAGE argument.
+
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 
 ARG MARIADB_VER
 ARG MARIADB_VER_MINOR

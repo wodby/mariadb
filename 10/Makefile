@@ -1,5 +1,8 @@
 -include env_make
 
+# Accept legacy build arguments during the image revision transition.
+BASE_IMAGE_REVISION ?= $(BASE_IMAGE_STABILITY_TAG)
+
 MARIADB_VER ?= 10.11.19
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
@@ -12,10 +15,10 @@ NPROC =
 
 PLATFORM ?= linux/amd64
 
-ifeq ($(BASE_IMAGE_STABILITY_TAG),)
+ifeq ($(BASE_IMAGE_REVISION),)
     BASE_IMAGE_TAG := $(ALPINE_VER)
 else
-    BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_STABILITY_TAG)
+    BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_REVISION)
 endif
 
 TAG ?= $(MARIADB_VER_MINOR)

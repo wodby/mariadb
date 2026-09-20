@@ -8,9 +8,10 @@ on:
 
     tags:
     - '*'
+    - '!*-r[0-9]*'
 
 env:
-  BASE_IMAGE_STABILITY_TAG: 2.20.8
+  BASE_IMAGE_REVISION: 2.20.8
   MARIADB118: '11.8.9'
   MARIADB114: '11.4.13'
   MARIADB1011: '10.11.19'
@@ -251,3 +252,18 @@ jobs:
         with:
           version: ${{ env.MARIADB106 }}
           workdir: 10
+
+  image-revision-aliases:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/r')
+    needs: [ mariadb118-push, mariadb114-push, mariadb1011-push, mariadb106-push ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: image-revision-aliases-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - uses: wodby/images/.github/actions/image-revision-aliases@6a3956567002e48847338be97b4d955ee40ae7cb
+        with:
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}

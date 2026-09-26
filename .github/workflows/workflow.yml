@@ -11,7 +11,7 @@ on:
     - '!*-r[0-9]*'
 
 env:
-  BASE_IMAGE_REVISION: r0
+  BASE_IMAGE_REVISION: r1
   MARIADB118: '11.8.9'
   MARIADB114: '11.4.13'
   MARIADB1011: '10.11.19'

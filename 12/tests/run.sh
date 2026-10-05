@@ -1,0 +1,169 @@
+#!/bin/bash
+
+set -e
+
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
+
+export MYSQL_ROOT_PASSWORD='password'
+export MYSQL_USER='mariadb'
+export MYSQL_PASSWORD='mariadb'
+export MYSQL_DATABASE='mariadb'
+export MYSQL_HOST='mariadb'
+
+unsupported_init_dir="$(mktemp -d)"
+unsupported_init_output="$(mktemp)"
+chmod 755 "${unsupported_init_dir}"
+touch "${unsupported_init_dir}/database.dump"
+if docker run --rm \
+	-e MYSQL_RANDOM_ROOT_PASSWORD=1 \
+	-v "${unsupported_init_dir}:/docker-entrypoint-initdb.d:ro" \
+	"${IMAGE}" > "${unsupported_init_output}" 2>&1; then
+	echo "Unsupported initialization file was accepted" >&2
+	exit 1
+fi
+if ! grep -q 'unsupported initialization file /docker-entrypoint-initdb.d/database.dump' "${unsupported_init_output}"; then
+	cat "${unsupported_init_output}" >&2
+	exit 1
+fi
+rm -rf "${unsupported_init_dir}"
+rm "${unsupported_init_output}"
+
+archive_init_dir="$(mktemp -d)"
+chmod 755 "${archive_init_dir}"
+echo 'CREATE TABLE mariadb.archive_init_test (id INT);' > "${archive_init_dir}/database.sql"
+tar -czf "${archive_init_dir}/database.tar.gz" -C "${archive_init_dir}" database.sql
+rm "${archive_init_dir}/database.sql"
+
+cid="$(
+	docker run -d \
+	    -e DEBUG \
+		-e MYSQL_ROOT_PASSWORD \
+		-e MYSQL_USER \
+		-e MYSQL_PASSWORD \
+		-e MYSQL_DATABASE \
+		-e MARIADB_PLUGIN_LOAD=auth_pam \
+		-v "${archive_init_dir}:/docker-entrypoint-initdb.d:ro" \
+		--name "${MYSQL_HOST}" \
+		"${IMAGE}"
+)"
+trap "docker rm -vf ${cid} > /dev/null; rm -rf ${archive_init_dir}" EXIT
+
+mariadb() {
+	docker run --rm -i \
+	    -e DEBUG -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+	    -v /tmp:/mnt/backups \
+	    --link "${MYSQL_HOST}":"${MYSQL_HOST}" \
+	    "${IMAGE}" \
+	    "${@}" \
+	    host="${MYSQL_HOST}"
+}
+
+mariadb make check-ready delay_seconds=5 wait_seconds=5 max_try=12
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM archive_init_test')" = 0 ]
+[[ "$(mariadb make query-silent query='SELECT VERSION()')" == 12.3.* ]]
+mariadb make mysql-upgrade
+mariadb make mysql-check
+
+mariadb make create-user username='actionuser' password='action-password'
+mariadb make create-user username='actionuser' password='action-password'
+if mariadb make create-user username='actionuser' password='unexpected-password'; then
+	echo "Create user unexpectedly replaced credentials" >&2
+	exit 1
+fi
+mariadb make grant-user-db username='actionuser' db="${MYSQL_DATABASE}"
+[ "$(mariadb make query-silent user='actionuser' password='action-password' query='SELECT 1')" = '1' ]
+mariadb make revoke-user-db username='actionuser' db="${MYSQL_DATABASE}"
+mariadb make drop-user username='actionuser'
+
+mariadb make query query="CREATE TABLE test (a INT, b INT, c VARCHAR(255))"
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 0 ]
+mariadb make query query="INSERT INTO test VALUES (1, 2, 'hello')"
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 1 ]
+mariadb make query query="INSERT INTO test VALUES (2, 3, 'goodbye!')"
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 2 ]
+mariadb make query query="DELETE FROM test WHERE a = 1"
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 1 ]
+mariadb make query query="DELETE FROM test WHERE a = 1"
+[ "$(mariadb make query-silent query='SELECT c FROM test')" = 'goodbye!' ]
+mariadb make query query="DELETE FROM test WHERE a = 1"
+mariadb make mysql-check
+
+mariadb make query query="CREATE TABLE cache_this (a INT, b INT, c VARCHAR(255))"
+mariadb make query query="CREATE TABLE cache_that (a INT, b INT, c VARCHAR(255))"
+mariadb make query query="INSERT INTO cache_this VALUES (1, 2, 'hello')"
+mariadb make query query="INSERT INTO cache_that VALUES (1, 2, 'hello')"
+mariadb make mysql-check
+
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_this')" = 1 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_that')" = 1 ]
+
+mariadb make query query="CREATE TABLE test1 (a INT, b INT, c VARCHAR(255))"
+mariadb make query query="CREATE TABLE test2 (a INT, b INT, c VARCHAR(255))"
+mariadb make query query="INSERT INTO test1 VALUES (1, 2, 'hello')"
+mariadb make query query="INSERT INTO test2 VALUES (1, 2, 'hello!')"
+mariadb make mysql-check
+
+mariadb make backup filepath="/mnt/backups/export.sql.gz" ignore="test1;test2;cache_%;test3"
+mariadb make query query="DROP DATABASE mariadb"
+mariadb make import source="/mnt/backups/export.sql.gz"
+mariadb make mysql-check
+
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_this')" = 0 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM cache_that')" = 0 ]
+
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 1 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test1')" = 0 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test2')" = 0 ]
+
+stream_dir="$(mktemp -d)"
+chmod 777 "${stream_dir}"
+docker run --rm \
+    -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+    -v "${stream_dir}:/stream" \
+    --link "${MYSQL_HOST}":"${MYSQL_HOST}" \
+    "${IMAGE}" bash -ceu '
+        mkfifo /stream/data
+        touch /stream/status
+        chmod 666 /stream/data /stream/status
+        cat /stream/data > /stream/export.sql.gz &
+        reader=$!
+        make -f /usr/local/bin/actions.mk backup-stream \
+            host="'"${MYSQL_HOST}"'" \
+            ignore="test1;test2;cache_%;test3" \
+            stream_path=/stream/data \
+            status_path=/stream/status
+        wait "${reader}"
+        test "$(cat /stream/status)" = 0
+
+        rm /stream/data /stream/status
+        mkfifo /stream/data
+        touch /stream/status
+        chmod 666 /stream/data /stream/status
+        cat /stream/data >/dev/null &
+        reader=$!
+        if make -f /usr/local/bin/actions.mk backup-stream \
+            host="'"${MYSQL_HOST}"'" \
+            db=missing_stream_backup_database \
+            stream_path=/stream/data \
+            status_path=/stream/status; then
+            exit 1
+        fi
+        wait "${reader}"
+        test "$(cat /stream/status)" != 0
+    '
+docker run --rm -i \
+    -e DEBUG -e MYSQL_USER -e MYSQL_ROOT_PASSWORD -e MYSQL_PASSWORD -e MYSQL_DATABASE \
+    -v "${stream_dir}:/stream" \
+    --link "${MYSQL_HOST}":"${MYSQL_HOST}" \
+    "${IMAGE}" \
+    make import source=/stream/export.sql.gz host="${MYSQL_HOST}"
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test')" = 1 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test1')" = 0 ]
+[ "$(mariadb make query-silent query='SELECT COUNT(*) FROM test2')" = 0 ]
+rm -rf "${stream_dir}"
+
+mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.zip"
+mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.tar.gz"
+mariadb make mysql-check

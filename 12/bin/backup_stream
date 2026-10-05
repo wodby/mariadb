@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -eEo pipefail
+
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
+
+root_password=$1
+host=$2
+db=$3
+stream_path=$4
+status_path=$5
+ignore_tables=$6
+
+write_status() {
+    exit_code=$?
+    status_tmp="${status_path}.tmp.$$"
+    printf '%s\n' "${exit_code}" > "${status_tmp}"
+    mv "${status_tmp}" "${status_path}"
+}
+trap write_status EXIT
+
+# Open the FIFO before any database work so the uploader receives EOF even if
+# preparing the dump fails before the first byte is produced.
+exec 3> "${stream_path}"
+
+ignore=()
+
+IFS=';' read -ra ADDR <<< "${ignore_tables}"
+for table in "${ADDR[@]}"; do
+    if echo "${table}" | grep -q "%"; then
+        out=$(mariadb --silent -h"${host}" -uroot -p"${root_password}" -e "SHOW TABLES LIKE '${table}'" "${db}")
+        tables=(${out//$'\n'/ })
+
+        for t in "${tables[@]}"; do
+            ignore+=("--ignore-table=${db}.${t}")
+        done
+    else
+        ignore+=("--ignore-table=${db}.${table}")
+    fi
+done
+
+{
+    mariadb-dump -h"${host}" -uroot -p"${root_password}" \
+        --single-transaction --no-data --allow-keywords --skip-triggers \
+        "${db}"
+
+    mariadb-dump -h"${host}" -uroot -p"${root_password}" \
+        --single-transaction --no-create-info "${ignore[@]}" --allow-keywords \
+        "${db}"
+} | gzip >&3

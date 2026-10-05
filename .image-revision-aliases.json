@@ -4,6 +4,20 @@
   "versions": [
     {
       "version": {
+        "job": "mariadb123-push"
+      },
+      "variants": [
+        {
+          "short": [
+            "{minor}",
+            "{major}"
+          ],
+          "full": "{version}"
+        }
+      ]
+    },
+    {
+      "version": {
         "job": "mariadb118-push"
       },
       "variants": [

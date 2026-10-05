@@ -23,7 +23,8 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-- `11.8`, `11`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
+- `12.3`, `12`, `latest` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/12/Dockerfile)
+- `11.8`, `11` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
 - `11.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
 - `10.11`, `10` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 - `10.6` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
@@ -35,7 +36,7 @@ All images built for `linux/amd64` and `linux/arm64`.
 
 ## Environment Variables
 
-| Variable                                 | 11.8, 11.4           | 10.11, 10.6          |
+| Variable                                 | 12.3, 11.8, 11.4     | 10.11, 10.6          |
 |------------------------------------------|----------------------|----------------------|
 | [`MARIADB_PLUGIN_LOAD`]                  |                      |                      |
 | [`MARIADB_SSL_CERT`]                     |                      |                      |
@@ -146,7 +147,7 @@ ibdata1:10M:autoextend:max:10G"
 | [`WSREP_GTID_DOMAIN_ID`]                 | `0`                 |
 | [`WSREP_GTID_MODE`]                      | `OFF`               |
 | [`WSREP_IGNORE_APPLY_ERRORS`]            | `0`                 |
-| [`WSREP_LOAD_DATA_SPLITTING`]            | `OFF` (N/A in 11.8) |
+| [`WSREP_LOAD_DATA_SPLITTING`]            | `OFF` (N/A in 12.3 and 11.8) |
 | [`WSREP_LOG_CONFLICTS`]                  | `OFF`               |
 | [`WSREP_MAX_WS_ROWS`]                    | `0`                 |
 | [`WSREP_MAX_WS_SIZE`]                    | `2G`                |

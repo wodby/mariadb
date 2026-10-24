@@ -49,6 +49,10 @@ jobs:
           make
           make test
           echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Verify Brotli security fixes
+        uses: wodby/images/.github/actions/check-brotli@4d79323d1d62295e425a222e8cb23ccf843cbbea
+        with:
+          image: ${{ steps.build-image.outputs.image }}
       - name: Scan image
         uses: ./.github/actions/grype
         with:
@@ -109,6 +113,10 @@ jobs:
           make
           make test
           echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Verify Brotli security fixes
+        uses: wodby/images/.github/actions/check-brotli@4d79323d1d62295e425a222e8cb23ccf843cbbea
+        with:
+          image: ${{ steps.build-image.outputs.image }}
       - name: Scan image
         uses: ./.github/actions/grype
         with:
@@ -168,6 +176,10 @@ jobs:
           make
           make test
           echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Verify Brotli security fixes
+        uses: wodby/images/.github/actions/check-brotli@4d79323d1d62295e425a222e8cb23ccf843cbbea
+        with:
+          image: ${{ steps.build-image.outputs.image }}
       - name: Scan image
         uses: ./.github/actions/grype
         with:
@@ -226,6 +238,10 @@ jobs:
           make
           make test
           echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Verify Brotli security fixes
+        uses: wodby/images/.github/actions/check-brotli@4d79323d1d62295e425a222e8cb23ccf843cbbea
+        with:
+          image: ${{ steps.build-image.outputs.image }}
       - name: Scan image
         uses: ./.github/actions/grype
         with:
@@ -285,6 +301,10 @@ jobs:
           make
           make test
           echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Verify Brotli security fixes
+        uses: wodby/images/.github/actions/check-brotli@4d79323d1d62295e425a222e8cb23ccf843cbbea
+        with:
+          image: ${{ steps.build-image.outputs.image }}
       - name: Scan image
         uses: ./.github/actions/grype
         with:

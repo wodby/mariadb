@@ -17,6 +17,9 @@ ENV MARIADB_VER="${MARIADB_VER}" \
 
 COPY patches /tmp/patches
 
+# Refresh inherited security fixes when rebuilding this image.
+RUN apk upgrade --no-cache
+
 RUN set -xe; \
     \
     addgroup -g 101 -S mysql; \

@@ -3,7 +3,7 @@
 # Accept legacy build arguments during the image revision transition.
 BASE_IMAGE_REVISION ?= $(BASE_IMAGE_STABILITY_TAG)
 
-MARIADB_VER ?= 11.8.9
+MARIADB_VER ?= 11.8.10
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 GALERA_VER ?=

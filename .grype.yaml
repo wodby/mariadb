@@ -1,0 +1,13 @@
+# Keep accepted findings visible in scan reports.
+show-suppressed: true
+
+ignore:
+  # The image ships MariaDB, not Oracle MySQL. Grype's binary cataloger reads the
+  # MariaDB client as two packages, "mariadb" and "mysql", with the same MariaDB
+  # version, then matches the fake "mysql" package against Oracle MySQL advisories
+  # (for example, MySQL fixes in 8.4.13 and 9.7.4). MariaDB advisories still match
+  # the "mariadb" package and are not affected by this rule.
+  - package:
+      name: mysql
+      type: binary
+      location: /usr/bin/mariadb

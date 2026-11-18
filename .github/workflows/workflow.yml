@@ -10,6 +10,13 @@ on:
     - '*'
     - '!*-r[0-9]*'
 
+# Runs of one event and branch or tag never overlap, so an older master run
+# cannot finish last and move floating tags back. A newer pending run of the
+# same event replaces an older one; other events never replace each other.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   BASE_IMAGE_REVISION: r17
   MARIADB123: '12.3.4'
@@ -55,11 +62,9 @@ jobs:
           image: docker:${{ steps.build-image.outputs.image }}
       - name: Push scanned architecture image
         if: github.event_name == 'push'
-        env:
-          MARIADB_VER: ${{ env.MARIADB123 }}
-          ARCH: ${{ matrix.arch }}
-        working-directory: '12'
-        run: make push
+        uses: wodby/images/.github/actions/arch-image-push@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
+        with:
+          image: ${{ steps.build-image.outputs.image }}
   mariadb123-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -72,6 +77,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: wodby/images/.github/actions/arch-image-pins@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB123 }}
@@ -115,11 +121,9 @@ jobs:
           image: docker:${{ steps.build-image.outputs.image }}
       - name: Push scanned architecture image
         if: github.event_name == 'push'
-        env:
-          MARIADB_VER: ${{ env.MARIADB118 }}
-          ARCH: ${{ matrix.arch }}
-        working-directory: '11'
-        run: make push
+        uses: wodby/images/.github/actions/arch-image-push@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
+        with:
+          image: ${{ steps.build-image.outputs.image }}
   mariadb118-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -132,6 +136,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: wodby/images/.github/actions/arch-image-pins@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB118 }}
@@ -174,11 +179,9 @@ jobs:
           image: docker:${{ steps.build-image.outputs.image }}
       - name: Push scanned architecture image
         if: github.event_name == 'push'
-        env:
-          MARIADB_VER: ${{ env.MARIADB114 }}
-          ARCH: ${{ matrix.arch }}
-        working-directory: '11'
-        run: make push
+        uses: wodby/images/.github/actions/arch-image-push@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
+        with:
+          image: ${{ steps.build-image.outputs.image }}
   mariadb114-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -191,6 +194,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: wodby/images/.github/actions/arch-image-pins@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB114 }}
@@ -232,11 +236,9 @@ jobs:
           image: docker:${{ steps.build-image.outputs.image }}
       - name: Push scanned architecture image
         if: github.event_name == 'push'
-        env:
-          MARIADB_VER: ${{ env.MARIADB1011 }}
-          ARCH: ${{ matrix.arch }}
-        working-directory: '10'
-        run: make push
+        uses: wodby/images/.github/actions/arch-image-push@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
+        with:
+          image: ${{ steps.build-image.outputs.image }}
   mariadb1011-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -249,6 +251,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: wodby/images/.github/actions/arch-image-pins@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB1011 }}
@@ -291,11 +294,9 @@ jobs:
           image: docker:${{ steps.build-image.outputs.image }}
       - name: Push scanned architecture image
         if: github.event_name == 'push'
-        env:
-          MARIADB_VER: ${{ env.MARIADB106 }}
-          ARCH: ${{ matrix.arch }}
-        working-directory: '10'
-        run: make push
+        uses: wodby/images/.github/actions/arch-image-push@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
+        with:
+          image: ${{ steps.build-image.outputs.image }}
   mariadb106-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -308,6 +309,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: wodby/images/.github/actions/arch-image-pins@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
       - uses: ./.github/actions
         with:
           version: ${{ env.MARIADB106 }}

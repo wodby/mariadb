@@ -6,10 +6,11 @@ __check_defined = \
       $(error Required parameter is missing: $1$(if $2, ($2))))
 
 command = mariadb-admin -uroot -p${root_password} -h${host} status &> /dev/null
-user ?= $(MYSQL_USER)
-password ?= $(MYSQL_PASSWORD)
-db ?= $(MYSQL_DATABASE)
-root_password ?= $(MYSQL_ROOT_PASSWORD)
+# The MARIADB_* names of the official image take precedence, as in init_mariadb.
+user ?= $(or $(MARIADB_USER),$(MYSQL_USER))
+password ?= $(or $(MARIADB_PASSWORD),$(MYSQL_PASSWORD))
+db ?= $(or $(MARIADB_DATABASE),$(MYSQL_DATABASE))
+root_password ?= $(or $(MARIADB_ROOT_PASSWORD),$(MYSQL_ROOT_PASSWORD))
 host ?= localhost
 max_try ?= 1
 wait_seconds ?= 1

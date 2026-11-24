@@ -56,9 +56,21 @@ RUN set -xe; \
         xz-dev \
         zlib-dev; \
     \
-    mariadb_url="https://archive.mariadb.org/mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
-    curl -fSL "${mariadb_url}" -o /tmp/mariadb.tar.gz; \
-    curl -fSL "${mariadb_url}.asc" -o /tmp/mariadb.tar.gz.asc; \
+    # Try MariaDB's mirror redirector first: it sends each build to a nearby
+    # mirror, while archive.mariadb.org alone is often slow or drops long
+    # transfers. Mirrors only carry current releases, so fall back to the
+    # archive. The signature check below makes the source mirror irrelevant.
+    mariadb_path="mariadb-${MARIADB_VER}/source/mariadb-${MARIADB_VER}.tar.gz"; \
+    for mariadb_base in https://mirror.mariadb.org https://archive.mariadb.org; do \
+        if curl -fSL --retry 3 --retry-all-errors --connect-timeout 30 --speed-limit 51200 --speed-time 120 \
+                "${mariadb_base}/${mariadb_path}" -o /tmp/mariadb.tar.gz \
+            && curl -fSL --retry 3 --retry-all-errors --connect-timeout 30 --speed-limit 51200 --speed-time 120 \
+                "${mariadb_base}/${mariadb_path}.asc" -o /tmp/mariadb.tar.gz.asc; then \
+            break; \
+        fi; \
+        rm -f /tmp/mariadb.tar.gz /tmp/mariadb.tar.gz.asc; \
+    done; \
+    [ -f /tmp/mariadb.tar.gz.asc ] || { echo "Failed to download MariaDB ${MARIADB_VER} source" >&2; exit 1; }; \
     GPG_KEYS="0xF1656F24C74CD1D8" gpg_verify /tmp/mariadb.tar.gz.asc /tmp/mariadb.tar.gz; \
     \
     tar zxf /tmp/mariadb.tar.gz -C /tmp; \

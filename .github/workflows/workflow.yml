@@ -23,7 +23,6 @@ env:
   MARIADB118: '11.8.10'
   MARIADB114: '11.4.14'
   MARIADB1011: '10.11.20'
-  MARIADB106: '10.6.28'
   # Ubuntu variant: versions of the official mariadb image, which is published
   # some time after a MariaDB release. Their digests are pinned in
   # ubuntu/base-images.mk.
@@ -264,63 +263,6 @@ jobs:
           workdir: 10
           latest_major: true
 
-  mariadb106-build:
-    strategy:
-      fail-fast: false
-      matrix:
-        arch:
-          - amd64
-          - arm64
-        include:
-          - arch: amd64
-            runner: ubuntu-24.04
-          - arch: arm64
-            runner: ubuntu-24.04-arm
-    runs-on: ${{ matrix.runner }}
-    steps:
-      - uses: actions/checkout@v5
-      - uses: docker/login-action@v3
-        if: github.event_name == 'push'
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and test
-        id: build-image
-        env:
-          MARIADB_VER: ${{ env.MARIADB106 }}
-          ARCH: ${{ matrix.arch }}
-        working-directory: '10'
-        run: |
-          make
-          make test
-          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
-      - name: Scan image
-        uses: ./.github/actions/grype
-        with:
-          image: docker:${{ steps.build-image.outputs.image }}
-      - name: Push scanned architecture image
-        if: github.event_name == 'push'
-        uses: wodby/images/.github/actions/arch-image-push@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
-        with:
-          image: ${{ steps.build-image.outputs.image }}
-  mariadb106-push:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    needs:
-      - mariadb106-build
-    steps:
-      - uses: actions/checkout@v5
-      - uses: docker/login-action@v3
-        if: github.event_name == 'push'
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: wodby/images/.github/actions/arch-image-pins@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
-      - uses: ./.github/actions
-        with:
-          version: ${{ env.MARIADB106 }}
-          workdir: 10
-
   # The Ubuntu variant is built on the official image instead of from source.
   ubuntu-setup:
     runs-on: ubuntu-latest
@@ -403,7 +345,7 @@ jobs:
 
   image-revision-aliases:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/r')
-    needs: [ mariadb123-push, mariadb118-push, mariadb114-push, mariadb1011-push, mariadb106-push, ubuntu-push ]
+    needs: [ mariadb123-push, mariadb118-push, mariadb114-push, mariadb1011-push, ubuntu-push ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

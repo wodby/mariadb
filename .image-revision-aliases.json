@@ -59,19 +59,6 @@
     },
     {
       "version": {
-        "job": "mariadb106-push"
-      },
-      "variants": [
-        {
-          "short": [
-            "{minor}"
-          ],
-          "full": "{version}"
-        }
-      ]
-    },
-    {
-      "version": {
         "env": "MARIADB123_UBUNTU"
       },
       "variants": [

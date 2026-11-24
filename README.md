@@ -54,12 +54,17 @@ It differs from the Alpine images in these ways:
 - **Versions.** A version becomes available once the official image for it is published, which can be later than the
   Alpine image built from source.
 
-```
-$ make -C ubuntu MARIADB_VER=11.8.9
-$ make -C ubuntu MARIADB_VER=11.8.9 test
-```
+Tags and respective `Dockerfile` links:
 
-The official image digests are pinned in `ubuntu/base-images.mk`.
+- `12.3-ubuntu`, `12-ubuntu` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/ubuntu/Dockerfile)
+- `11.8-ubuntu`, `11-ubuntu` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/ubuntu/Dockerfile)
+- `11.4-ubuntu` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/ubuntu/Dockerfile)
+
+Image revision tags work as for the Alpine images, with the suffix kept: `11.8-ubuntu-rN`, and
+`11.8.9-ubuntu-rN` for an exact upstream version.
+
+The versions are set in the workflow (`MARIADB118_UBUNTU` and the others) and the official image digests are pinned in
+`ubuntu/base-images.mk`.
 
 ## Environment Variables
 

@@ -13,6 +13,9 @@ inputs:
   workdir:
     description: workdir
     required: true
+  tag_suffix:
+    description: suffix appended to the minor and major tags of a variant
+    required: false
 runs:
   using: "composite"
   steps:
@@ -21,6 +24,7 @@ runs:
         MARIADB_VER: ${{ inputs.version }}
         LATEST: ${{ inputs.latest }}
         LATEST_MAJOR: ${{ inputs.latest_major }}
+        TAG_SUFFIX: ${{ inputs.tag_suffix }}
       run: |
         . $GITHUB_ACTION_PATH/release.sh
       shell: bash

@@ -85,7 +85,8 @@ mariadb() {
 
 mariadb make check-ready delay_seconds=5 wait_seconds=5 max_try=12
 [ "$(mariadb make query-silent query='SELECT COUNT(*) FROM archive_init_test')" = 0 ]
-[[ "$(mariadb make query-silent query='SELECT @@version_comment')" == *ubu* ]]
+# The server is MariaDB's own Ubuntu package, not a build of this repository.
+mariadb make query-silent query='SELECT @@version' | grep -q -- '-ubu'
 mariadb make mysql-upgrade
 mariadb make mysql-check
 

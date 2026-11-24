@@ -24,6 +24,12 @@ env:
   MARIADB114: '11.4.14'
   MARIADB1011: '10.11.20'
   MARIADB106: '10.6.28'
+  # Ubuntu variant: versions of the official mariadb image, which is published
+  # some time after a MariaDB release. Their digests are pinned in
+  # ubuntu/base-images.mk.
+  MARIADB123_UBUNTU: '12.3.3'
+  MARIADB118_UBUNTU: '11.8.9'
+  MARIADB114_UBUNTU: '11.4.13'
 
 jobs:
   mariadb123-build:
@@ -315,17 +321,28 @@ jobs:
           version: ${{ env.MARIADB106 }}
           workdir: 10
 
-  # The Ubuntu variant is built on the official image, whose versions are pinned
-  # in ubuntu/base-images.mk. It is built, tested and scanned here; it is not
-  # published yet.
+  # The Ubuntu variant is built on the official image instead of from source.
+  ubuntu-setup:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.set-matrix.outputs.versions }}
+    steps:
+      - id: set-matrix
+        run: |
+          cat << 'EOF' > versions.json
+          [
+            {"key": "mariadb123-ubuntu", "version": "${{ env.MARIADB123_UBUNTU }}", "latest_major": "1"},
+            {"key": "mariadb118-ubuntu", "version": "${{ env.MARIADB118_UBUNTU }}", "latest_major": "1"},
+            {"key": "mariadb114-ubuntu", "version": "${{ env.MARIADB114_UBUNTU }}", "latest_major": ""}
+          ]
+          EOF
+          echo "versions=$(jq -c . versions.json)" >> "$GITHUB_OUTPUT"
   ubuntu-build:
+    needs: ubuntu-setup
     strategy:
       fail-fast: false
       matrix:
-        version:
-          - '12.3.3'
-          - '11.8.9'
-          - '11.4.13'
+        mariadb: ${{ fromJson(needs.ubuntu-setup.outputs.versions) }}
         arch:
           - amd64
           - arm64
@@ -337,10 +354,15 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v5
+      - uses: docker/login-action@v3
+        if: github.event_name == 'push'
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and test
         id: build-image
         env:
-          MARIADB_VER: ${{ matrix.version }}
+          MARIADB_VER: ${{ matrix.mariadb.version }}
           ARCH: ${{ matrix.arch }}
         working-directory: ubuntu
         run: |
@@ -351,10 +373,37 @@ jobs:
         uses: ./.github/actions/grype
         with:
           image: docker:${{ steps.build-image.outputs.image }}
+      - name: Push scanned architecture image
+        if: github.event_name == 'push'
+        uses: wodby/images/.github/actions/arch-image-push@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+  ubuntu-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs:
+      - ubuntu-setup
+      - ubuntu-build
+    strategy:
+      matrix:
+        mariadb: ${{ fromJson(needs.ubuntu-setup.outputs.versions) }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: wodby/images/.github/actions/arch-image-pins@2da5f02ec3dffc5cb3331152e01e3c89874b0bfe
+      - uses: ./.github/actions
+        with:
+          version: ${{ matrix.mariadb.version }}
+          workdir: ubuntu
+          latest_major: ${{ matrix.mariadb.latest_major }}
+          tag_suffix: -ubuntu
 
   image-revision-aliases:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/r')
-    needs: [ mariadb123-push, mariadb118-push, mariadb114-push, mariadb1011-push, mariadb106-push ]
+    needs: [ mariadb123-push, mariadb118-push, mariadb114-push, mariadb1011-push, mariadb106-push, ubuntu-push ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

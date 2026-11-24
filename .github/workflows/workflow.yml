@@ -315,6 +315,43 @@ jobs:
           version: ${{ env.MARIADB106 }}
           workdir: 10
 
+  # The Ubuntu variant is built on the official image, whose versions are pinned
+  # in ubuntu/base-images.mk. It is built, tested and scanned here; it is not
+  # published yet.
+  ubuntu-build:
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - '12.3.3'
+          - '11.8.9'
+          - '11.4.13'
+        arch:
+          - amd64
+          - arm64
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build and test
+        id: build-image
+        env:
+          MARIADB_VER: ${{ matrix.version }}
+          ARCH: ${{ matrix.arch }}
+        working-directory: ubuntu
+        run: |
+          make
+          make test
+          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Scan image
+        uses: ./.github/actions/grype
+        with:
+          image: docker:${{ steps.build-image.outputs.image }}
+
   image-revision-aliases:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/r')
     needs: [ mariadb123-push, mariadb118-push, mariadb114-push, mariadb1011-push, mariadb106-push ]

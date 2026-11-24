@@ -34,6 +34,33 @@ Alpine's [package repository](https://pkgs.alpinelinux.org/packages).
 
 All images built for `linux/amd64` and `linux/arm64`.
 
+### Ubuntu variant
+
+The `ubuntu` directory builds a second kind of image on top of the official [`mariadb`](https://hub.docker.com/_/mariadb)
+image: MariaDB's own server and Galera packages on Ubuntu, with the [orchestration actions](#orchestration-actions)
+of this repository added. Use it where the upstream build matters more than image size or a shared base, for example
+for Galera clusters or under a Kubernetes operator written for the official image.
+
+It differs from the Alpine images in these ways:
+
+- **Configuration.** The server is configured as in the official image, with `.cnf` files mounted into
+  `/etc/mysql/conf.d`. The [environment variables](#environment-variables) that tune `my.cnf` do not apply.
+- **Initialization.** The entrypoint of the official image runs unchanged, with its variables (`MARIADB_ROOT_PASSWORD`
+  and the others, or their `MYSQL_` names) and its `/docker-entrypoint-initdb.d` file types. Archives (`.zip`,
+  `.tar.gz`) are not loaded from that directory; the `import` action still accepts them.
+- **Galera.** The Galera library (`/usr/lib/galera/libgalera_smm.so`) and `garbd` are included. Galera is switched on
+  with a configuration file, not with `WSREP_ON`.
+- **User.** The server runs as `mysql` with UID and GID 999, not 100 and 101.
+- **Versions.** A version becomes available once the official image for it is published, which can be later than the
+  Alpine image built from source.
+
+```
+$ make -C ubuntu MARIADB_VER=11.8.9
+$ make -C ubuntu MARIADB_VER=11.8.9 test
+```
+
+The official image digests are pinned in `ubuntu/base-images.mk`.
+
 ## Environment Variables
 
 | Variable                                 | 12.3, 11.8, 11.4     | 10.11, 10.6          |

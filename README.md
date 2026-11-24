@@ -27,16 +27,47 @@ Supported tags and respective `Dockerfile` links:
 - `11.8`, `11` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
 - `11.4` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/11/Dockerfile)
 - `10.11`, `10` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
-- `10.6` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/10/Dockerfile)
 
 Credits to the Alpine Linux team for patches for better musl compatibility of MariaDB. Patches taken from
 Alpine's [package repository](https://pkgs.alpinelinux.org/packages).
 
 All images built for `linux/amd64` and `linux/arm64`.
 
+### Ubuntu variant
+
+The `ubuntu` directory builds a second kind of image on top of the official [`mariadb`](https://hub.docker.com/_/mariadb)
+image: MariaDB's own server and Galera packages on Ubuntu, with the [orchestration actions](#orchestration-actions)
+of this repository added. Use it where the upstream build matters more than image size or a shared base, for example
+for Galera clusters or under a Kubernetes operator written for the official image.
+
+It differs from the Alpine images in these ways:
+
+- **Configuration.** The server is configured as in the official image, with `.cnf` files mounted into
+  `/etc/mysql/conf.d`. The [environment variables](#environment-variables) that tune `my.cnf` do not apply.
+- **Initialization.** The entrypoint of the official image runs unchanged, with its variables (`MARIADB_ROOT_PASSWORD`
+  and the others, or their `MYSQL_` names) and its `/docker-entrypoint-initdb.d` file types. Archives (`.zip`,
+  `.tar.gz`) are not loaded from that directory; the `import` action still accepts them.
+- **Galera.** The Galera library (`/usr/lib/galera/libgalera_smm.so`) and `garbd` are included. Galera is switched on
+  with a configuration file, not with `WSREP_ON`.
+- **User.** The server runs as `mysql` with UID and GID 999, not 100 and 101.
+- **Versions.** A version becomes available once the official image for it is published, which can be later than the
+  Alpine image built from source.
+
+Tags and respective `Dockerfile` links:
+
+- `12.3-ubuntu`, `12-ubuntu` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/ubuntu/Dockerfile)
+- `11.8-ubuntu`, `11-ubuntu` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/ubuntu/Dockerfile)
+- `11.4-ubuntu` [_(Dockerfile)_](https://github.com/wodby/mariadb/tree/master/ubuntu/Dockerfile)
+
+Image revision tags work as for the Alpine images, with the suffix kept: `11.8-ubuntu-rN`, and
+`11.8.9-ubuntu-rN` for an exact upstream version.
+
+The versions are set in the workflow (`MARIADB118_UBUNTU` and the others) and the official image digests are pinned in
+`ubuntu/base-images.mk`.
+
 ## Environment Variables
 
-| Variable                                 | 12.3, 11.8, 11.4     | 10.11, 10.6          |
+| Variable                                 | 12.3, 11.8, 11.4     | 10.11                |
 |------------------------------------------|----------------------|----------------------|
 | [`MARIADB_PLUGIN_LOAD`]                  |                      |                      |
 | [`MARIADB_SSL_CERT`]                     |                      |                      |

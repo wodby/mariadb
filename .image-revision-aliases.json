@@ -59,14 +59,42 @@
     },
     {
       "version": {
-        "job": "mariadb106-push"
+        "env": "MARIADB123_UBUNTU"
       },
       "variants": [
         {
           "short": [
-            "{minor}"
+            "{minor}-ubuntu",
+            "{major}-ubuntu"
           ],
-          "full": "{version}"
+          "full": "{version}-ubuntu"
+        }
+      ]
+    },
+    {
+      "version": {
+        "env": "MARIADB118_UBUNTU"
+      },
+      "variants": [
+        {
+          "short": [
+            "{minor}-ubuntu",
+            "{major}-ubuntu"
+          ],
+          "full": "{version}-ubuntu"
+        }
+      ]
+    },
+    {
+      "version": {
+        "env": "MARIADB114_UBUNTU"
+      },
+      "variants": [
+        {
+          "short": [
+            "{minor}-ubuntu"
+          ],
+          "full": "{version}-ubuntu"
         }
       ]
     }

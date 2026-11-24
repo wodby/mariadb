@@ -11,17 +11,21 @@ if [[ "${GITHUB_REF}" == refs/heads/master || "${GITHUB_REF}" == refs/tags/* ]];
   minor_ver="${MARIADB_VER%.*}"
   major_ver="${minor_ver%.*}"
 
-  tags=("${minor_ver}")
+  # A variant keeps its suffix in every tag: 11.8-ubuntu, 11-ubuntu, 11.8-ubuntu-r1.
+  minor_tag="${minor_ver}${TAG_SUFFIX}"
+  major_tag="${major_ver}${TAG_SUFFIX}"
+
+  tags=("${minor_tag}")
 
   if [[ -n "${LATEST_MAJOR}" ]]; then
-    tags+=("${major_ver}")
+    tags+=("${major_tag}")
   fi  
 
   if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
     image_revision=("${GITHUB_REF##*/}")
-    tags=("${minor_ver}-${image_revision}")
+    tags=("${minor_tag}-${image_revision}")
     if [[ -n "${LATEST_MAJOR}" ]]; then
-      tags+=("${major_ver}-${image_revision}")
+      tags+=("${major_tag}-${image_revision}")
     fi
   else          
     if [[ -n "${LATEST}" ]]; then

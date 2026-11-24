@@ -1,0 +1,14 @@
+--- a/galerautils/src/gu_datetime.cpp
++++ b/galerautils/src/gu_datetime.cpp
+@@ -23,7 +23,10 @@
+      * 1.1
+      * .1
+      */
+-    const char* real_regex_str = "^([0-9]*)?\\.?([0-9]*)?$";
++    /* Without the optional groups: for "37" they are ambiguous, and musl puts
++     * the digits in the decimal group, so 37 seconds was read as 0.37. This
++     * form has one valid match and accepts the same strings. */
++    const char* real_regex_str = "^([0-9]*)\\.?([0-9]*)$";
+     enum RealParts
+     {
+         integer = 1,

@@ -1,0 +1,14 @@
+--- a/gcomm/test/check_trace.cpp
++++ b/gcomm/test/check_trace.cpp
+@@ -227,7 +227,10 @@
+             if (loss() < 1.)
+             {
+                 double rnd(double(rand())/double(RAND_MAX));
+-                if (loss() < rnd)
++                /* Test harness only. A draw of exactly 0 must not pass a
++                 * link that was cut with loss 0: musl's first rand() is 0,
++                 * which let one message through and failed the EVS tests. */
++                if (loss() <= rnd)
+                 {
+                     queue_.pop_front();
+                     return ChannelMsg(Datagram(), UUID::nil());

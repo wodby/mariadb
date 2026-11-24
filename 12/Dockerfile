@@ -8,7 +8,9 @@ FROM ${BASE_IMAGE}
 ARG MARIADB_VER
 ARG MARIADB_VER_MINOR
 ARG GALERA_VER
-ARG WSREP_VER
+ARG GALERA_SHA256
+ARG WSREP_API_COMMIT
+ARG WSREP_API_SHA256
 ARG NPROC
 
 ENV MARIADB_VER="${MARIADB_VER}" \
@@ -80,21 +82,29 @@ RUN set -xe; \
     if [ -n "${GALERA_VER}" ]; then \
         apk add --update --no-cache -t .galera-run-deps \
             boost-program_options \
+            # The state transfer scripts call "ps -p", which BusyBox ps lacks.
+            procps-ng \
             rsync \
             socat; \
         apk add --update --no-cache -t .galera-build-deps \
             boost-dev \
-            check-dev \
-            scons; \
+            check-dev; \
         galera_url="https://github.com/codership/galera/archive/release_${GALERA_VER}.tar.gz"; \
         curl -fSL "${galera_url}" -o /tmp/galera.tar.gz; \
+        echo "${GALERA_SHA256}  /tmp/galera.tar.gz" | sha256sum -c -; \
         tar zxf /tmp/galera.tar.gz -C /tmp; \
-        rmdir "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
-        ln -s "/tmp/mariadb-${MARIADB_VER}/wsrep-lib/wsrep-API/v${WSREP_VER}" "/tmp/galera-release_${GALERA_VER}/wsrep/src"; \
+        # The release archive comes without its wsrep/src submodule. Use the
+        # wsrep-API commit the release pins: the copy in the MariaDB source can
+        # be older, and Galera then fails to compile.
+        curl -fSL "https://github.com/codership/wsrep-API/archive/${WSREP_API_COMMIT}.tar.gz" -o /tmp/wsrep-api.tar.gz; \
+        echo "${WSREP_API_SHA256}  /tmp/wsrep-api.tar.gz" | sha256sum -c -; \
+        tar zxf /tmp/wsrep-api.tar.gz -C "/tmp/galera-release_${GALERA_VER}/wsrep/src" --strip-components 1; \
         \
         cd "/tmp/galera-release_${GALERA_VER}"; \
         for i in /tmp/patches/galera/"${GALERA_VER:0:4}"/*.patch; do patch -p1 -i "${i}"; done; \
-        RUN_TESTS=0 scripts/build.sh -j "${NPROC:-$(nproc)}"; \
+        # build.sh also runs Galera's unit tests. Keep them: upstream does not
+        # test on musl, and they are what catches a libc difference.
+        scripts/build.sh -j "${NPROC:-$(nproc)}"; \
         apk del --purge .galera-build-deps; \
         \
         mkdir -p /usr/lib/galera; \

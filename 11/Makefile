@@ -6,8 +6,14 @@ BASE_IMAGE_REVISION ?= $(BASE_IMAGE_STABILITY_TAG)
 MARIADB_VER ?= 11.8.10
 MARIADB_VER_MINOR = $(shell echo "${MARIADB_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
-GALERA_VER ?=
-WSREP_VER ?= $(shell echo "${GALERA_VER}" | grep -oE '^[0-9]+')
+GALERA_VER ?= 26.4.29
+# SHA-256 of the release_$(GALERA_VER) source archive; update it with GALERA_VER.
+GALERA_SHA256 ?= 3b6c340949cee9d8e7fb995c70725c6c7552446bf4ea8218e6299de774b99dcc
+# The wsrep-API commit that release pins as its wsrep/src submodule, and the
+# SHA-256 of its source archive. Galera is built with it, not with the copy
+# in the MariaDB source, which can be older than the release needs.
+WSREP_API_COMMIT ?= e8313df29e9329521dced03a4cc558d0cf7d8032
+WSREP_API_SHA256 ?= d6c004890133f29536abffbff506620c9196003e5144033f6cf22e379aa11606
 
 ALPINE_VER ?= 3.22
 
@@ -43,7 +49,9 @@ build:
 	    --build-arg MARIADB_VER=$(MARIADB_VER) \
 	    --build-arg MARIADB_VER_MINOR=$(MARIADB_VER_MINOR) \
 	    --build-arg GALERA_VER=$(GALERA_VER) \
-	    --build-arg WSREP_VER=$(WSREP_VER) \
+	    --build-arg GALERA_SHA256=$(GALERA_SHA256) \
+	    --build-arg WSREP_API_COMMIT=$(WSREP_API_COMMIT) \
+	    --build-arg WSREP_API_SHA256=$(WSREP_API_SHA256) \
 	    --build-arg NPROC=$(NPROC) ./
 
 buildx-build:
@@ -52,7 +60,9 @@ buildx-build:
 	    --build-arg MARIADB_VER=$(MARIADB_VER) \
 	    --build-arg MARIADB_VER_MINOR=$(MARIADB_VER_MINOR) \
 	    --build-arg GALERA_VER=$(GALERA_VER) \
-	    --build-arg WSREP_VER=$(WSREP_VER) \
+	    --build-arg GALERA_SHA256=$(GALERA_SHA256) \
+	    --build-arg WSREP_API_COMMIT=$(WSREP_API_COMMIT) \
+	    --build-arg WSREP_API_SHA256=$(WSREP_API_SHA256) \
 	    --build-arg NPROC=$(NPROC) ./
 
 buildx-push:
@@ -61,7 +71,9 @@ buildx-push:
 	    --build-arg MARIADB_VER=$(MARIADB_VER) \
 	    --build-arg MARIADB_VER_MINOR=$(MARIADB_VER_MINOR) \
 	    --build-arg GALERA_VER=$(GALERA_VER) \
-	    --build-arg WSREP_VER=$(WSREP_VER) \
+	    --build-arg GALERA_SHA256=$(GALERA_SHA256) \
+	    --build-arg WSREP_API_COMMIT=$(WSREP_API_COMMIT) \
+	    --build-arg WSREP_API_SHA256=$(WSREP_API_SHA256) \
 	    --build-arg NPROC=$(NPROC) ./
 
 # CI combines the exact architecture images this workflow run pushed; see

@@ -1,13 +1,15 @@
 --- a/galerautils/src/gu_arch.h
 +++ b/galerautils/src/gu_arch.h
-@@ -50,8 +50,9 @@
+@@ -50,9 +50,9 @@
  #elif defined(__APPLE__) || defined(__FreeBSD__)
  # include <stdint.h>
  # define GU_WORDSIZE __WORDSIZE
 -#else
 -# include <bits/wordsize.h>
-+#else /* use this instead of bits/wordsize.h */
+-# define GU_WORDSIZE __WORDSIZE
++#else /* musl has no bits/wordsize.h; the compiler knows the pointer size on every architecture */
 +# include <stdint.h>
-+# include <bits/user.h>
- # define GU_WORDSIZE __WORDSIZE
++# define GU_WORDSIZE (__SIZEOF_POINTER__ * 8)
  #endif
+ 
+ #include <stdint.h>

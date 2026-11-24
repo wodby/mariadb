@@ -160,7 +160,7 @@ ibdata1:10M:autoextend:max:10G"
 | [`WSREP_PROVIDER_OPTIONS`]               |                     |
 | [`WSREP_RECOVER`]                        | `OFF`               |
 | [`WSREP_REJECT_QUERIES`]                 | `NONE`              |
-| [`WSREP_REPLICATE_MYISAM`]               | `OFF`               |
+| [`WSREP_REPLICATE_MYISAM`] (10.6 only)   | `OFF`               |
 | [`WSREP_RESTART_SLAVE`]                  | `OFF`               |
 | [`WSREP_RETRY_AUTOCOMMIT`]               | `1`                 |
 | [`WSREP_SLAVE_FK_CHECKS`]                | `ON`                |
@@ -198,8 +198,12 @@ documentation over Codership's.
 
 ### Galera-specific MariaDB configuration
 
+Every image includes the Galera library (`/usr/lib/galera/libgalera_smm.so`), the Galera arbitrator `garbd` and the
+tools the `mariabackup` and `rsync` state transfer methods need.
+
 You ***must*** set the `WSREP_ON` environment variable if you want the container's `/etc/mysql/my.cnf` to include
-Galera/wsrep specific configuration settings.
+Galera/wsrep specific configuration settings. Set `WSREP_NODE_ADDRESS` to the address the other nodes reach this node
+at; the default `0.0.0.0` only works for a single node.
 
 ### Bootstrapping a Galera Cluster
 
@@ -207,19 +211,19 @@ When starting a new cluster, the first node must bootstrap the cluster:
 
 ```
 $ docker run -e WSREP_ON=ON -v data1:/var/lib/mysql --name galera-1 \
-    wodby/mariadb:galera --wsrep-new-cluster
+    wodby/mariadb:11.8 --wsrep-new-cluster
 ```
 
 When the first node is ready, the other nodes can join it (via its hostname or IP) and participate in the cluster:
 
 ```
 $ docker run -e WSREP_ON=ON -v data2:/var/lib/mysql --name galera-2 \
-    wodby/mariadb:galera --wsrep-cluster-address="gcomm://<node-1>"
+    wodby/mariadb:11.8 --wsrep-cluster-address="gcomm://<node-1>"
 ```
 
 ```
 $ docker run -e WSREP_ON=ON -v data3:/var/lib/mysql --name galera-3 \
-    wodby/mariadb:galera --wsrep-cluster-address="gcomm://<node-1>,<node-2>"
+    wodby/mariadb:11.8 --wsrep-cluster-address="gcomm://<node-1>,<node-2>"
 ```
 
 After the other nodes have joined the first, you should terminate the first container and `docker run` a new container
@@ -242,10 +246,10 @@ third voter.
 In general, it's a good idea to use `garbd` for clusters with even numbers of nodes, to provide a tie-breaking vote in
 case half of the nodes agree and the other half disagree.
 
-The `galera`-tagged images also include `garbd`, which can be run instead of mariadb.
+The images also include `garbd`, which can be run instead of mariadb.
 
 ```
-$ docker run wodby/mariadb:galera garbd --help
+$ docker run wodby/mariadb:11.8 garbd --help
 Usage: garbd [options] [group address]
 [...]
 ```

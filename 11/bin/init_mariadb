@@ -134,7 +134,10 @@ mariadb_get_config() {
 
 # Do a temporary startup of the MySQL server, for init purposes
 docker_temp_server_start() {
-	"$@" --skip-networking --socket="${SOCKET}" &
+	# Galera stays off here, as in the official image: with it on, a node that
+	# starts with an empty data directory would try to join the cluster and
+	# take a state transfer in the middle of initialization.
+	"$@" --skip-networking --socket="${SOCKET}" --wsrep_on=OFF &
 	mariadb_note "Waiting for server startup"
 	local i
 	for i in {30..0}; do

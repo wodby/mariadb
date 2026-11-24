@@ -166,3 +166,58 @@ rm -rf "${stream_dir}"
 mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.zip"
 mariadb make import source="https://s3.amazonaws.com/wodby-sample-files/mariadb-import-test/export.tar.gz"
 mariadb make mysql-check
+
+# Galera: a node bootstraps a cluster and a second one joins it with a full
+# state transfer. The joiner starts from an empty data directory, so this also
+# covers initialization on a joining node and the tools the transfer scripts
+# need. Rows written on either node must then be readable on the other.
+galera_net="mariadb-galera-test-$$"
+galera_subnet='172.31.251'
+docker network create --subnet "${galera_subnet}.0/24" "${galera_net}" > /dev/null
+# Docker can still be detaching a removed container when the network is
+# removed, so that is tried twice. The exit trap does all the cleanup.
+trap "docker rm -vf ${cid} ${galera_net}-1 ${galera_net}-2 > /dev/null 2>&1; docker network rm ${galera_net} > /dev/null 2>&1 || { sleep 3; docker network rm ${galera_net} > /dev/null 2>&1; }; rm -rf ${archive_init_dir}" EXIT
+
+galera_node() {
+	local n="$1"; shift
+	docker run -d \
+		--network "${galera_net}" --ip "${galera_subnet}.1${n}" \
+		--name "${galera_net}-${n}" \
+		-e MYSQL_ROOT_PASSWORD \
+		-e WSREP_ON=ON \
+		-e WSREP_CLUSTER_ADDRESS="gcomm://${galera_subnet}.11,${galera_subnet}.12" \
+		-e WSREP_NODE_ADDRESS="${galera_subnet}.1${n}" \
+		-e WSREP_NODE_NAME="node${n}" \
+		-e WSREP_SST_METHOD=mariabackup \
+		-e WSREP_SST_AUTH="root:${MYSQL_ROOT_PASSWORD}" \
+		"${IMAGE}" "$@" > /dev/null
+}
+
+galera_sql() {
+	local n="$1"; shift
+	docker exec "${galera_net}-${n}" mariadb -uroot -p"${MYSQL_ROOT_PASSWORD}" --batch --skip-column-names -e "$@"
+}
+
+galera_wait() {
+	local n="$1" size="$2" i
+	for i in $(seq 1 60); do
+		if [ "$(galera_sql "${n}" "SELECT CONCAT((SELECT VARIABLE_VALUE FROM information_schema.GLOBAL_STATUS WHERE VARIABLE_NAME='wsrep_cluster_size'), '/', (SELECT VARIABLE_VALUE FROM information_schema.GLOBAL_STATUS WHERE VARIABLE_NAME='wsrep_local_state_comment'))" 2>/dev/null)" = "${size}/Synced" ]; then
+			return 0
+		fi
+		sleep 3
+	done
+	docker logs "${galera_net}-${n}" 2>&1 | tail -n 60 >&2
+	echo "Galera node ${n} did not reach a synced cluster of ${size}" >&2
+	return 1
+}
+
+galera_node 1 mariadbd --wsrep-new-cluster
+galera_wait 1 1
+galera_sql 1 "CREATE DATABASE galera; CREATE TABLE galera.t (id INT AUTO_INCREMENT PRIMARY KEY, node VARCHAR(8)); INSERT INTO galera.t (node) VALUES ('node1')"
+galera_node 2 mariadbd
+galera_wait 2 2
+galera_wait 1 2
+[ "$(galera_sql 2 'SELECT node FROM galera.t')" = 'node1' ]
+galera_sql 2 "INSERT INTO galera.t (node) VALUES ('node2')"
+[ "$(galera_sql 1 'SELECT COUNT(*) FROM galera.t')" = 2 ]
+docker run --rm "${IMAGE}" garbd --version > /dev/null 2>&1

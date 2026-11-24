@@ -30,6 +30,48 @@ fi
 rm -rf "${unsupported_init_dir}"
 rm "${unsupported_init_output}"
 
+# The variable names and drop-in configuration directories of the official
+# MariaDB image must work without any MYSQL_* variable: this is what tools
+# written for that image, such as Kubernetes operators, pass to the container.
+official_conf_dir="$(mktemp -d)"
+chmod 755 "${official_conf_dir}"
+printf '[mysqld]\nmax_connections = 123\n' > "${official_conf_dir}/test.cnf"
+chmod 644 "${official_conf_dir}/test.cnf"
+official_cid="$(
+	docker run -d \
+		-e MARIADB_ROOT_PASSWORD='official-root' \
+		-e MARIADB_DATABASE='official' \
+		-e MARIADB_USER='official' \
+		-e MARIADB_PASSWORD='official-user' \
+		-v "${official_conf_dir}:/etc/mysql/conf.d:ro" \
+		--name mariadb-official-names \
+		"${IMAGE}"
+)"
+trap "docker rm -vf ${official_cid} > /dev/null; rm -rf ${official_conf_dir}" EXIT
+
+official() {
+	docker run --rm -i \
+		-e MARIADB_ROOT_PASSWORD='official-root' \
+		-e MARIADB_DATABASE='official' \
+		-e MARIADB_USER='official' \
+		-e MARIADB_PASSWORD='official-user' \
+		--link mariadb-official-names \
+		"${IMAGE}" \
+		"${@}" \
+		host=mariadb-official-names
+}
+
+official make check-ready delay_seconds=5 wait_seconds=5 max_try=12
+[ "$(official make query-silent query='SELECT DATABASE()')" = 'official' ]
+[ "$(official make query-silent query='SELECT @@max_connections')" = '123' ]
+official make mysql-check
+official make create-db name='official_action'
+official make drop-db name='official_action'
+
+docker rm -vf "${official_cid}" > /dev/null
+rm -rf "${official_conf_dir}"
+trap - EXIT
+
 archive_init_dir="$(mktemp -d)"
 chmod 755 "${archive_init_dir}"
 echo 'CREATE TABLE mariadb.archive_init_test (id INT);' > "${archive_init_dir}/database.sql"

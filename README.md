@@ -125,6 +125,31 @@ Default value for all versions:
 ibdata1:10M:autoextend:max:10G"
 ```
 
+### Official image variable names
+
+The initialization variables of the official `mariadb` image are accepted as well, so tools written for that image,
+such as Kubernetes operators, can run this one:
+
+| Official name                       | Same as                      |
+|-------------------------------------|------------------------------|
+| `MARIADB_ROOT_PASSWORD`             | `MYSQL_ROOT_PASSWORD`        |
+| `MARIADB_ROOT_HOST`                 | `MYSQL_ROOT_HOST`            |
+| `MARIADB_DATABASE`                  | `MYSQL_DATABASE`             |
+| `MARIADB_USER`                      | `MYSQL_USER`                 |
+| `MARIADB_PASSWORD`                  | `MYSQL_PASSWORD`             |
+| `MARIADB_ALLOW_EMPTY_ROOT_PASSWORD` | `MYSQL_ALLOW_EMPTY_PASSWORD` |
+| `MARIADB_RANDOM_ROOT_PASSWORD`      | `MYSQL_RANDOM_ROOT_PASSWORD` |
+| `MARIADB_INITDB_SKIP_TZINFO`        | `MYSQL_INITDB_SKIP_TZINFO`   |
+
+When both names are set, the `MARIADB_` value is used. The [orchestration actions](#orchestration-actions) read the
+same names for their default parameters.
+
+### Drop-in configuration
+
+`/etc/mysql/my.cnf` is generated from the environment variables above every time the container starts. To set an
+option that has no variable, mount a `.cnf` file into `/etc/mysql/mariadb.conf.d` or `/etc/mysql/conf.d`. Both
+directories are read after the generated file, in that order, so their settings win.
+
 ### Additional Galera environment variables
 
 | Variable                                 | Value               |
@@ -283,10 +308,10 @@ commands:
     revoke-user-db username db
 
 default params values:
-    user $MYSQL_USER
-    password $MYSQL_PASSWORD
-    db $MYSQL_DATABASE
-    root_password $MYSQL_ROOT_PASSWORD
+    user $MARIADB_USER or $MYSQL_USER
+    password $MARIADB_PASSWORD or $MYSQL_PASSWORD
+    db $MARIADB_DATABASE or $MYSQL_DATABASE
+    root_password $MARIADB_ROOT_PASSWORD or $MYSQL_ROOT_PASSWORD
     host localhost
     max_try 1
     wait_seconds 1

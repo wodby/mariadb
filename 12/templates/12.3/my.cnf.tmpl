@@ -203,3 +203,8 @@ wsrep_sync_wait                         = {{ getenv "WSREP_SYNC_WAIT" "0" }}
 wsrep_trx_fragment_size                 = {{ getenv "WSREP_TRX_FRAGMENT_SIZE" "0" }}
 wsrep_trx_fragment_unit                 = {{ getenv "WSREP_TRX_FRAGMENT_UNIT" "bytes" }}
 {{- end }}
+
+# Drop-in configuration, in the order of the official MariaDB image. Read last,
+# so a file in either directory overrides the settings above.
+!includedir /etc/mysql/mariadb.conf.d/
+!includedir /etc/mysql/conf.d/

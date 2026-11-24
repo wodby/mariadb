@@ -182,6 +182,8 @@ RUN set -xe; \
         /var/run/mysqld \
         /var/lib/mysql \
         /etc/mysql/certificates \
+        /etc/mysql/conf.d \
+        /etc/mysql/mariadb.conf.d \
         /docker-entrypoint-initdb.d \
         "${BACKUPS_DIR}"; \
     \

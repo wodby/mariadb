@@ -49,6 +49,20 @@ file_env() {
 	unset "$fileVar"
 }
 
+# usage: _mariadb_file_env MYSQL_VAR [DEFAULT]
+# Reads MYSQL_VAR and its MARIADB_ name the way the official MariaDB image
+# does: the MARIADB_ value wins, and both names are exported with one value so
+# the rest of this script and the orchestration actions can keep reading MYSQL_*.
+_mariadb_file_env() {
+	local var="$1"; shift
+	local maria="MARIADB_${var#MYSQL_}"
+	file_env "$var" "$@"
+	file_env "$maria" "${!var}"
+	if [ "${!maria:-}" ]; then
+		export "$var"="${!maria}"
+	fi
+}
+
 # check to see if this file is being run or sourced from another script
 _is_sourced() {
 	# https://unix.stackexchange.com/a/215279
@@ -206,11 +220,19 @@ docker_setup_env() {
 	SOCKET="$(mariadb_get_config 'socket' "$@")"
 
 	# Initialize values that might be stored in a file
-	file_env 'MYSQL_ROOT_HOST' '%'
-	file_env 'MYSQL_DATABASE'
-	file_env 'MYSQL_USER'
-	file_env 'MYSQL_PASSWORD'
-	file_env 'MYSQL_ROOT_PASSWORD'
+	_mariadb_file_env 'MYSQL_ROOT_HOST' '%'
+	_mariadb_file_env 'MYSQL_DATABASE'
+	_mariadb_file_env 'MYSQL_USER'
+	_mariadb_file_env 'MYSQL_PASSWORD'
+	_mariadb_file_env 'MYSQL_ROOT_PASSWORD'
+
+	# The official image renamed these switches too; either spelling works.
+	: "${MARIADB_ALLOW_EMPTY_ROOT_PASSWORD:=${MYSQL_ALLOW_EMPTY_PASSWORD:-}}"
+	export MYSQL_ALLOW_EMPTY_PASSWORD="$MARIADB_ALLOW_EMPTY_ROOT_PASSWORD" MARIADB_ALLOW_EMPTY_ROOT_PASSWORD
+	: "${MARIADB_RANDOM_ROOT_PASSWORD:=${MYSQL_RANDOM_ROOT_PASSWORD:-}}"
+	export MYSQL_RANDOM_ROOT_PASSWORD="$MARIADB_RANDOM_ROOT_PASSWORD" MARIADB_RANDOM_ROOT_PASSWORD
+	: "${MARIADB_INITDB_SKIP_TZINFO:=${MYSQL_INITDB_SKIP_TZINFO:-}}"
+	export MYSQL_INITDB_SKIP_TZINFO="$MARIADB_INITDB_SKIP_TZINFO" MARIADB_INITDB_SKIP_TZINFO
 
 	declare -g DATABASE_ALREADY_EXISTS
 	if [ -d "$DATADIR/mysql" ]; then
